@@ -1,0 +1,35 @@
+POW			{return POW;}
+ROOT			{return ROOT;}
+LOG			{return LOG;}
+COS			{return COS;}
+SIN			{return SIN;}
+TAN			{return TAN;}
+FIB			{return FIB;}
+FACT			{return FACT;}
+BASE			{return BASE;}
+SUM			{return SUM;}
+PROD			{return PROD;}
+ABS			{return ABS;}
+MOD			{return MOD;}
+RAND			{return RAND;}
+
+EXIT			{return EXIT;}
+
+SIGMA			{return SIGMA;}
+ERA			{return ERA;}
+PRIMF			{return PRIMF;}
+GCD			{return GCD;}
+BC 			{return BC;}
+PN			{return PN;}
+AVG			{return AVG;}
+CEIL			{return CEIL;}
+FLOOR			{return FLOOR;}
+
+\<			{return SMALLER;}
+\>			{return GREATER;}
+\=\=			{return EQUAL;}
+\!\=			{return DIFFERENT;}
+\<\=			{return SMALLEREQUAL;}
+\>\=			{return GREATEREQUAL;}
+
+EXIT			{return EXIT;}

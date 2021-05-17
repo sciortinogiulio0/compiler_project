@@ -1,0 +1,628 @@
+Terminals unused in grammar
+
+    POW
+    ROOT
+    LOG
+    COS
+    SIN
+    TAN
+    FIB
+    FACT
+    BASE
+    SUM
+    PROD
+    ABS
+    MOD
+    NEP
+    PI
+    RAND
+    SIGMA
+    ERA
+    PRIMF
+    GCD
+    BC
+    PN
+    AVG
+    CEIL
+    FLOOR
+    ','
+
+
+Grammar
+
+    0 $accept: startProgram $end
+
+    1 startProgram: op '\n'
+    2             | startProgram op '\n'
+
+    3 op: declaration
+    4   | declaration SMALLER declaration
+    5   | declaration GREATER declaration
+    6   | declaration EQUAL declaration
+    7   | declaration DIFFERENT declaration
+    8   | declaration SMALLEREQUAL declaration
+    9   | declaration GREATEREQUAL declaration
+   10   | EXIT
+
+   11 declaration: '(' declaration ')'
+   12            | declaration '+' declaration
+   13            | declaration '-' declaration
+   14            | declaration '*' declaration
+   15            | declaration '/' declaration
+   16            | declaration '^' declaration
+   17            | declaration '!'
+   18            | '-' declaration
+   19            | VALUE
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    '\n' (10) 1 2
+    '!' (33) 17
+    '(' (40) 11
+    ')' (41) 11
+    '*' (42) 14
+    '+' (43) 12
+    ',' (44)
+    '-' (45) 13 18
+    '/' (47) 15
+    '^' (94) 16
+    error (256)
+    VALUE <value> (258) 19
+    POW (259)
+    ROOT (260)
+    LOG (261)
+    COS (262)
+    SIN (263)
+    TAN (264)
+    FIB (265)
+    FACT (266)
+    BASE (267)
+    SUM (268)
+    PROD (269)
+    ABS (270)
+    MOD (271)
+    NEP (272)
+    PI (273)
+    SMALLER (274) 4
+    GREATER (275) 5
+    EQUAL (276) 6
+    DIFFERENT (277) 7
+    SMALLEREQUAL (278) 8
+    GREATEREQUAL (279) 9
+    RAND (280)
+    SIGMA (281)
+    ERA (282)
+    PRIMF (283)
+    GCD (284)
+    BC (285)
+    PN (286)
+    AVG (287)
+    CEIL (288)
+    FLOOR (289)
+    EXIT (290) 10
+
+
+Nonterminals, with rules where they appear
+
+    $accept (46)
+        on left: 0
+    startProgram (47)
+        on left: 1 2
+        on right: 0 2
+    op (48)
+        on left: 3 4 5 6 7 8 9 10
+        on right: 1 2
+    declaration <value> (49)
+        on left: 11 12 13 14 15 16 17 18 19
+        on right: 3 4 5 6 7 8 9 11 12 13 14 15 16 17 18
+
+
+State 0
+
+    0 $accept: . startProgram $end
+
+    VALUE  shift, and go to state 1
+    EXIT   shift, and go to state 2
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    startProgram  go to state 5
+    op            go to state 6
+    declaration   go to state 7
+
+
+State 1
+
+   19 declaration: VALUE .
+
+    $default  reduce using rule 19 (declaration)
+
+
+State 2
+
+   10 op: EXIT .
+
+    $default  reduce using rule 10 (op)
+
+
+State 3
+
+   18 declaration: '-' . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 8
+
+
+State 4
+
+   11 declaration: '(' . declaration ')'
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 9
+
+
+State 5
+
+    0 $accept: startProgram . $end
+    2 startProgram: startProgram . op '\n'
+
+    $end   shift, and go to state 10
+    VALUE  shift, and go to state 1
+    EXIT   shift, and go to state 2
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    op           go to state 11
+    declaration  go to state 7
+
+
+State 6
+
+    1 startProgram: op . '\n'
+
+    '\n'  shift, and go to state 12
+
+
+State 7
+
+    3 op: declaration .
+    4   | declaration . SMALLER declaration
+    5   | declaration . GREATER declaration
+    6   | declaration . EQUAL declaration
+    7   | declaration . DIFFERENT declaration
+    8   | declaration . SMALLEREQUAL declaration
+    9   | declaration . GREATEREQUAL declaration
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    SMALLER       shift, and go to state 13
+    GREATER       shift, and go to state 14
+    EQUAL         shift, and go to state 15
+    DIFFERENT     shift, and go to state 16
+    SMALLEREQUAL  shift, and go to state 17
+    GREATEREQUAL  shift, and go to state 18
+    '+'           shift, and go to state 19
+    '-'           shift, and go to state 20
+    '*'           shift, and go to state 21
+    '/'           shift, and go to state 22
+    '^'           shift, and go to state 23
+    '!'           shift, and go to state 24
+
+    $default  reduce using rule 3 (op)
+
+
+State 8
+
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+   18            | '-' declaration .
+
+    '*'  shift, and go to state 21
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 18 (declaration)
+
+
+State 9
+
+   11 declaration: '(' declaration . ')'
+   12            | declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '+'  shift, and go to state 19
+    '-'  shift, and go to state 20
+    '*'  shift, and go to state 21
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+    ')'  shift, and go to state 25
+
+
+State 10
+
+    0 $accept: startProgram $end .
+
+    $default  accept
+
+
+State 11
+
+    2 startProgram: startProgram op . '\n'
+
+    '\n'  shift, and go to state 26
+
+
+State 12
+
+    1 startProgram: op '\n' .
+
+    $default  reduce using rule 1 (startProgram)
+
+
+State 13
+
+    4 op: declaration SMALLER . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 27
+
+
+State 14
+
+    5 op: declaration GREATER . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 28
+
+
+State 15
+
+    6 op: declaration EQUAL . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 29
+
+
+State 16
+
+    7 op: declaration DIFFERENT . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 30
+
+
+State 17
+
+    8 op: declaration SMALLEREQUAL . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 31
+
+
+State 18
+
+    9 op: declaration GREATEREQUAL . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 32
+
+
+State 19
+
+   12 declaration: declaration '+' . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 33
+
+
+State 20
+
+   13 declaration: declaration '-' . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 34
+
+
+State 21
+
+   14 declaration: declaration '*' . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 35
+
+
+State 22
+
+   15 declaration: declaration '/' . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 36
+
+
+State 23
+
+   16 declaration: declaration '^' . declaration
+
+    VALUE  shift, and go to state 1
+    '-'    shift, and go to state 3
+    '('    shift, and go to state 4
+
+    declaration  go to state 37
+
+
+State 24
+
+   17 declaration: declaration '!' .
+
+    $default  reduce using rule 17 (declaration)
+
+
+State 25
+
+   11 declaration: '(' declaration ')' .
+
+    $default  reduce using rule 11 (declaration)
+
+
+State 26
+
+    2 startProgram: startProgram op '\n' .
+
+    $default  reduce using rule 2 (startProgram)
+
+
+State 27
+
+    4 op: declaration SMALLER declaration .
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '+'  shift, and go to state 19
+    '-'  shift, and go to state 20
+    '*'  shift, and go to state 21
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 4 (op)
+
+
+State 28
+
+    5 op: declaration GREATER declaration .
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '+'  shift, and go to state 19
+    '-'  shift, and go to state 20
+    '*'  shift, and go to state 21
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 5 (op)
+
+
+State 29
+
+    6 op: declaration EQUAL declaration .
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '+'  shift, and go to state 19
+    '-'  shift, and go to state 20
+    '*'  shift, and go to state 21
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 6 (op)
+
+
+State 30
+
+    7 op: declaration DIFFERENT declaration .
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '+'  shift, and go to state 19
+    '-'  shift, and go to state 20
+    '*'  shift, and go to state 21
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 7 (op)
+
+
+State 31
+
+    8 op: declaration SMALLEREQUAL declaration .
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '+'  shift, and go to state 19
+    '-'  shift, and go to state 20
+    '*'  shift, and go to state 21
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 8 (op)
+
+
+State 32
+
+    9 op: declaration GREATEREQUAL declaration .
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '+'  shift, and go to state 19
+    '-'  shift, and go to state 20
+    '*'  shift, and go to state 21
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 9 (op)
+
+
+State 33
+
+   12 declaration: declaration . '+' declaration
+   12            | declaration '+' declaration .
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '-'  shift, and go to state 20
+    '*'  shift, and go to state 21
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 12 (declaration)
+
+
+State 34
+
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   13            | declaration '-' declaration .
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '*'  shift, and go to state 21
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 13 (declaration)
+
+
+State 35
+
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   14            | declaration '*' declaration .
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '/'  shift, and go to state 22
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 14 (declaration)
+
+
+State 36
+
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   15            | declaration '/' declaration .
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+
+    '^'  shift, and go to state 23
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 15 (declaration)
+
+
+State 37
+
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   16            | declaration '^' declaration .
+   17            | declaration . '!'
+
+    '!'  shift, and go to state 24
+
+    $default  reduce using rule 16 (declaration)
