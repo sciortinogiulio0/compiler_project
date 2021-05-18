@@ -12,6 +12,16 @@ VALUE    {DIGIT}+(\.{DIGIT}+)?
 
 FIB			{return FIB;}
 SIGMA			{return SIGMA;}
+LOG			{return LOG;}
+AVG			{return AVG;}
+CEIL			{return CEIL;}
+FLOOR			{return FLOOR;}
+RAND			{return RAND;}
+BIN			{return BIN;}
+GCD			{return GCD;}
+PRIME			{return PRIME;}
+PRIMF			{return PRIMF;}
+ERA			{return ERA;}
 "+"			{return '+';}
 "-"			{return '-';}
 "*"			{return '*';}

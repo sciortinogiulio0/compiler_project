@@ -7,19 +7,17 @@
 	
 	int fibonacci(int n);
 	int binomial(int n, int k);
-    	char* Eratosthenes(int n);
+    	int eratosthenes(int n);
     	int gcd(int m, int n);
-    	char* primeFactors(int n);
-    	char* primeNums(int n);
+    	int primeFactors(int n);
+    	int primeNums(int n);
     	int sigma(int x, int n);
     	float avg (float x, float n);
-    	int ceils (float n);
-    	int floors (float n);
     	bool smaller(float a, float b);
     	bool greater(float a, float b);
     	bool equal(float a, float b);
-    	int randint(int from, int to);
     	int fac(int n);
+    	int randint(int from, int to,int count);
     	
     	void yyerror(char *s);
     	int yylex();
@@ -55,6 +53,7 @@
 %token RAND
 %token SIGMA
 %token ERA
+%token PRIME
 %token PRIMF
 %token GCD
 %token BC
@@ -63,6 +62,7 @@
 %token CEIL
 %token FLOOR
 %token EXIT
+%token BIN
 
 %type <value> declaration
 
@@ -105,6 +105,16 @@ declaration:	'(' declaration ')' 			{$$ = $2;}
 		| VALUE				{$$ = $1;}
 		| FIB '(' declaration ')'		{$$ = (int) fibonacci($3);}
 		| SIGMA '(' declaration ',' declaration ')'		{$$ = (int) sigma($3,$5);}
+		| GCD '(' declaration ',' declaration ')'		{$$ = gcd($3,$5);}
+		| AVG '(' declaration ',' declaration ')'		{$$ = avg($3,$5);}
+		| LOG '(' declaration ')'				{$$ = log($3);}
+		| CEIL '(' declaration ')'				{$$ = ceil($3);}
+		| FLOOR '(' declaration ')'				{$$ = floor($3);}
+		| ERA '(' declaration ')'				{$$ = eratosthenes($3);}
+		| BIN '(' declaration ',' declaration ')'		{$$ = (int) binomial($3,$5);}
+		| RAND '(' declaration ',' declaration ',' declaration ')' {$$ = (int) randint($3,$5,$7);}
+		| PRIME '(' declaration ')' {$$ = (int) primeNums($3);}
+		| PRIMF '(' declaration ')' {$$ = (int) primeFactors($3);}
 		;
 
 %%
@@ -187,4 +197,154 @@ int sigma(int x, int n){
     }
 
     return result;
+}
+
+int gcd(int m, int n) {
+
+    if(m<0){
+        printf("First input must be greater or equal than 0");
+        return 0;
+    }
+
+    if(n<0){
+        printf("Second input must be greater or equal than 0");
+        return 0;
+    }
+        if (m > n) {
+            if ((m % n) == 0)
+                return n;
+            else
+                return gcd(n, m % n);
+        } else {
+            if ((n % m) == 0)
+                return m;
+            else
+                return gcd(m, n % m);
+        }
+}
+
+float avg(float x, float n){
+	return (x+n)/2;
+}
+
+int binomial(int n, int k) {
+
+     if(n<k){
+       printf("first input must be greater than the second one");
+       return 0;
+     }
+
+      if(n<0){
+       printf("first input must be greater or equal than 0");
+       return 0;
+
+     }
+      if(k<0){
+       printf("second input must be greater or equal than 0");
+       return 0;
+     }
+
+    if (k > n - k)
+    k = n - k;
+    int b = 1;
+    int i;
+    int temp;
+    for (i = 1, temp = n; i <= k; i++, temp--){
+    b = b * temp / i;
+    }
+    return b;
+}
+
+int randint(int lower, int upper, int count) {
+        int result = 0;
+        int i;
+    for (i = 0; i < count; i++) {
+        int num = (rand() % (upper - lower + 1)) + lower;
+        result = num;
+        if(i<count-1){
+      		printf("%f\n",(float) result);
+      }
+    }
+    return (int) result;
+}
+int primeNums(int n) {
+
+     if(n<=0){
+         printf("input must be greater than 0");
+         return 0;
+     }
+        int count=0;
+        if (n > 0) {
+            int i;
+            for (i = 0; i <= n; i++) {
+                bool a = false;
+                int j;
+                for (j = 2; j <= i / 2; j++) {
+                    if (i % j == 0) {
+                        a = true;
+                    }
+                }
+                if (!a && i != 1 && i != 0)
+                    count++;
+            }
+        }
+        return count;
+    }
+
+int eratosthenes(int n) {
+ int i;
+ int primes = primeNums(n);
+ if(n<=0){
+         printf("input must be greater than 0");
+         return 0;
+     }
+        int count=0;
+        if (n > 0) {
+            for (i = 0; i <= n; i++) {
+                bool a = false;
+                int j;
+                for (j = 2; j <= i / 2; j++) {
+                    if (i % j == 0) {
+                        a = true;
+                    }
+                }
+                if (!a && i != 1 && i != 0 && count<primes-1){
+                    printf("%f\n",(float) i);
+                    count++;
+                    //printf("%d ",count);
+                }
+                else if (!a && i != 1 && i != 0){
+                    return i;
+        	 }
+            }
+        }
+
+        return 0;
+}
+
+int primeFactors(int n)
+{
+    // Print the number of 2s that divide n
+    while (n%2 == 0)
+    {
+        printf("%d ", 2);
+        n = n/2;
+    }
+ 
+    // n must be odd at this point.  So we can skip
+    // one element (Note i = i +2)
+    for (int i = 3; i <= sqrt(n); i = i+2)
+    {
+        // While i divides n, print i and divide n
+        while (n%i == 0)
+        {
+            printf("%d ", i);
+            n = n/i;
+        }
+    }
+ 
+    // This condition is to handle the case when n
+    // is a prime number greater than 2
+    if (n > 2)
+        printf ("%d ", n);
 }

@@ -74,14 +74,16 @@ extern int yydebug;
     RAND = 280,
     SIGMA = 281,
     ERA = 282,
-    PRIMF = 283,
-    GCD = 284,
-    BC = 285,
-    PN = 286,
-    AVG = 287,
-    CEIL = 288,
-    FLOOR = 289,
-    EXIT = 290
+    PRIME = 283,
+    PRIMF = 284,
+    GCD = 285,
+    BC = 286,
+    PN = 287,
+    AVG = 288,
+    CEIL = 289,
+    FLOOR = 290,
+    EXIT = 291,
+    BIN = 292
   };
 #endif
 /* Tokens.  */
@@ -110,25 +112,27 @@ extern int yydebug;
 #define RAND 280
 #define SIGMA 281
 #define ERA 282
-#define PRIMF 283
-#define GCD 284
-#define BC 285
-#define PN 286
-#define AVG 287
-#define CEIL 288
-#define FLOOR 289
-#define EXIT 290
+#define PRIME 283
+#define PRIMF 284
+#define GCD 285
+#define BC 286
+#define PN 287
+#define AVG 288
+#define CEIL 289
+#define FLOOR 290
+#define EXIT 291
+#define BIN 292
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 28 "yacc.y"
+#line 26 "yacc.y"
 
 	char* lex;
 	float value;
 
-#line 132 "y.tab.h"
+#line 136 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
