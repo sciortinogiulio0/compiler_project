@@ -13,12 +13,13 @@
     	char* primeNums(int n);
     	int sigma(int x, int n);
     	float avg (float x, float n);
-    	int ceil (float n);
-    	int floor (float n);
+    	int ceils (float n);
+    	int floors (float n);
     	bool smaller(float a, float b);
     	bool greater(float a, float b);
     	bool equal(float a, float b);
     	int randint(int from, int to);
+    	int fac(int n);
     	
     	void yyerror(char *s);
     	int yylex();
@@ -99,7 +100,7 @@ declaration:	'(' declaration ')' 			{$$ = $2;}
 		| declaration '*' declaration		{$$ = $1 + $3;}
 		| declaration '/' declaration		{$$ = $1 + $3;}
 		| declaration '^' declaration		{$$ = pow($1, $3);}
-		| declaration '!'			{$$ = fac($1);}
+		| declaration '!'			{$$ = (int) fac($1);}
 		| '-' declaration			{$$ =  - $2;}
 		| VALUE				{$$ = $1;}
 		;

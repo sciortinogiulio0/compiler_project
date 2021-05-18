@@ -123,7 +123,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "yacc.y"
+#line 28 "yacc.y"
 
 	char* lex;
 	float value;

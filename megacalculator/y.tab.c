@@ -73,6 +73,7 @@
 	#include<string.h>
 	#include<stdbool.h>
 	#include<stdlib.h>
+	
 	int fibonacci(int n);
 	int binomial(int n, int k);
     	char* Eratosthenes(int n);
@@ -81,17 +82,18 @@
     	char* primeNums(int n);
     	int sigma(int x, int n);
     	float avg (float x, float n);
-    	int ceil (float n);
-    	int floor (float n);
+    	int ceils (float n);
+    	int floors (float n);
     	bool smaller(float a, float b);
     	bool greater(float a, float b);
     	bool equal(float a, float b);
     	int randint(int from, int to);
+    	int fac(int n);
     	
     	void yyerror(char *s);
     	int yylex();
 
-#line 95 "y.tab.c"
+#line 97 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -213,12 +215,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "yacc.y"
+#line 28 "yacc.y"
 
 	char* lex;
 	float value;
 
-#line 222 "y.tab.c"
+#line 224 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -597,9 +599,9 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    81,    81,    82,    85,    86,    87,    88,    89,    90,
-      91,    92,    95,    96,    97,    98,    99,   100,   101,   102,
-     103
+       0,    83,    83,    84,    87,    88,    89,    90,    91,    92,
+      93,    94,    97,    98,    99,   100,   101,   102,   103,   104,
+     105
 };
 #endif
 
@@ -1418,109 +1420,109 @@ yyreduce:
   switch (yyn)
     {
   case 4:
-#line 85 "yacc.y"
+#line 87 "yacc.y"
                                                                                 {printf("%f", (yyvsp[0].value));}
-#line 1424 "y.tab.c"
+#line 1426 "y.tab.c"
     break;
 
   case 5:
-#line 86 "yacc.y"
+#line 88 "yacc.y"
                                                                                 {printf("%s", smaller((yyvsp[-2].value), (yyvsp[0].value)) ? "true" : "false");}
-#line 1430 "y.tab.c"
+#line 1432 "y.tab.c"
     break;
 
   case 6:
-#line 87 "yacc.y"
+#line 89 "yacc.y"
                                                                                 {printf("%s", greater((yyvsp[-2].value), (yyvsp[0].value)) ? "true" : "false");}
-#line 1436 "y.tab.c"
+#line 1438 "y.tab.c"
     break;
 
   case 7:
-#line 88 "yacc.y"
+#line 90 "yacc.y"
                                                                         {printf("%s", equal((yyvsp[-2].value), (yyvsp[0].value)) ? "true" : "false");}
-#line 1442 "y.tab.c"
+#line 1444 "y.tab.c"
     break;
 
   case 8:
-#line 89 "yacc.y"
+#line 91 "yacc.y"
                                                                                 {printf("%s", equal((yyvsp[-2].value), (yyvsp[0].value)) ? "false" : "true");}
-#line 1448 "y.tab.c"
+#line 1450 "y.tab.c"
     break;
 
   case 9:
-#line 90 "yacc.y"
+#line 92 "yacc.y"
                                                                         {printf("%s", (smaller((yyvsp[-2].value), (yyvsp[0].value)) || equal((yyvsp[-2].value), (yyvsp[0].value))) ? "true" : "false");}
-#line 1454 "y.tab.c"
+#line 1456 "y.tab.c"
     break;
 
   case 10:
-#line 91 "yacc.y"
+#line 93 "yacc.y"
                                                                         {printf("%s", (greater((yyvsp[-2].value), (yyvsp[0].value)) || equal((yyvsp[-2].value), (yyvsp[0].value))) ? "true" : "false");}
-#line 1460 "y.tab.c"
+#line 1462 "y.tab.c"
     break;
 
   case 11:
-#line 92 "yacc.y"
+#line 94 "yacc.y"
                                                                                 {exit(0);}
-#line 1466 "y.tab.c"
+#line 1468 "y.tab.c"
     break;
 
   case 12:
-#line 95 "yacc.y"
+#line 97 "yacc.y"
                                                         {(yyval.value) = (yyvsp[-1].value);}
-#line 1472 "y.tab.c"
+#line 1474 "y.tab.c"
     break;
 
   case 13:
-#line 96 "yacc.y"
+#line 98 "yacc.y"
                                                         {(yyval.value) = (yyvsp[-2].value) + (yyvsp[0].value);}
-#line 1478 "y.tab.c"
+#line 1480 "y.tab.c"
     break;
 
   case 14:
-#line 97 "yacc.y"
+#line 99 "yacc.y"
                                                         {(yyval.value) = (yyvsp[-2].value) + (yyvsp[0].value);}
-#line 1484 "y.tab.c"
+#line 1486 "y.tab.c"
     break;
 
   case 15:
-#line 98 "yacc.y"
+#line 100 "yacc.y"
                                                         {(yyval.value) = (yyvsp[-2].value) + (yyvsp[0].value);}
-#line 1490 "y.tab.c"
+#line 1492 "y.tab.c"
     break;
 
   case 16:
-#line 99 "yacc.y"
+#line 101 "yacc.y"
                                                         {(yyval.value) = (yyvsp[-2].value) + (yyvsp[0].value);}
-#line 1496 "y.tab.c"
+#line 1498 "y.tab.c"
     break;
 
   case 17:
-#line 100 "yacc.y"
+#line 102 "yacc.y"
                                                         {(yyval.value) = pow((yyvsp[-2].value), (yyvsp[0].value));}
-#line 1502 "y.tab.c"
+#line 1504 "y.tab.c"
     break;
 
   case 18:
-#line 101 "yacc.y"
-                                                        {(yyval.value) = fac((yyvsp[-1].value));}
-#line 1508 "y.tab.c"
+#line 103 "yacc.y"
+                                                        {(yyval.value) = (int) fac((yyvsp[-1].value));}
+#line 1510 "y.tab.c"
     break;
 
   case 19:
-#line 102 "yacc.y"
+#line 104 "yacc.y"
                                                         {(yyval.value) =  - (yyvsp[0].value);}
-#line 1514 "y.tab.c"
+#line 1516 "y.tab.c"
     break;
 
   case 20:
-#line 103 "yacc.y"
+#line 105 "yacc.y"
                                                 {(yyval.value) = (yyvsp[0].value);}
-#line 1520 "y.tab.c"
+#line 1522 "y.tab.c"
     break;
 
 
-#line 1524 "y.tab.c"
+#line 1526 "y.tab.c"
 
       default: break;
     }
@@ -1752,7 +1754,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 106 "yacc.y"
+#line 108 "yacc.y"
 
 int yywrap()
 {

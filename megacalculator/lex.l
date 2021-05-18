@@ -10,9 +10,6 @@ VALUE    {DIGIT}+(\.{DIGIT}+)?
 
 %%
 
-
-
-
 "+"			{return '+';}
 "-"			{return '-';}
 "*"			{return '*';}
