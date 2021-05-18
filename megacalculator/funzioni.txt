@@ -25,11 +25,4 @@ AVG			{return AVG;}
 CEIL			{return CEIL;}
 FLOOR			{return FLOOR;}
 
-\<			{return SMALLER;}
-\>			{return GREATER;}
-\=\=			{return EQUAL;}
-\!\=			{return DIFFERENT;}
-\<\=			{return SMALLEREQUAL;}
-\>\=			{return GREATEREQUAL;}
-
 EXIT			{return EXIT;}

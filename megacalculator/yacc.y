@@ -103,6 +103,8 @@ declaration:	'(' declaration ')' 			{$$ = $2;}
 		| declaration '!'			{$$ = (int) fac($1);}
 		| '-' declaration			{$$ =  - $2;}
 		| VALUE				{$$ = $1;}
+		| FIB '(' declaration ')'		{$$ = (int) fibonacci($3);}
+		| SIGMA '(' declaration ',' declaration ')'		{$$ = (int) sigma($3,$5);}
 		;
 
 %%
@@ -145,4 +147,44 @@ int fac(int number)
       factorial = factorial * loop;
    }
    return factorial;
+}
+
+int fibonacci (int n)
+{
+   int first = 1;
+   int second = 1;
+   int third;
+   int i;
+   for(i=2;i<n;i++) {
+      third=first+second;
+      first=second;
+      second=third;
+      if(third!=n){
+      	printf("%d\n",third);
+      }
+  }
+  return third;
+}
+
+int sigma(int x, int n){
+    int result=0;
+    int i;
+
+    if(x<1){
+        printf("First input must be greater than 1");
+        return 0;
+    }
+
+    if(n<0){
+        printf("Second input must be greater or equal than 0");
+        return 0;
+    }
+
+    for (i=1;i<=n;i++){
+        if(n%i==0){
+            result += pow(i,x);
+        }
+    }
+
+    return result;
 }

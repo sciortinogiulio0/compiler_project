@@ -10,6 +10,8 @@ VALUE    {DIGIT}+(\.{DIGIT}+)?
 
 %%
 
+FIB			{return FIB;}
+SIGMA			{return SIGMA;}
 "+"			{return '+';}
 "-"			{return '-';}
 "*"			{return '*';}
@@ -19,6 +21,7 @@ VALUE    {DIGIT}+(\.{DIGIT}+)?
 "^"			{return '^';}
 "!"			{return '!';}
 \n			{return '\n';}
+","			{return ',';}
 
 [ ]			{}
 

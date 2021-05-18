@@ -6,7 +6,6 @@ Terminals unused in grammar
     COS
     SIN
     TAN
-    FIB
     FACT
     BASE
     SUM
@@ -16,7 +15,6 @@ Terminals unused in grammar
     NEP
     PI
     RAND
-    SIGMA
     ERA
     PRIMF
     GCD
@@ -25,7 +23,6 @@ Terminals unused in grammar
     AVG
     CEIL
     FLOOR
-    ','
 
 
 Grammar
@@ -53,6 +50,8 @@ Grammar
    17            | declaration '!'
    18            | '-' declaration
    19            | VALUE
+   20            | FIB '(' declaration ')'
+   21            | SIGMA '(' declaration ',' declaration ')'
 
 
 Terminals, with rules where they appear
@@ -60,11 +59,11 @@ Terminals, with rules where they appear
     $end (0) 0
     '\n' (10) 1 2
     '!' (33) 17
-    '(' (40) 11
-    ')' (41) 11
+    '(' (40) 11 20 21
+    ')' (41) 11 20 21
     '*' (42) 14
     '+' (43) 12
-    ',' (44)
+    ',' (44) 21
     '-' (45) 13 18
     '/' (47) 15
     '^' (94) 16
@@ -76,7 +75,7 @@ Terminals, with rules where they appear
     COS (262)
     SIN (263)
     TAN (264)
-    FIB (265)
+    FIB (265) 20
     FACT (266)
     BASE (267)
     SUM (268)
@@ -92,7 +91,7 @@ Terminals, with rules where they appear
     SMALLEREQUAL (278) 8
     GREATEREQUAL (279) 9
     RAND (280)
-    SIGMA (281)
+    SIGMA (281) 21
     ERA (282)
     PRIMF (283)
     GCD (284)
@@ -115,8 +114,8 @@ Nonterminals, with rules where they appear
         on left: 3 4 5 6 7 8 9 10
         on right: 1 2
     declaration <value> (49)
-        on left: 11 12 13 14 15 16 17 18 19
-        on right: 3 4 5 6 7 8 9 11 12 13 14 15 16 17 18
+        on left: 11 12 13 14 15 16 17 18 19 20 21
+        on right: 3 4 5 6 7 8 9 11 12 13 14 15 16 17 18 20 21
 
 
 State 0
@@ -124,13 +123,15 @@ State 0
     0 $accept: . startProgram $end
 
     VALUE  shift, and go to state 1
-    EXIT   shift, and go to state 2
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    EXIT   shift, and go to state 4
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
 
-    startProgram  go to state 5
-    op            go to state 6
-    declaration   go to state 7
+    startProgram  go to state 7
+    op            go to state 8
+    declaration   go to state 9
 
 
 State 1
@@ -142,56 +143,76 @@ State 1
 
 State 2
 
+   20 declaration: FIB . '(' declaration ')'
+
+    '('  shift, and go to state 10
+
+
+State 3
+
+   21 declaration: SIGMA . '(' declaration ',' declaration ')'
+
+    '('  shift, and go to state 11
+
+
+State 4
+
    10 op: EXIT .
 
     $default  reduce using rule 10 (op)
 
 
-State 3
+State 5
 
    18 declaration: '-' . declaration
 
     VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
 
-    declaration  go to state 8
-
-
-State 4
-
-   11 declaration: '(' . declaration ')'
-
-    VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
-
-    declaration  go to state 9
-
-
-State 5
-
-    0 $accept: startProgram . $end
-    2 startProgram: startProgram . op '\n'
-
-    $end   shift, and go to state 10
-    VALUE  shift, and go to state 1
-    EXIT   shift, and go to state 2
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
-
-    op           go to state 11
-    declaration  go to state 7
+    declaration  go to state 12
 
 
 State 6
 
-    1 startProgram: op . '\n'
+   11 declaration: '(' . declaration ')'
 
-    '\n'  shift, and go to state 12
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    declaration  go to state 13
 
 
 State 7
+
+    0 $accept: startProgram . $end
+    2 startProgram: startProgram . op '\n'
+
+    $end   shift, and go to state 14
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    EXIT   shift, and go to state 4
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    op           go to state 15
+    declaration  go to state 9
+
+
+State 8
+
+    1 startProgram: op . '\n'
+
+    '\n'  shift, and go to state 16
+
+
+State 9
 
     3 op: declaration .
     4   | declaration . SMALLER declaration
@@ -207,23 +228,49 @@ State 7
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    SMALLER       shift, and go to state 13
-    GREATER       shift, and go to state 14
-    EQUAL         shift, and go to state 15
-    DIFFERENT     shift, and go to state 16
-    SMALLEREQUAL  shift, and go to state 17
-    GREATEREQUAL  shift, and go to state 18
-    '+'           shift, and go to state 19
-    '-'           shift, and go to state 20
-    '*'           shift, and go to state 21
-    '/'           shift, and go to state 22
-    '^'           shift, and go to state 23
-    '!'           shift, and go to state 24
+    SMALLER       shift, and go to state 17
+    GREATER       shift, and go to state 18
+    EQUAL         shift, and go to state 19
+    DIFFERENT     shift, and go to state 20
+    SMALLEREQUAL  shift, and go to state 21
+    GREATEREQUAL  shift, and go to state 22
+    '+'           shift, and go to state 23
+    '-'           shift, and go to state 24
+    '*'           shift, and go to state 25
+    '/'           shift, and go to state 26
+    '^'           shift, and go to state 27
+    '!'           shift, and go to state 28
 
     $default  reduce using rule 3 (op)
 
 
-State 8
+State 10
+
+   20 declaration: FIB '(' . declaration ')'
+
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    declaration  go to state 29
+
+
+State 11
+
+   21 declaration: SIGMA '(' . declaration ',' declaration ')'
+
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    declaration  go to state 30
+
+
+State 12
 
    12 declaration: declaration . '+' declaration
    13            | declaration . '-' declaration
@@ -233,15 +280,15 @@ State 8
    17            | declaration . '!'
    18            | '-' declaration .
 
-    '*'  shift, and go to state 21
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 18 (declaration)
 
 
-State 9
+State 13
 
    11 declaration: '(' declaration . ')'
    12            | declaration . '+' declaration
@@ -251,179 +298,239 @@ State 9
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '+'  shift, and go to state 19
-    '-'  shift, and go to state 20
-    '*'  shift, and go to state 21
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
-    ')'  shift, and go to state 25
+    '+'  shift, and go to state 23
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
+    ')'  shift, and go to state 31
 
 
-State 10
+State 14
 
     0 $accept: startProgram $end .
 
     $default  accept
 
 
-State 11
+State 15
 
     2 startProgram: startProgram op . '\n'
 
-    '\n'  shift, and go to state 26
+    '\n'  shift, and go to state 32
 
 
-State 12
+State 16
 
     1 startProgram: op '\n' .
 
     $default  reduce using rule 1 (startProgram)
 
 
-State 13
+State 17
 
     4 op: declaration SMALLER . declaration
 
     VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
-
-    declaration  go to state 27
-
-
-State 14
-
-    5 op: declaration GREATER . declaration
-
-    VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
-
-    declaration  go to state 28
-
-
-State 15
-
-    6 op: declaration EQUAL . declaration
-
-    VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
-
-    declaration  go to state 29
-
-
-State 16
-
-    7 op: declaration DIFFERENT . declaration
-
-    VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
-
-    declaration  go to state 30
-
-
-State 17
-
-    8 op: declaration SMALLEREQUAL . declaration
-
-    VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
-
-    declaration  go to state 31
-
-
-State 18
-
-    9 op: declaration GREATEREQUAL . declaration
-
-    VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
-
-    declaration  go to state 32
-
-
-State 19
-
-   12 declaration: declaration '+' . declaration
-
-    VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
 
     declaration  go to state 33
 
 
-State 20
+State 18
 
-   13 declaration: declaration '-' . declaration
+    5 op: declaration GREATER . declaration
 
     VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
 
     declaration  go to state 34
 
 
-State 21
+State 19
 
-   14 declaration: declaration '*' . declaration
+    6 op: declaration EQUAL . declaration
 
     VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
 
     declaration  go to state 35
 
 
-State 22
+State 20
 
-   15 declaration: declaration '/' . declaration
+    7 op: declaration DIFFERENT . declaration
 
     VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
 
     declaration  go to state 36
 
 
-State 23
+State 21
 
-   16 declaration: declaration '^' . declaration
+    8 op: declaration SMALLEREQUAL . declaration
 
     VALUE  shift, and go to state 1
-    '-'    shift, and go to state 3
-    '('    shift, and go to state 4
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
 
     declaration  go to state 37
 
 
+State 22
+
+    9 op: declaration GREATEREQUAL . declaration
+
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    declaration  go to state 38
+
+
+State 23
+
+   12 declaration: declaration '+' . declaration
+
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    declaration  go to state 39
+
+
 State 24
+
+   13 declaration: declaration '-' . declaration
+
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    declaration  go to state 40
+
+
+State 25
+
+   14 declaration: declaration '*' . declaration
+
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    declaration  go to state 41
+
+
+State 26
+
+   15 declaration: declaration '/' . declaration
+
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    declaration  go to state 42
+
+
+State 27
+
+   16 declaration: declaration '^' . declaration
+
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    declaration  go to state 43
+
+
+State 28
 
    17 declaration: declaration '!' .
 
     $default  reduce using rule 17 (declaration)
 
 
-State 25
+State 29
+
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+   20            | FIB '(' declaration . ')'
+
+    '+'  shift, and go to state 23
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
+    ')'  shift, and go to state 44
+
+
+State 30
+
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+   21            | SIGMA '(' declaration . ',' declaration ')'
+
+    '+'  shift, and go to state 23
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
+    ','  shift, and go to state 45
+
+
+State 31
 
    11 declaration: '(' declaration ')' .
 
     $default  reduce using rule 11 (declaration)
 
 
-State 26
+State 32
 
     2 startProgram: startProgram op '\n' .
 
     $default  reduce using rule 2 (startProgram)
 
 
-State 27
+State 33
 
     4 op: declaration SMALLER declaration .
    12 declaration: declaration . '+' declaration
@@ -433,17 +540,17 @@ State 27
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '+'  shift, and go to state 19
-    '-'  shift, and go to state 20
-    '*'  shift, and go to state 21
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '+'  shift, and go to state 23
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 4 (op)
 
 
-State 28
+State 34
 
     5 op: declaration GREATER declaration .
    12 declaration: declaration . '+' declaration
@@ -453,17 +560,17 @@ State 28
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '+'  shift, and go to state 19
-    '-'  shift, and go to state 20
-    '*'  shift, and go to state 21
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '+'  shift, and go to state 23
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 5 (op)
 
 
-State 29
+State 35
 
     6 op: declaration EQUAL declaration .
    12 declaration: declaration . '+' declaration
@@ -473,17 +580,17 @@ State 29
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '+'  shift, and go to state 19
-    '-'  shift, and go to state 20
-    '*'  shift, and go to state 21
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '+'  shift, and go to state 23
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 6 (op)
 
 
-State 30
+State 36
 
     7 op: declaration DIFFERENT declaration .
    12 declaration: declaration . '+' declaration
@@ -493,17 +600,17 @@ State 30
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '+'  shift, and go to state 19
-    '-'  shift, and go to state 20
-    '*'  shift, and go to state 21
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '+'  shift, and go to state 23
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 7 (op)
 
 
-State 31
+State 37
 
     8 op: declaration SMALLEREQUAL declaration .
    12 declaration: declaration . '+' declaration
@@ -513,17 +620,17 @@ State 31
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '+'  shift, and go to state 19
-    '-'  shift, and go to state 20
-    '*'  shift, and go to state 21
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '+'  shift, and go to state 23
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 8 (op)
 
 
-State 32
+State 38
 
     9 op: declaration GREATEREQUAL declaration .
    12 declaration: declaration . '+' declaration
@@ -533,17 +640,17 @@ State 32
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '+'  shift, and go to state 19
-    '-'  shift, and go to state 20
-    '*'  shift, and go to state 21
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '+'  shift, and go to state 23
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 9 (op)
 
 
-State 33
+State 39
 
    12 declaration: declaration . '+' declaration
    12            | declaration '+' declaration .
@@ -553,16 +660,16 @@ State 33
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '-'  shift, and go to state 20
-    '*'  shift, and go to state 21
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 12 (declaration)
 
 
-State 34
+State 40
 
    12 declaration: declaration . '+' declaration
    13            | declaration . '-' declaration
@@ -572,15 +679,15 @@ State 34
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '*'  shift, and go to state 21
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 13 (declaration)
 
 
-State 35
+State 41
 
    12 declaration: declaration . '+' declaration
    13            | declaration . '-' declaration
@@ -590,14 +697,14 @@ State 35
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '/'  shift, and go to state 22
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 14 (declaration)
 
 
-State 36
+State 42
 
    12 declaration: declaration . '+' declaration
    13            | declaration . '-' declaration
@@ -607,13 +714,13 @@ State 36
    16            | declaration . '^' declaration
    17            | declaration . '!'
 
-    '^'  shift, and go to state 23
-    '!'  shift, and go to state 24
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 15 (declaration)
 
 
-State 37
+State 43
 
    12 declaration: declaration . '+' declaration
    13            | declaration . '-' declaration
@@ -623,6 +730,52 @@ State 37
    16            | declaration '^' declaration .
    17            | declaration . '!'
 
-    '!'  shift, and go to state 24
+    '!'  shift, and go to state 28
 
     $default  reduce using rule 16 (declaration)
+
+
+State 44
+
+   20 declaration: FIB '(' declaration ')' .
+
+    $default  reduce using rule 20 (declaration)
+
+
+State 45
+
+   21 declaration: SIGMA '(' declaration ',' . declaration ')'
+
+    VALUE  shift, and go to state 1
+    FIB    shift, and go to state 2
+    SIGMA  shift, and go to state 3
+    '-'    shift, and go to state 5
+    '('    shift, and go to state 6
+
+    declaration  go to state 46
+
+
+State 46
+
+   12 declaration: declaration . '+' declaration
+   13            | declaration . '-' declaration
+   14            | declaration . '*' declaration
+   15            | declaration . '/' declaration
+   16            | declaration . '^' declaration
+   17            | declaration . '!'
+   21            | SIGMA '(' declaration ',' declaration . ')'
+
+    '+'  shift, and go to state 23
+    '-'  shift, and go to state 24
+    '*'  shift, and go to state 25
+    '/'  shift, and go to state 26
+    '^'  shift, and go to state 27
+    '!'  shift, and go to state 28
+    ')'  shift, and go to state 47
+
+
+State 47
+
+   21 declaration: SIGMA '(' declaration ',' declaration ')' .
+
+    $default  reduce using rule 21 (declaration)
