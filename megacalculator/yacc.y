@@ -84,7 +84,7 @@ startProgram:	op '\n'
 		| startProgram op '\n'
 		;
 		
-op:		declaration							{printf("%f", $1);}
+op:		declaration							{printf("%f\n\n", $1);}
 		| declaration SMALLER declaration 				{printf("%s", smaller($1, $3) ? "true" : "false");}
 		| declaration GREATER declaration				{printf("%s", greater($1, $3) ? "true" : "false");}
 		| declaration EQUAL declaration				{printf("%s", equal($1, $3) ? "true" : "false");}
@@ -327,7 +327,7 @@ int primeFactors(int n)
     // Print the number of 2s that divide n
     while (n%2 == 0)
     {
-        printf("%d ", 2);
+        printf("%f\n", 2.0);
         n = n/2;
     }
  
@@ -338,13 +338,13 @@ int primeFactors(int n)
         // While i divides n, print i and divide n
         while (n%i == 0)
         {
-            printf("%d ", i);
+            printf("%f\n", (float) i);
             n = n/i;
         }
     }
- 
+
     // This condition is to handle the case when n
     // is a prime number greater than 2
     if (n > 2)
-        printf ("%d ", n);
+        return n;
 }

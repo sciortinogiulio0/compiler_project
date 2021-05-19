@@ -30,8 +30,8 @@ ERA			{return ERA;}
 ")"			{return ')';}
 "^"			{return '^';}
 "!"			{return '!';}
-\n			{return '\n';}
 ","			{return ',';}
+\n			{return '\n';}
 
 [ ]			{}
 

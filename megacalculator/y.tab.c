@@ -1494,7 +1494,7 @@ yyreduce:
     {
   case 4:
 #line 87 "yacc.y"
-                                                                                {printf("%f", (yyvsp[0].value));}
+                                                                                {printf("%f\n\n", (yyvsp[0].value));}
 #line 1499 "y.tab.c"
     break;
 
@@ -2110,7 +2110,7 @@ int primeFactors(int n)
     // Print the number of 2s that divide n
     while (n%2 == 0)
     {
-        printf("%d ", 2);
+        printf("%f\n", 2.0);
         n = n/2;
     }
  
@@ -2121,13 +2121,13 @@ int primeFactors(int n)
         // While i divides n, print i and divide n
         while (n%i == 0)
         {
-            printf("%d ", i);
+            printf("%f\n", (float) i);
             n = n/i;
         }
     }
- 
+
     // This condition is to handle the case when n
     // is a prime number greater than 2
     if (n > 2)
-        printf ("%d ", n);
+        return n;
 }

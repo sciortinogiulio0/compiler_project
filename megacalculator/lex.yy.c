@@ -365,8 +365,8 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[72] =
     {   0,
-        0,    0,   33,   32,   21,   23,   20,   17,   18,   15,
-       13,   22,   14,   16,   24,   25,   32,   26,   32,   32,
+        0,    0,   33,   32,   22,   23,   20,   17,   18,   15,
+       13,   21,   14,   16,   24,   25,   32,   26,   32,   32,
        32,   32,   32,   32,   32,   32,   32,   32,   19,   28,
         0,   24,   29,   27,   30,    0,    0,    0,    0,    0,
         0,    0,    0,    0,    0,    0,    0,   24,    4,    8,
@@ -871,15 +871,15 @@ YY_RULE_SETUP
 {return '!';}
 	YY_BREAK
 case 21:
-/* rule 21 can match eol */
 YY_RULE_SETUP
 #line 33 "lex.l"
-{return '\n';}
+{return ',';}
 	YY_BREAK
 case 22:
+/* rule 22 can match eol */
 YY_RULE_SETUP
 #line 34 "lex.l"
-{return ',';}
+{return '\n';}
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
