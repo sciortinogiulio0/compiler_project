@@ -4,7 +4,9 @@
 	#include<string.h>
 	#include<stdbool.h>
 	#include<stdlib.h>
+    #include<ctype.h>
 	
+    int yydebug=1;
 	int fibonacci(int n);
 	int binomial(int n, int k);
     	int eratosthenes(int n);
@@ -18,7 +20,20 @@
     	bool equal(float a, float b);
     	int fac(int n);
     	int randint(int from, int to,int count);
+        void add_variable(float val, char *name);
+        float searchSymbol (char *name);
     	
+        struct symbolTable
+        {
+            char *name;
+            float value;
+            struct symbolTable *next;
+
+        };
+
+        struct symbolTable *table;
+
+        extern void *malloc();
     	void yyerror(char *s);
     	int yylex();
 %}
@@ -29,6 +44,7 @@
 }
 
 %token <value> VALUE
+%token <lex> ID
 %token POW
 %token ROOT
 %token LOG
@@ -66,6 +82,7 @@
 
 %type <value> declaration
 
+
 %left '+'
 %left '-'
 %left '*'
@@ -75,6 +92,8 @@
 %left '('
 %left ')'
 %left ','
+%nonassoc ID
+
 
 %start startProgram
 
@@ -85,7 +104,8 @@ startProgram:	op '\n'
 		;
 		
 op:		declaration							{printf("%f\n\n", $1);}
-		| declaration SMALLER declaration 				{printf("%s", smaller($1, $3) ? "true" : "false");}
+		| ID '=' declaration                            {add_variable($3,$1); printf("Variable : %s\n\n", $1);}
+        | declaration SMALLER declaration 				{printf("%s", smaller($1, $3) ? "true" : "false");}
 		| declaration GREATER declaration				{printf("%s", greater($1, $3) ? "true" : "false");}
 		| declaration EQUAL declaration				{printf("%s", equal($1, $3) ? "true" : "false");}
 		| declaration DIFFERENT declaration				{printf("%s", equal($1, $3) ? "false" : "true");}
@@ -102,7 +122,8 @@ declaration:	'(' declaration ')' 			{$$ = $2;}
 		| declaration '^' declaration		{$$ = pow($1, $3);}
 		| declaration '!'			{$$ = (int) fac($1);}
 		| '-' declaration			{$$ =  - $2;}
-		| VALUE				{$$ = $1;}
+        | VALUE				{$$ = $1;}
+        | ID                            {$$ = searchSymbol($1);}
 		| FIB '(' declaration ')'		{$$ = (int) fibonacci($3);}
 		| SIGMA '(' declaration ',' declaration ')'		{$$ = (int) sigma($3,$5);}
 		| GCD '(' declaration ',' declaration ')'		{$$ = gcd($3,$5);}
@@ -126,7 +147,7 @@ int yywrap()
 #include "lex.yy.c"
 void main()
 {
-    printf("\n\n\nDefinetely do not insert data (jk, do it)\n");
+    printf("\nInsert data in our megacalculator\n");
     yyparse();
 }
 
@@ -347,4 +368,40 @@ int primeFactors(int n)
     // is a prime number greater than 2
     if (n > 2)
         return n;
+}
+
+void add_variable(float val, char *name)
+{
+  struct symbolTable *st = table;
+    for(; st; st=st->next)
+    {
+        if(strcmp(st->name,name)==0)
+        {
+          st->value = val;
+      		return;
+        }
+    }
+
+  /* variable not there, allocate a new entry and link it on the list */
+
+	st = (struct symbolTable *) malloc(sizeof(struct symbolTable));
+	st->next = table;
+
+  /* have to copy the variable itself as well */
+
+	st->name = (char *) malloc(strlen(name)+1);
+	strcpy(st->name, name);
+	st->value = val;
+	table = st;
+}
+
+float searchSymbol(char *name)
+{
+  struct symbolTable *st = table;
+    for(; st; st=st->next)
+    {
+        if(strcmp(st->name,name)==0)
+            return st->value;
+    }
+    return 0; 		
 }

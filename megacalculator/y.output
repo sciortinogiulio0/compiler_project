@@ -25,101 +25,105 @@ Grammar
     2             | startProgram op '\n'
 
     3 op: declaration
-    4   | declaration SMALLER declaration
-    5   | declaration GREATER declaration
-    6   | declaration EQUAL declaration
-    7   | declaration DIFFERENT declaration
-    8   | declaration SMALLEREQUAL declaration
-    9   | declaration GREATEREQUAL declaration
-   10   | EXIT
+    4   | ID '=' declaration
+    5   | declaration SMALLER declaration
+    6   | declaration GREATER declaration
+    7   | declaration EQUAL declaration
+    8   | declaration DIFFERENT declaration
+    9   | declaration SMALLEREQUAL declaration
+   10   | declaration GREATEREQUAL declaration
+   11   | EXIT
 
-   11 declaration: '(' declaration ')'
-   12            | declaration '+' declaration
-   13            | declaration '-' declaration
-   14            | declaration '*' declaration
-   15            | declaration '/' declaration
-   16            | declaration '^' declaration
-   17            | declaration '!'
-   18            | '-' declaration
-   19            | VALUE
-   20            | FIB '(' declaration ')'
-   21            | SIGMA '(' declaration ',' declaration ')'
-   22            | GCD '(' declaration ',' declaration ')'
-   23            | AVG '(' declaration ',' declaration ')'
-   24            | LOG '(' declaration ')'
-   25            | CEIL '(' declaration ')'
-   26            | FLOOR '(' declaration ')'
-   27            | ERA '(' declaration ')'
-   28            | BIN '(' declaration ',' declaration ')'
-   29            | RAND '(' declaration ',' declaration ',' declaration ')'
-   30            | PRIME '(' declaration ')'
-   31            | PRIMF '(' declaration ')'
+   12 declaration: '(' declaration ')'
+   13            | declaration '+' declaration
+   14            | declaration '-' declaration
+   15            | declaration '*' declaration
+   16            | declaration '/' declaration
+   17            | declaration '^' declaration
+   18            | declaration '!'
+   19            | '-' declaration
+   20            | VALUE
+   21            | ID
+   22            | FIB '(' declaration ')'
+   23            | SIGMA '(' declaration ',' declaration ')'
+   24            | GCD '(' declaration ',' declaration ')'
+   25            | AVG '(' declaration ',' declaration ')'
+   26            | LOG '(' declaration ')'
+   27            | CEIL '(' declaration ')'
+   28            | FLOOR '(' declaration ')'
+   29            | ERA '(' declaration ')'
+   30            | BIN '(' declaration ',' declaration ')'
+   31            | RAND '(' declaration ',' declaration ',' declaration ')'
+   32            | PRIME '(' declaration ')'
+   33            | PRIMF '(' declaration ')'
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     '\n' (10) 1 2
-    '!' (33) 17
-    '(' (40) 11 20 21 22 23 24 25 26 27 28 29 30 31
-    ')' (41) 11 20 21 22 23 24 25 26 27 28 29 30 31
-    '*' (42) 14
-    '+' (43) 12
-    ',' (44) 21 22 23 28 29
-    '-' (45) 13 18
-    '/' (47) 15
-    '^' (94) 16
+    '!' (33) 18
+    '(' (40) 12 22 23 24 25 26 27 28 29 30 31 32 33
+    ')' (41) 12 22 23 24 25 26 27 28 29 30 31 32 33
+    '*' (42) 15
+    '+' (43) 13
+    ',' (44) 23 24 25 30 31
+    '-' (45) 14 19
+    '/' (47) 16
+    '=' (61) 4
+    '^' (94) 17
     error (256)
-    VALUE <value> (258) 19
-    POW (259)
-    ROOT (260)
-    LOG (261) 24
-    COS (262)
-    SIN (263)
-    TAN (264)
-    FIB (265) 20
-    FACT (266)
-    BASE (267)
-    SUM (268)
-    PROD (269)
-    ABS (270)
-    MOD (271)
-    NEP (272)
-    PI (273)
-    SMALLER (274) 4
-    GREATER (275) 5
-    EQUAL (276) 6
-    DIFFERENT (277) 7
-    SMALLEREQUAL (278) 8
-    GREATEREQUAL (279) 9
-    RAND (280) 29
-    SIGMA (281) 21
-    ERA (282) 27
-    PRIME (283) 30
-    PRIMF (284) 31
-    GCD (285) 22
-    BC (286)
-    PN (287)
-    AVG (288) 23
-    CEIL (289) 25
-    FLOOR (290) 26
-    EXIT (291) 10
-    BIN (292) 28
+    VALUE <value> (258) 20
+    ID <lex> (259) 4 21
+    POW (260)
+    ROOT (261)
+    LOG (262) 26
+    COS (263)
+    SIN (264)
+    TAN (265)
+    FIB (266) 22
+    FACT (267)
+    BASE (268)
+    SUM (269)
+    PROD (270)
+    ABS (271)
+    MOD (272)
+    NEP (273)
+    PI (274)
+    SMALLER (275) 5
+    GREATER (276) 6
+    EQUAL (277) 7
+    DIFFERENT (278) 8
+    SMALLEREQUAL (279) 9
+    GREATEREQUAL (280) 10
+    RAND (281) 31
+    SIGMA (282) 23
+    ERA (283) 29
+    PRIME (284) 32
+    PRIMF (285) 33
+    GCD (286) 24
+    BC (287)
+    PN (288)
+    AVG (289) 25
+    CEIL (290) 27
+    FLOOR (291) 28
+    EXIT (292) 11
+    BIN (293) 30
 
 
 Nonterminals, with rules where they appear
 
-    $accept (48)
+    $accept (50)
         on left: 0
-    startProgram (49)
+    startProgram (51)
         on left: 1 2
         on right: 0 2
-    op (50)
-        on left: 3 4 5 6 7 8 9 10
+    op (52)
+        on left: 3 4 5 6 7 8 9 10 11
         on right: 1 2
-    declaration <value> (51)
-        on left: 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31
-        on right: 3 4 5 6 7 8 9 11 12 13 14 15 16 17 18 20 21 22 23 24 25 26 27 28 29 30 31
+    declaration <value> (53)
+        on left: 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33
+        on right: 3 4 5 6 7 8 9 10 12 13 14 15 16 17 18 19 22 23 24 25 26 27 28 29 30 31 32 33
 
 
 State 0
@@ -127,1609 +131,1703 @@ State 0
     0 $accept: . startProgram $end
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    EXIT   shift, and go to state 13
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 2
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    EXIT   shift, and go to state 14
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
-    startProgram  go to state 17
-    op            go to state 18
-    declaration   go to state 19
+    startProgram  go to state 18
+    op            go to state 19
+    declaration   go to state 20
 
 
 State 1
 
-   19 declaration: VALUE .
+   20 declaration: VALUE .
 
-    $default  reduce using rule 19 (declaration)
+    $default  reduce using rule 20 (declaration)
 
 
 State 2
 
-   24 declaration: LOG . '(' declaration ')'
+    4 op: ID . '=' declaration
+   21 declaration: ID .
 
-    '('  shift, and go to state 20
+    '='  shift, and go to state 21
+
+    $default  reduce using rule 21 (declaration)
 
 
 State 3
 
-   20 declaration: FIB . '(' declaration ')'
-
-    '('  shift, and go to state 21
-
-
-State 4
-
-   29 declaration: RAND . '(' declaration ',' declaration ',' declaration ')'
+   26 declaration: LOG . '(' declaration ')'
 
     '('  shift, and go to state 22
 
 
-State 5
+State 4
 
-   21 declaration: SIGMA . '(' declaration ',' declaration ')'
+   22 declaration: FIB . '(' declaration ')'
 
     '('  shift, and go to state 23
 
 
-State 6
+State 5
 
-   27 declaration: ERA . '(' declaration ')'
+   31 declaration: RAND . '(' declaration ',' declaration ',' declaration ')'
 
     '('  shift, and go to state 24
 
 
-State 7
+State 6
 
-   30 declaration: PRIME . '(' declaration ')'
+   23 declaration: SIGMA . '(' declaration ',' declaration ')'
 
     '('  shift, and go to state 25
 
 
-State 8
+State 7
 
-   31 declaration: PRIMF . '(' declaration ')'
+   29 declaration: ERA . '(' declaration ')'
 
     '('  shift, and go to state 26
 
 
-State 9
+State 8
 
-   22 declaration: GCD . '(' declaration ',' declaration ')'
+   32 declaration: PRIME . '(' declaration ')'
 
     '('  shift, and go to state 27
 
 
-State 10
+State 9
 
-   23 declaration: AVG . '(' declaration ',' declaration ')'
+   33 declaration: PRIMF . '(' declaration ')'
 
     '('  shift, and go to state 28
 
 
-State 11
+State 10
 
-   25 declaration: CEIL . '(' declaration ')'
+   24 declaration: GCD . '(' declaration ',' declaration ')'
 
     '('  shift, and go to state 29
 
 
-State 12
+State 11
 
-   26 declaration: FLOOR . '(' declaration ')'
+   25 declaration: AVG . '(' declaration ',' declaration ')'
 
     '('  shift, and go to state 30
 
 
-State 13
+State 12
 
-   10 op: EXIT .
-
-    $default  reduce using rule 10 (op)
-
-
-State 14
-
-   28 declaration: BIN . '(' declaration ',' declaration ')'
+   27 declaration: CEIL . '(' declaration ')'
 
     '('  shift, and go to state 31
 
 
+State 13
+
+   28 declaration: FLOOR . '(' declaration ')'
+
+    '('  shift, and go to state 32
+
+
+State 14
+
+   11 op: EXIT .
+
+    $default  reduce using rule 11 (op)
+
+
 State 15
 
-   18 declaration: '-' . declaration
+   30 declaration: BIN . '(' declaration ',' declaration ')'
 
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 32
+    '('  shift, and go to state 33
 
 
 State 16
 
-   11 declaration: '(' . declaration ')'
+   19 declaration: '-' . declaration
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
-    declaration  go to state 33
+    declaration  go to state 35
 
 
 State 17
 
-    0 $accept: startProgram . $end
-    2 startProgram: startProgram . op '\n'
+   12 declaration: '(' . declaration ')'
 
-    $end   shift, and go to state 34
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    EXIT   shift, and go to state 13
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
-    op           go to state 35
-    declaration  go to state 19
+    declaration  go to state 36
 
 
 State 18
 
-    1 startProgram: op . '\n'
+    0 $accept: startProgram . $end
+    2 startProgram: startProgram . op '\n'
 
-    '\n'  shift, and go to state 36
+    $end   shift, and go to state 37
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 2
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    EXIT   shift, and go to state 14
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    op           go to state 38
+    declaration  go to state 20
 
 
 State 19
 
-    3 op: declaration .
-    4   | declaration . SMALLER declaration
-    5   | declaration . GREATER declaration
-    6   | declaration . EQUAL declaration
-    7   | declaration . DIFFERENT declaration
-    8   | declaration . SMALLEREQUAL declaration
-    9   | declaration . GREATEREQUAL declaration
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
+    1 startProgram: op . '\n'
 
-    SMALLER       shift, and go to state 37
-    GREATER       shift, and go to state 38
-    EQUAL         shift, and go to state 39
-    DIFFERENT     shift, and go to state 40
-    SMALLEREQUAL  shift, and go to state 41
-    GREATEREQUAL  shift, and go to state 42
-    '+'           shift, and go to state 43
-    '-'           shift, and go to state 44
-    '*'           shift, and go to state 45
-    '/'           shift, and go to state 46
-    '^'           shift, and go to state 47
-    '!'           shift, and go to state 48
-
-    $default  reduce using rule 3 (op)
+    '\n'  shift, and go to state 39
 
 
 State 20
 
-   24 declaration: LOG '(' . declaration ')'
+    3 op: declaration .
+    5   | declaration . SMALLER declaration
+    6   | declaration . GREATER declaration
+    7   | declaration . EQUAL declaration
+    8   | declaration . DIFFERENT declaration
+    9   | declaration . SMALLEREQUAL declaration
+   10   | declaration . GREATEREQUAL declaration
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    SMALLER       shift, and go to state 40
+    GREATER       shift, and go to state 41
+    EQUAL         shift, and go to state 42
+    DIFFERENT     shift, and go to state 43
+    SMALLEREQUAL  shift, and go to state 44
+    GREATEREQUAL  shift, and go to state 45
+    '+'           shift, and go to state 46
+    '-'           shift, and go to state 47
+    '*'           shift, and go to state 48
+    '/'           shift, and go to state 49
+    '^'           shift, and go to state 50
+    '!'           shift, and go to state 51
 
-    declaration  go to state 49
+    $default  reduce using rule 3 (op)
 
 
 State 21
 
-   20 declaration: FIB '(' . declaration ')'
+    4 op: ID '=' . declaration
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 50
-
-
-State 22
-
-   29 declaration: RAND '(' . declaration ',' declaration ',' declaration ')'
-
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 51
-
-
-State 23
-
-   21 declaration: SIGMA '(' . declaration ',' declaration ')'
-
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 52
 
 
-State 24
+State 22
 
-   27 declaration: ERA '(' . declaration ')'
+   26 declaration: LOG '(' . declaration ')'
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 53
 
 
-State 25
+State 23
 
-   30 declaration: PRIME '(' . declaration ')'
+   22 declaration: FIB '(' . declaration ')'
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 54
 
 
-State 26
+State 24
 
-   31 declaration: PRIMF '(' . declaration ')'
+   31 declaration: RAND '(' . declaration ',' declaration ',' declaration ')'
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 55
 
 
-State 27
+State 25
 
-   22 declaration: GCD '(' . declaration ',' declaration ')'
+   23 declaration: SIGMA '(' . declaration ',' declaration ')'
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 56
 
 
-State 28
+State 26
 
-   23 declaration: AVG '(' . declaration ',' declaration ')'
+   29 declaration: ERA '(' . declaration ')'
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 57
 
 
-State 29
+State 27
 
-   25 declaration: CEIL '(' . declaration ')'
+   32 declaration: PRIME '(' . declaration ')'
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 58
 
 
-State 30
+State 28
 
-   26 declaration: FLOOR '(' . declaration ')'
+   33 declaration: PRIMF '(' . declaration ')'
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 59
 
 
-State 31
+State 29
 
-   28 declaration: BIN '(' . declaration ',' declaration ')'
+   24 declaration: GCD '(' . declaration ',' declaration ')'
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 60
 
 
+State 30
+
+   25 declaration: AVG '(' . declaration ',' declaration ')'
+
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 61
+
+
+State 31
+
+   27 declaration: CEIL '(' . declaration ')'
+
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 62
+
+
 State 32
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   18            | '-' declaration .
+   28 declaration: FLOOR '(' . declaration ')'
 
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
-    $default  reduce using rule 18 (declaration)
+    declaration  go to state 63
 
 
 State 33
 
-   11 declaration: '(' declaration . ')'
-   12            | declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
+   30 declaration: BIN '(' . declaration ',' declaration ')'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ')'  shift, and go to state 61
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 64
 
 
 State 34
+
+   21 declaration: ID .
+
+    $default  reduce using rule 21 (declaration)
+
+
+State 35
+
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   19            | '-' declaration .
+
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+
+    $default  reduce using rule 19 (declaration)
+
+
+State 36
+
+   12 declaration: '(' declaration . ')'
+   13            | declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ')'  shift, and go to state 65
+
+
+State 37
 
     0 $accept: startProgram $end .
 
     $default  accept
 
 
-State 35
+State 38
 
     2 startProgram: startProgram op . '\n'
 
-    '\n'  shift, and go to state 62
+    '\n'  shift, and go to state 66
 
 
-State 36
+State 39
 
     1 startProgram: op '\n' .
 
     $default  reduce using rule 1 (startProgram)
 
 
-State 37
-
-    4 op: declaration SMALLER . declaration
-
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 63
-
-
-State 38
-
-    5 op: declaration GREATER . declaration
-
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 64
-
-
-State 39
-
-    6 op: declaration EQUAL . declaration
-
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 65
-
-
 State 40
 
-    7 op: declaration DIFFERENT . declaration
+    5 op: declaration SMALLER . declaration
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 66
-
-
-State 41
-
-    8 op: declaration SMALLEREQUAL . declaration
-
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 67
 
 
-State 42
+State 41
 
-    9 op: declaration GREATEREQUAL . declaration
+    6 op: declaration GREATER . declaration
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 68
 
 
-State 43
+State 42
 
-   12 declaration: declaration '+' . declaration
+    7 op: declaration EQUAL . declaration
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 69
 
 
-State 44
+State 43
 
-   13 declaration: declaration '-' . declaration
+    8 op: declaration DIFFERENT . declaration
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 70
 
 
-State 45
+State 44
 
-   14 declaration: declaration '*' . declaration
+    9 op: declaration SMALLEREQUAL . declaration
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 71
 
 
-State 46
+State 45
 
-   15 declaration: declaration '/' . declaration
+   10 op: declaration GREATEREQUAL . declaration
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 72
 
 
-State 47
+State 46
 
-   16 declaration: declaration '^' . declaration
+   13 declaration: declaration '+' . declaration
 
     VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
 
     declaration  go to state 73
 
 
+State 47
+
+   14 declaration: declaration '-' . declaration
+
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 74
+
+
 State 48
 
-   17 declaration: declaration '!' .
+   15 declaration: declaration '*' . declaration
 
-    $default  reduce using rule 17 (declaration)
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 75
 
 
 State 49
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   24            | LOG '(' declaration . ')'
+   16 declaration: declaration '/' . declaration
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ')'  shift, and go to state 74
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 76
 
 
 State 50
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   20            | FIB '(' declaration . ')'
+   17 declaration: declaration '^' . declaration
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ')'  shift, and go to state 75
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 77
 
 
 State 51
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   29            | RAND '(' declaration . ',' declaration ',' declaration ')'
+   18 declaration: declaration '!' .
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ','  shift, and go to state 76
+    $default  reduce using rule 18 (declaration)
 
 
 State 52
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   21            | SIGMA '(' declaration . ',' declaration ')'
+    4 op: ID '=' declaration .
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ','  shift, and go to state 77
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+
+    $default  reduce using rule 4 (op)
 
 
 State 53
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   27            | ERA '(' declaration . ')'
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   26            | LOG '(' declaration . ')'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
     ')'  shift, and go to state 78
 
 
 State 54
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   30            | PRIME '(' declaration . ')'
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   22            | FIB '(' declaration . ')'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
     ')'  shift, and go to state 79
 
 
 State 55
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   31            | PRIMF '(' declaration . ')'
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   31            | RAND '(' declaration . ',' declaration ',' declaration ')'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ')'  shift, and go to state 80
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ','  shift, and go to state 80
 
 
 State 56
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   22            | GCD '(' declaration . ',' declaration ')'
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   23            | SIGMA '(' declaration . ',' declaration ')'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
     ','  shift, and go to state 81
 
 
 State 57
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   23            | AVG '(' declaration . ',' declaration ')'
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   29            | ERA '(' declaration . ')'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ','  shift, and go to state 82
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ')'  shift, and go to state 82
 
 
 State 58
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   25            | CEIL '(' declaration . ')'
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   32            | PRIME '(' declaration . ')'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
     ')'  shift, and go to state 83
 
 
 State 59
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   26            | FLOOR '(' declaration . ')'
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   33            | PRIMF '(' declaration . ')'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
     ')'  shift, and go to state 84
 
 
 State 60
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   28            | BIN '(' declaration . ',' declaration ')'
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   24            | GCD '(' declaration . ',' declaration ')'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
     ','  shift, and go to state 85
 
 
 State 61
 
-   11 declaration: '(' declaration ')' .
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   25            | AVG '(' declaration . ',' declaration ')'
 
-    $default  reduce using rule 11 (declaration)
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ','  shift, and go to state 86
 
 
 State 62
+
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   27            | CEIL '(' declaration . ')'
+
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ')'  shift, and go to state 87
+
+
+State 63
+
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   28            | FLOOR '(' declaration . ')'
+
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ')'  shift, and go to state 88
+
+
+State 64
+
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   30            | BIN '(' declaration . ',' declaration ')'
+
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ','  shift, and go to state 89
+
+
+State 65
+
+   12 declaration: '(' declaration ')' .
+
+    $default  reduce using rule 12 (declaration)
+
+
+State 66
 
     2 startProgram: startProgram op '\n' .
 
     $default  reduce using rule 2 (startProgram)
 
 
-State 63
+State 67
 
-    4 op: declaration SMALLER declaration .
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
+    5 op: declaration SMALLER declaration .
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-
-    $default  reduce using rule 4 (op)
-
-
-State 64
-
-    5 op: declaration GREATER declaration .
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
 
     $default  reduce using rule 5 (op)
 
 
-State 65
+State 68
 
-    6 op: declaration EQUAL declaration .
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
+    6 op: declaration GREATER declaration .
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
 
     $default  reduce using rule 6 (op)
 
 
-State 66
+State 69
 
-    7 op: declaration DIFFERENT declaration .
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
+    7 op: declaration EQUAL declaration .
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
 
     $default  reduce using rule 7 (op)
 
 
-State 67
+State 70
 
-    8 op: declaration SMALLEREQUAL declaration .
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
+    8 op: declaration DIFFERENT declaration .
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
 
     $default  reduce using rule 8 (op)
 
 
-State 68
+State 71
 
-    9 op: declaration GREATEREQUAL declaration .
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
+    9 op: declaration SMALLEREQUAL declaration .
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
 
     $default  reduce using rule 9 (op)
 
 
-State 69
-
-   12 declaration: declaration . '+' declaration
-   12            | declaration '+' declaration .
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-
-    $default  reduce using rule 12 (declaration)
-
-
-State 70
-
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   13            | declaration '-' declaration .
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-
-    $default  reduce using rule 13 (declaration)
-
-
-State 71
-
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   14            | declaration '*' declaration .
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-
-    $default  reduce using rule 14 (declaration)
-
-
 State 72
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   15            | declaration '/' declaration .
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
+   10 op: declaration GREATEREQUAL declaration .
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
 
-    $default  reduce using rule 15 (declaration)
+    $default  reduce using rule 10 (op)
 
 
 State 73
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   16            | declaration '^' declaration .
-   17            | declaration . '!'
+   13 declaration: declaration . '+' declaration
+   13            | declaration '+' declaration .
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    '!'  shift, and go to state 48
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
 
-    $default  reduce using rule 16 (declaration)
+    $default  reduce using rule 13 (declaration)
 
 
 State 74
 
-   24 declaration: LOG '(' declaration ')' .
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   14            | declaration '-' declaration .
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    $default  reduce using rule 24 (declaration)
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+
+    $default  reduce using rule 14 (declaration)
 
 
 State 75
 
-   20 declaration: FIB '(' declaration ')' .
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   15            | declaration '*' declaration .
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    $default  reduce using rule 20 (declaration)
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+
+    $default  reduce using rule 15 (declaration)
 
 
 State 76
 
-   29 declaration: RAND '(' declaration ',' . declaration ',' declaration ')'
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   16            | declaration '/' declaration .
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
 
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
 
-    declaration  go to state 86
+    $default  reduce using rule 16 (declaration)
 
 
 State 77
 
-   21 declaration: SIGMA '(' declaration ',' . declaration ')'
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   17            | declaration '^' declaration .
+   18            | declaration . '!'
 
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
+    '!'  shift, and go to state 51
 
-    declaration  go to state 87
+    $default  reduce using rule 17 (declaration)
 
 
 State 78
 
-   27 declaration: ERA '(' declaration ')' .
-
-    $default  reduce using rule 27 (declaration)
-
-
-State 79
-
-   30 declaration: PRIME '(' declaration ')' .
-
-    $default  reduce using rule 30 (declaration)
-
-
-State 80
-
-   31 declaration: PRIMF '(' declaration ')' .
-
-    $default  reduce using rule 31 (declaration)
-
-
-State 81
-
-   22 declaration: GCD '(' declaration ',' . declaration ')'
-
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 88
-
-
-State 82
-
-   23 declaration: AVG '(' declaration ',' . declaration ')'
-
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 89
-
-
-State 83
-
-   25 declaration: CEIL '(' declaration ')' .
-
-    $default  reduce using rule 25 (declaration)
-
-
-State 84
-
-   26 declaration: FLOOR '(' declaration ')' .
+   26 declaration: LOG '(' declaration ')' .
 
     $default  reduce using rule 26 (declaration)
 
 
-State 85
+State 79
 
-   28 declaration: BIN '(' declaration ',' . declaration ')'
-
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 90
-
-
-State 86
-
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   29            | RAND '(' declaration ',' declaration . ',' declaration ')'
-
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ','  shift, and go to state 91
-
-
-State 87
-
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   21            | SIGMA '(' declaration ',' declaration . ')'
-
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ')'  shift, and go to state 92
-
-
-State 88
-
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   22            | GCD '(' declaration ',' declaration . ')'
-
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ')'  shift, and go to state 93
-
-
-State 89
-
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   23            | AVG '(' declaration ',' declaration . ')'
-
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ')'  shift, and go to state 94
-
-
-State 90
-
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   28            | BIN '(' declaration ',' declaration . ')'
-
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ')'  shift, and go to state 95
-
-
-State 91
-
-   29 declaration: RAND '(' declaration ',' declaration ',' . declaration ')'
-
-    VALUE  shift, and go to state 1
-    LOG    shift, and go to state 2
-    FIB    shift, and go to state 3
-    RAND   shift, and go to state 4
-    SIGMA  shift, and go to state 5
-    ERA    shift, and go to state 6
-    PRIME  shift, and go to state 7
-    PRIMF  shift, and go to state 8
-    GCD    shift, and go to state 9
-    AVG    shift, and go to state 10
-    CEIL   shift, and go to state 11
-    FLOOR  shift, and go to state 12
-    BIN    shift, and go to state 14
-    '-'    shift, and go to state 15
-    '('    shift, and go to state 16
-
-    declaration  go to state 96
-
-
-State 92
-
-   21 declaration: SIGMA '(' declaration ',' declaration ')' .
-
-    $default  reduce using rule 21 (declaration)
-
-
-State 93
-
-   22 declaration: GCD '(' declaration ',' declaration ')' .
+   22 declaration: FIB '(' declaration ')' .
 
     $default  reduce using rule 22 (declaration)
 
 
-State 94
+State 80
 
-   23 declaration: AVG '(' declaration ',' declaration ')' .
+   31 declaration: RAND '(' declaration ',' . declaration ',' declaration ')'
 
-    $default  reduce using rule 23 (declaration)
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 90
 
 
-State 95
+State 81
 
-   28 declaration: BIN '(' declaration ',' declaration ')' .
+   23 declaration: SIGMA '(' declaration ',' . declaration ')'
+
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 91
+
+
+State 82
+
+   29 declaration: ERA '(' declaration ')' .
+
+    $default  reduce using rule 29 (declaration)
+
+
+State 83
+
+   32 declaration: PRIME '(' declaration ')' .
+
+    $default  reduce using rule 32 (declaration)
+
+
+State 84
+
+   33 declaration: PRIMF '(' declaration ')' .
+
+    $default  reduce using rule 33 (declaration)
+
+
+State 85
+
+   24 declaration: GCD '(' declaration ',' . declaration ')'
+
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 92
+
+
+State 86
+
+   25 declaration: AVG '(' declaration ',' . declaration ')'
+
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 93
+
+
+State 87
+
+   27 declaration: CEIL '(' declaration ')' .
+
+    $default  reduce using rule 27 (declaration)
+
+
+State 88
+
+   28 declaration: FLOOR '(' declaration ')' .
 
     $default  reduce using rule 28 (declaration)
 
 
+State 89
+
+   30 declaration: BIN '(' declaration ',' . declaration ')'
+
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 94
+
+
+State 90
+
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   31            | RAND '(' declaration ',' declaration . ',' declaration ')'
+
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ','  shift, and go to state 95
+
+
+State 91
+
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   23            | SIGMA '(' declaration ',' declaration . ')'
+
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ')'  shift, and go to state 96
+
+
+State 92
+
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   24            | GCD '(' declaration ',' declaration . ')'
+
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ')'  shift, and go to state 97
+
+
+State 93
+
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   25            | AVG '(' declaration ',' declaration . ')'
+
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ')'  shift, and go to state 98
+
+
+State 94
+
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   30            | BIN '(' declaration ',' declaration . ')'
+
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ')'  shift, and go to state 99
+
+
+State 95
+
+   31 declaration: RAND '(' declaration ',' declaration ',' . declaration ')'
+
+    VALUE  shift, and go to state 1
+    ID     shift, and go to state 34
+    LOG    shift, and go to state 3
+    FIB    shift, and go to state 4
+    RAND   shift, and go to state 5
+    SIGMA  shift, and go to state 6
+    ERA    shift, and go to state 7
+    PRIME  shift, and go to state 8
+    PRIMF  shift, and go to state 9
+    GCD    shift, and go to state 10
+    AVG    shift, and go to state 11
+    CEIL   shift, and go to state 12
+    FLOOR  shift, and go to state 13
+    BIN    shift, and go to state 15
+    '-'    shift, and go to state 16
+    '('    shift, and go to state 17
+
+    declaration  go to state 100
+
+
 State 96
 
-   12 declaration: declaration . '+' declaration
-   13            | declaration . '-' declaration
-   14            | declaration . '*' declaration
-   15            | declaration . '/' declaration
-   16            | declaration . '^' declaration
-   17            | declaration . '!'
-   29            | RAND '(' declaration ',' declaration ',' declaration . ')'
+   23 declaration: SIGMA '(' declaration ',' declaration ')' .
 
-    '+'  shift, and go to state 43
-    '-'  shift, and go to state 44
-    '*'  shift, and go to state 45
-    '/'  shift, and go to state 46
-    '^'  shift, and go to state 47
-    '!'  shift, and go to state 48
-    ')'  shift, and go to state 97
+    $default  reduce using rule 23 (declaration)
 
 
 State 97
 
-   29 declaration: RAND '(' declaration ',' declaration ',' declaration ')' .
+   24 declaration: GCD '(' declaration ',' declaration ')' .
 
-    $default  reduce using rule 29 (declaration)
+    $default  reduce using rule 24 (declaration)
+
+
+State 98
+
+   25 declaration: AVG '(' declaration ',' declaration ')' .
+
+    $default  reduce using rule 25 (declaration)
+
+
+State 99
+
+   30 declaration: BIN '(' declaration ',' declaration ')' .
+
+    $default  reduce using rule 30 (declaration)
+
+
+State 100
+
+   13 declaration: declaration . '+' declaration
+   14            | declaration . '-' declaration
+   15            | declaration . '*' declaration
+   16            | declaration . '/' declaration
+   17            | declaration . '^' declaration
+   18            | declaration . '!'
+   31            | RAND '(' declaration ',' declaration ',' declaration . ')'
+
+    '+'  shift, and go to state 46
+    '-'  shift, and go to state 47
+    '*'  shift, and go to state 48
+    '/'  shift, and go to state 49
+    '^'  shift, and go to state 50
+    '!'  shift, and go to state 51
+    ')'  shift, and go to state 101
+
+
+State 101
+
+   31 declaration: RAND '(' declaration ',' declaration ',' declaration ')' .
+
+    $default  reduce using rule 31 (declaration)

@@ -50,89 +50,91 @@ extern int yydebug;
   enum yytokentype
   {
     VALUE = 258,
-    POW = 259,
-    ROOT = 260,
-    LOG = 261,
-    COS = 262,
-    SIN = 263,
-    TAN = 264,
-    FIB = 265,
-    FACT = 266,
-    BASE = 267,
-    SUM = 268,
-    PROD = 269,
-    ABS = 270,
-    MOD = 271,
-    NEP = 272,
-    PI = 273,
-    SMALLER = 274,
-    GREATER = 275,
-    EQUAL = 276,
-    DIFFERENT = 277,
-    SMALLEREQUAL = 278,
-    GREATEREQUAL = 279,
-    RAND = 280,
-    SIGMA = 281,
-    ERA = 282,
-    PRIME = 283,
-    PRIMF = 284,
-    GCD = 285,
-    BC = 286,
-    PN = 287,
-    AVG = 288,
-    CEIL = 289,
-    FLOOR = 290,
-    EXIT = 291,
-    BIN = 292
+    ID = 259,
+    POW = 260,
+    ROOT = 261,
+    LOG = 262,
+    COS = 263,
+    SIN = 264,
+    TAN = 265,
+    FIB = 266,
+    FACT = 267,
+    BASE = 268,
+    SUM = 269,
+    PROD = 270,
+    ABS = 271,
+    MOD = 272,
+    NEP = 273,
+    PI = 274,
+    SMALLER = 275,
+    GREATER = 276,
+    EQUAL = 277,
+    DIFFERENT = 278,
+    SMALLEREQUAL = 279,
+    GREATEREQUAL = 280,
+    RAND = 281,
+    SIGMA = 282,
+    ERA = 283,
+    PRIME = 284,
+    PRIMF = 285,
+    GCD = 286,
+    BC = 287,
+    PN = 288,
+    AVG = 289,
+    CEIL = 290,
+    FLOOR = 291,
+    EXIT = 292,
+    BIN = 293
   };
 #endif
 /* Tokens.  */
 #define VALUE 258
-#define POW 259
-#define ROOT 260
-#define LOG 261
-#define COS 262
-#define SIN 263
-#define TAN 264
-#define FIB 265
-#define FACT 266
-#define BASE 267
-#define SUM 268
-#define PROD 269
-#define ABS 270
-#define MOD 271
-#define NEP 272
-#define PI 273
-#define SMALLER 274
-#define GREATER 275
-#define EQUAL 276
-#define DIFFERENT 277
-#define SMALLEREQUAL 278
-#define GREATEREQUAL 279
-#define RAND 280
-#define SIGMA 281
-#define ERA 282
-#define PRIME 283
-#define PRIMF 284
-#define GCD 285
-#define BC 286
-#define PN 287
-#define AVG 288
-#define CEIL 289
-#define FLOOR 290
-#define EXIT 291
-#define BIN 292
+#define ID 259
+#define POW 260
+#define ROOT 261
+#define LOG 262
+#define COS 263
+#define SIN 264
+#define TAN 265
+#define FIB 266
+#define FACT 267
+#define BASE 268
+#define SUM 269
+#define PROD 270
+#define ABS 271
+#define MOD 272
+#define NEP 273
+#define PI 274
+#define SMALLER 275
+#define GREATER 276
+#define EQUAL 277
+#define DIFFERENT 278
+#define SMALLEREQUAL 279
+#define GREATEREQUAL 280
+#define RAND 281
+#define SIGMA 282
+#define ERA 283
+#define PRIME 284
+#define PRIMF 285
+#define GCD 286
+#define BC 287
+#define PN 288
+#define AVG 289
+#define CEIL 290
+#define FLOOR 291
+#define EXIT 292
+#define BIN 293
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 26 "yacc.y"
+#line 41 "yacc.y"
 
 	char* lex;
 	float value;
 
-#line 136 "y.tab.h"
+#line 138 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
