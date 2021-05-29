@@ -83,14 +83,8 @@ extern int yydebug;
     AVG = 289,
     CEIL = 290,
     FLOOR = 291,
-    FOR = 292,
-    WHILE = 293,
-    IF = 294,
-    ELSE = 295,
-    OR = 296,
-    AND = 297,
-    EXIT = 298,
-    BIN = 299
+    EXIT = 292,
+    BIN = 293
   };
 #endif
 /* Tokens.  */
@@ -128,14 +122,8 @@ extern int yydebug;
 #define AVG 289
 #define CEIL 290
 #define FLOOR 291
-#define FOR 292
-#define WHILE 293
-#define IF 294
-#define ELSE 295
-#define OR 296
-#define AND 297
-#define EXIT 298
-#define BIN 299
+#define EXIT 292
+#define BIN 293
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -146,7 +134,7 @@ union YYSTYPE
 	char* lex;
 	float value;
 
-#line 150 "y.tab.h"
+#line 138 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

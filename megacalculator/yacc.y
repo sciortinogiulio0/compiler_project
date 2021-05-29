@@ -77,12 +77,6 @@
 %token AVG
 %token CEIL
 %token FLOOR
-%token FOR
-%token WHILE
-%token IF
-%token ELSE
-%token OR
-%token AND
 %token EXIT
 %token BIN
 
@@ -117,37 +111,8 @@ op:		declaration							{printf("%f\n\n", $1);}
 		| declaration DIFFERENT declaration				{printf("%s", equal($1, $3) ? "false" : "true");}
 		| declaration SMALLEREQUAL declaration			{printf("%s", (smaller($1, $3) || equal($1, $3)) ? "true" : "false");}
 		| declaration GREATEREQUAL declaration			{printf("%s", (greater($1, $3) || equal($1, $3)) ? "true" : "false");}
-        | block
 		| EXIT								{exit(0);}
 		;
-
-block:	WHILE '(' cond ')' op	'\n'						{ printf("While loop detected.\n"); }
-		 | IF '(' cond ')' op '\n'					{ printf("IF clause detected.\n"); }
-		 | IF '(' cond ')' op ELSE op '\n'			{printf("IF..ELSE clause detected.\n");}
-		 ;
-
-cond: scond
-	| scond logop cond
-	;
-
-scond: nid relop nid
-	;
-
-nid: ID
-	| VALUE
-	;
-
-logop: AND
-	| OR
-	;
-
-relop: DIFFERENT
-	| EQUAL
-    | SMALLEREQUAL
-	| SMALLER
-	| GREATER
-	| GREATEREQUAL
-	;
 
 declaration:	'(' declaration ')' 			{$$ = $2;}
 		| declaration '+' declaration		{$$ = $1 + $3;}

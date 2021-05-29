@@ -29,20 +29,12 @@ GCD			{return GCD;}
 PRIME			{return PRIME;}
 PRIMF			{return PRIMF;}
 ERA			{return ERA;}
-\+\+ 						{return INC;}
-\-\- 						{return DEC;}
 \<			{return SMALLER;}
 \>			{return GREATER;}
 \=\=			{return EQUAL;}
 \!\=			{return DIFFERENT;}
 \<\=			{return SMALLEREQUAL;}
 \>\=			{return GREATEREQUAL;}
-FOR							{return FOR;}
-WHILE						{return WHILE;}
-IF							{return IF;}
-ELSE						{return ELSE;}
-OR							{return OR;}
-AND							{return AND;}
 EXIT			{return EXIT;}
 
 {ID}   	        {yylval.lex = strdup(yytext);return ID;}
@@ -64,5 +56,4 @@ EXIT			{return EXIT;}
 void yyerror(char *s)
 {
 	printf("\nError: %s\n", s);
-    flag =1;
 }
