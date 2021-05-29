@@ -64,5 +64,4 @@ EXIT			{return EXIT;}
 void yyerror(char *s)
 {
 	printf("\nError: %s\n", s);
-    flag =1;
 }
