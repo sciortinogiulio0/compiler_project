@@ -1,0 +1,11 @@
+a = 3
+a--
+b = 7
+b < a
+b * a
+b == a
+a^2
+ERA(10)
+PRIMF(16)
+SIGMA(2,9)
+EXIT

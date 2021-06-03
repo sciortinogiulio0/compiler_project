@@ -1,21 +1,21 @@
-Terminals which are not used
+Terminals unused in grammar
 
-   POW
-   ROOT
-   COS
-   SIN
-   TAN
-   FACT
-   BASE
-   SUM
-   PROD
-   ABS
-   MOD
-   NEP
-   PI
-   BC
-   PN
-   FOR
+    POW
+    ROOT
+    COS
+    SIN
+    TAN
+    FACT
+    BASE
+    SUM
+    PROD
+    ABS
+    MOD
+    NEP
+    PI
+    BC
+    PN
+    FOR
 
 
 Grammar
@@ -88,92 +88,99 @@ Grammar
 
 Terminals, with rules where they appear
 
-$end (0) 0
-'\n' (10) 1 2 13 14 15
-'!' (33) 35
-'(' (40) 13 14 15 29 43 44 45 46 47 48 49 50 51 52 53 54
-')' (41) 13 14 15 29 43 44 45 46 47 48 49 50 51 52 53 54
-'*' (42) 32
-'+' (43) 30
-',' (44) 44 45 46 51 52
-'-' (45) 31 36
-'/' (47) 33
-'=' (61) 4
-'^' (94) 34
-error (256)
-VALUE (258) 20 37
-ID (259) 4 19 38 39 40
-POW (260)
-ROOT (261)
-LOG (262) 47
-COS (263)
-SIN (264)
-TAN (265)
-FIB (266) 43
-FACT (267)
-BASE (268)
-SUM (269)
-PROD (270)
-ABS (271)
-MOD (272)
-NEP (273)
-PI (274)
-SMALLER (275) 5 26
-GREATER (276) 6 27
-EQUAL (277) 7 24
-DIFFERENT (278) 8 23
-SMALLEREQUAL (279) 9 25
-GREATEREQUAL (280) 10 28
-RAND (281) 52
-SIGMA (282) 44
-ERA (283) 50
-PRIME (284) 53
-PRIMF (285) 54
-GCD (286) 45
-BC (287)
-PN (288)
-AVG (289) 46
-CEIL (290) 48
-FLOOR (291) 49
-FOR (292)
-WHILE (293) 13
-IF (294) 14 15
-ELSE (295) 15
-OR (296) 22
-INC (297) 39 41
-DEC (298) 40 42
-AND (299) 21
-EXIT (300) 12
-BIN (301) 51
+    $end (0) 0
+    '\n' (10) 1 2 13 14 15
+    '!' (33) 35
+    '(' (40) 13 14 15 29 43 44 45 46 47 48 49 50 51 52 53 54
+    ')' (41) 13 14 15 29 43 44 45 46 47 48 49 50 51 52 53 54
+    '*' (42) 32
+    '+' (43) 30
+    ',' (44) 44 45 46 51 52
+    '-' (45) 31 36
+    '/' (47) 33
+    '=' (61) 4
+    '^' (94) 34
+    error (256)
+    VALUE <value> (258) 20 37
+    ID <lex> (259) 4 19 38 39 40
+    POW (260)
+    ROOT (261)
+    LOG (262) 47
+    COS (263)
+    SIN (264)
+    TAN (265)
+    FIB (266) 43
+    FACT (267)
+    BASE (268)
+    SUM (269)
+    PROD (270)
+    ABS (271)
+    MOD (272)
+    NEP (273)
+    PI (274)
+    SMALLER (275) 5 26
+    GREATER (276) 6 27
+    EQUAL (277) 7 24
+    DIFFERENT (278) 8 23
+    SMALLEREQUAL (279) 9 25
+    GREATEREQUAL (280) 10 28
+    RAND (281) 52
+    SIGMA (282) 44
+    ERA (283) 50
+    PRIME (284) 53
+    PRIMF (285) 54
+    GCD (286) 45
+    BC (287)
+    PN (288)
+    AVG (289) 46
+    CEIL (290) 48
+    FLOOR (291) 49
+    FOR (292)
+    WHILE (293) 13
+    IF (294) 14 15
+    ELSE (295) 15
+    OR (296) 22
+    INC (297) 39 41
+    DEC (298) 40 42
+    AND (299) 21
+    EXIT (300) 12
+    BIN (301) 51
 
 
 Nonterminals, with rules where they appear
 
-$accept (58)
-    on left: 0
-startProgram (59)
-    on left: 1 2, on right: 0 2
-op (60)
-    on left: 3 4 5 6 7 8 9 10 11 12, on right: 1 2 13 14 15
-block (61)
-    on left: 13 14 15, on right: 11
-cond (62)
-    on left: 16 17, on right: 13 14 15 17
-scond (63)
-    on left: 18, on right: 16 17
-nid (64)
-    on left: 19 20, on right: 18
-logop (65)
-    on left: 21 22, on right: 17
-relop (66)
-    on left: 23 24 25 26 27 28, on right: 18
-declaration (67)
-    on left: 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46
-    47 48 49 50 51 52 53 54, on right: 3 4 5 6 7 8 9 10 29 30 31 32
-    33 34 35 36 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+    $accept (58)
+        on left: 0
+    startProgram (59)
+        on left: 1 2
+        on right: 0 2
+    op (60)
+        on left: 3 4 5 6 7 8 9 10 11 12
+        on right: 1 2 13 14 15
+    block (61)
+        on left: 13 14 15
+        on right: 11
+    cond (62)
+        on left: 16 17
+        on right: 13 14 15 17
+    scond (63)
+        on left: 18
+        on right: 16 17
+    nid (64)
+        on left: 19 20
+        on right: 18
+    logop (65)
+        on left: 21 22
+        on right: 17
+    relop (66)
+        on left: 23 24 25 26 27 28
+        on right: 18
+    declaration <value> (67)
+        on left: 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54
+        on right: 3 4 5 6 7 8 9 10 29 30 31 32 33 34 35 36 41 42 43 44 45 46 47 48 49 50 51 52 53 54
 
 
-state 0
+State 0
 
     0 $accept: . startProgram $end
 
@@ -203,14 +210,14 @@ state 0
     declaration   go to state 23
 
 
-state 1
+State 1
 
    37 declaration: VALUE .
 
     $default  reduce using rule 37 (declaration)
 
 
-state 2
+State 2
 
     4 op: ID . '=' declaration
    38 declaration: ID .
@@ -224,91 +231,91 @@ state 2
     $default  reduce using rule 38 (declaration)
 
 
-state 3
+State 3
 
    47 declaration: LOG . '(' declaration ')'
 
     '('  shift, and go to state 27
 
 
-state 4
+State 4
 
    43 declaration: FIB . '(' declaration ')'
 
     '('  shift, and go to state 28
 
 
-state 5
+State 5
 
    52 declaration: RAND . '(' declaration ',' declaration ',' declaration ')'
 
     '('  shift, and go to state 29
 
 
-state 6
+State 6
 
    44 declaration: SIGMA . '(' declaration ',' declaration ')'
 
     '('  shift, and go to state 30
 
 
-state 7
+State 7
 
    50 declaration: ERA . '(' declaration ')'
 
     '('  shift, and go to state 31
 
 
-state 8
+State 8
 
    53 declaration: PRIME . '(' declaration ')'
 
     '('  shift, and go to state 32
 
 
-state 9
+State 9
 
    54 declaration: PRIMF . '(' declaration ')'
 
     '('  shift, and go to state 33
 
 
-state 10
+State 10
 
    45 declaration: GCD . '(' declaration ',' declaration ')'
 
     '('  shift, and go to state 34
 
 
-state 11
+State 11
 
    46 declaration: AVG . '(' declaration ',' declaration ')'
 
     '('  shift, and go to state 35
 
 
-state 12
+State 12
 
    48 declaration: CEIL . '(' declaration ')'
 
     '('  shift, and go to state 36
 
 
-state 13
+State 13
 
    49 declaration: FLOOR . '(' declaration ')'
 
     '('  shift, and go to state 37
 
 
-state 14
+State 14
 
    13 block: WHILE . '(' cond ')' op '\n'
 
     '('  shift, and go to state 38
 
 
-state 15
+State 15
 
    14 block: IF . '(' cond ')' op '\n'
    15      | IF . '(' cond ')' op ELSE op '\n'
@@ -316,21 +323,21 @@ state 15
     '('  shift, and go to state 39
 
 
-state 16
+State 16
 
    12 op: EXIT .
 
     $default  reduce using rule 12 (op)
 
 
-state 17
+State 17
 
    51 declaration: BIN . '(' declaration ',' declaration ')'
 
     '('  shift, and go to state 40
 
 
-state 18
+State 18
 
    36 declaration: '-' . declaration
 
@@ -354,7 +361,7 @@ state 18
     declaration  go to state 42
 
 
-state 19
+State 19
 
    29 declaration: '(' . declaration ')'
 
@@ -378,7 +385,7 @@ state 19
     declaration  go to state 43
 
 
-state 20
+State 20
 
     0 $accept: startProgram . $end
     2 startProgram: startProgram . op '\n'
@@ -409,21 +416,21 @@ state 20
     declaration  go to state 23
 
 
-state 21
+State 21
 
     1 startProgram: op . '\n'
 
     '\n'  shift, and go to state 46
 
 
-state 22
+State 22
 
    11 op: block .
 
     $default  reduce using rule 11 (op)
 
 
-state 23
+State 23
 
     3 op: declaration .
     5   | declaration . SMALLER declaration
@@ -459,21 +466,21 @@ state 23
     $default  reduce using rule 3 (op)
 
 
-state 24
+State 24
 
    39 declaration: ID INC .
 
     $default  reduce using rule 39 (declaration)
 
 
-state 25
+State 25
 
    40 declaration: ID DEC .
 
     $default  reduce using rule 40 (declaration)
 
 
-state 26
+State 26
 
     4 op: ID '=' . declaration
 
@@ -497,7 +504,7 @@ state 26
     declaration  go to state 61
 
 
-state 27
+State 27
 
    47 declaration: LOG '(' . declaration ')'
 
@@ -521,7 +528,7 @@ state 27
     declaration  go to state 62
 
 
-state 28
+State 28
 
    43 declaration: FIB '(' . declaration ')'
 
@@ -545,7 +552,7 @@ state 28
     declaration  go to state 63
 
 
-state 29
+State 29
 
    52 declaration: RAND '(' . declaration ',' declaration ',' declaration ')'
 
@@ -569,7 +576,7 @@ state 29
     declaration  go to state 64
 
 
-state 30
+State 30
 
    44 declaration: SIGMA '(' . declaration ',' declaration ')'
 
@@ -593,7 +600,7 @@ state 30
     declaration  go to state 65
 
 
-state 31
+State 31
 
    50 declaration: ERA '(' . declaration ')'
 
@@ -617,7 +624,7 @@ state 31
     declaration  go to state 66
 
 
-state 32
+State 32
 
    53 declaration: PRIME '(' . declaration ')'
 
@@ -641,7 +648,7 @@ state 32
     declaration  go to state 67
 
 
-state 33
+State 33
 
    54 declaration: PRIMF '(' . declaration ')'
 
@@ -665,7 +672,7 @@ state 33
     declaration  go to state 68
 
 
-state 34
+State 34
 
    45 declaration: GCD '(' . declaration ',' declaration ')'
 
@@ -689,7 +696,7 @@ state 34
     declaration  go to state 69
 
 
-state 35
+State 35
 
    46 declaration: AVG '(' . declaration ',' declaration ')'
 
@@ -713,7 +720,7 @@ state 35
     declaration  go to state 70
 
 
-state 36
+State 36
 
    48 declaration: CEIL '(' . declaration ')'
 
@@ -737,7 +744,7 @@ state 36
     declaration  go to state 71
 
 
-state 37
+State 37
 
    49 declaration: FLOOR '(' . declaration ')'
 
@@ -761,7 +768,7 @@ state 37
     declaration  go to state 72
 
 
-state 38
+State 38
 
    13 block: WHILE '(' . cond ')' op '\n'
 
@@ -773,7 +780,7 @@ state 38
     nid    go to state 77
 
 
-state 39
+State 39
 
    14 block: IF '(' . cond ')' op '\n'
    15      | IF '(' . cond ')' op ELSE op '\n'
@@ -786,7 +793,7 @@ state 39
     nid    go to state 77
 
 
-state 40
+State 40
 
    51 declaration: BIN '(' . declaration ',' declaration ')'
 
@@ -810,7 +817,7 @@ state 40
     declaration  go to state 79
 
 
-state 41
+State 41
 
    38 declaration: ID .
    39            | ID . INC
@@ -822,7 +829,7 @@ state 41
     $default  reduce using rule 38 (declaration)
 
 
-state 42
+State 42
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -842,7 +849,7 @@ state 42
     $default  reduce using rule 36 (declaration)
 
 
-state 43
+State 43
 
    29 declaration: '(' declaration . ')'
    30            | declaration . '+' declaration
@@ -865,28 +872,28 @@ state 43
     ')'  shift, and go to state 80
 
 
-state 44
+State 44
 
     0 $accept: startProgram $end .
 
     $default  accept
 
 
-state 45
+State 45
 
     2 startProgram: startProgram op . '\n'
 
     '\n'  shift, and go to state 81
 
 
-state 46
+State 46
 
     1 startProgram: op '\n' .
 
     $default  reduce using rule 1 (startProgram)
 
 
-state 47
+State 47
 
     5 op: declaration SMALLER . declaration
 
@@ -910,7 +917,7 @@ state 47
     declaration  go to state 82
 
 
-state 48
+State 48
 
     6 op: declaration GREATER . declaration
 
@@ -934,7 +941,7 @@ state 48
     declaration  go to state 83
 
 
-state 49
+State 49
 
     7 op: declaration EQUAL . declaration
 
@@ -958,7 +965,7 @@ state 49
     declaration  go to state 84
 
 
-state 50
+State 50
 
     8 op: declaration DIFFERENT . declaration
 
@@ -982,7 +989,7 @@ state 50
     declaration  go to state 85
 
 
-state 51
+State 51
 
     9 op: declaration SMALLEREQUAL . declaration
 
@@ -1006,7 +1013,7 @@ state 51
     declaration  go to state 86
 
 
-state 52
+State 52
 
    10 op: declaration GREATEREQUAL . declaration
 
@@ -1030,21 +1037,21 @@ state 52
     declaration  go to state 87
 
 
-state 53
+State 53
 
    41 declaration: declaration INC .
 
     $default  reduce using rule 41 (declaration)
 
 
-state 54
+State 54
 
    42 declaration: declaration DEC .
 
     $default  reduce using rule 42 (declaration)
 
 
-state 55
+State 55
 
    30 declaration: declaration '+' . declaration
 
@@ -1068,7 +1075,7 @@ state 55
     declaration  go to state 88
 
 
-state 56
+State 56
 
    31 declaration: declaration '-' . declaration
 
@@ -1092,7 +1099,7 @@ state 56
     declaration  go to state 89
 
 
-state 57
+State 57
 
    32 declaration: declaration '*' . declaration
 
@@ -1116,7 +1123,7 @@ state 57
     declaration  go to state 90
 
 
-state 58
+State 58
 
    33 declaration: declaration '/' . declaration
 
@@ -1140,7 +1147,7 @@ state 58
     declaration  go to state 91
 
 
-state 59
+State 59
 
    34 declaration: declaration '^' . declaration
 
@@ -1164,14 +1171,14 @@ state 59
     declaration  go to state 92
 
 
-state 60
+State 60
 
    35 declaration: declaration '!' .
 
     $default  reduce using rule 35 (declaration)
 
 
-state 61
+State 61
 
     4 op: ID '=' declaration .
    30 declaration: declaration . '+' declaration
@@ -1195,7 +1202,7 @@ state 61
     $default  reduce using rule 4 (op)
 
 
-state 62
+State 62
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1218,7 +1225,7 @@ state 62
     ')'  shift, and go to state 93
 
 
-state 63
+State 63
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1241,7 +1248,7 @@ state 63
     ')'  shift, and go to state 94
 
 
-state 64
+State 64
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1264,7 +1271,7 @@ state 64
     ','  shift, and go to state 95
 
 
-state 65
+State 65
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1287,7 +1294,7 @@ state 65
     ','  shift, and go to state 96
 
 
-state 66
+State 66
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1310,7 +1317,7 @@ state 66
     ')'  shift, and go to state 97
 
 
-state 67
+State 67
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1333,7 +1340,7 @@ state 67
     ')'  shift, and go to state 98
 
 
-state 68
+State 68
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1356,7 +1363,7 @@ state 68
     ')'  shift, and go to state 99
 
 
-state 69
+State 69
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1379,7 +1386,7 @@ state 69
     ','  shift, and go to state 100
 
 
-state 70
+State 70
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1402,7 +1409,7 @@ state 70
     ','  shift, and go to state 101
 
 
-state 71
+State 71
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1425,7 +1432,7 @@ state 71
     ')'  shift, and go to state 102
 
 
-state 72
+State 72
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1448,28 +1455,28 @@ state 72
     ')'  shift, and go to state 103
 
 
-state 73
+State 73
 
    20 nid: VALUE .
 
     $default  reduce using rule 20 (nid)
 
 
-state 74
+State 74
 
    19 nid: ID .
 
     $default  reduce using rule 19 (nid)
 
 
-state 75
+State 75
 
    13 block: WHILE '(' cond . ')' op '\n'
 
     ')'  shift, and go to state 104
 
 
-state 76
+State 76
 
    16 cond: scond .
    17     | scond . logop cond
@@ -1482,7 +1489,7 @@ state 76
     logop  go to state 107
 
 
-state 77
+State 77
 
    18 scond: nid . relop nid
 
@@ -1496,7 +1503,7 @@ state 77
     relop  go to state 114
 
 
-state 78
+State 78
 
    14 block: IF '(' cond . ')' op '\n'
    15      | IF '(' cond . ')' op ELSE op '\n'
@@ -1504,7 +1511,7 @@ state 78
     ')'  shift, and go to state 115
 
 
-state 79
+State 79
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1527,21 +1534,21 @@ state 79
     ','  shift, and go to state 116
 
 
-state 80
+State 80
 
    29 declaration: '(' declaration ')' .
 
     $default  reduce using rule 29 (declaration)
 
 
-state 81
+State 81
 
     2 startProgram: startProgram op '\n' .
 
     $default  reduce using rule 2 (startProgram)
 
 
-state 82
+State 82
 
     5 op: declaration SMALLER declaration .
    30 declaration: declaration . '+' declaration
@@ -1565,7 +1572,7 @@ state 82
     $default  reduce using rule 5 (op)
 
 
-state 83
+State 83
 
     6 op: declaration GREATER declaration .
    30 declaration: declaration . '+' declaration
@@ -1589,7 +1596,7 @@ state 83
     $default  reduce using rule 6 (op)
 
 
-state 84
+State 84
 
     7 op: declaration EQUAL declaration .
    30 declaration: declaration . '+' declaration
@@ -1613,7 +1620,7 @@ state 84
     $default  reduce using rule 7 (op)
 
 
-state 85
+State 85
 
     8 op: declaration DIFFERENT declaration .
    30 declaration: declaration . '+' declaration
@@ -1637,7 +1644,7 @@ state 85
     $default  reduce using rule 8 (op)
 
 
-state 86
+State 86
 
     9 op: declaration SMALLEREQUAL declaration .
    30 declaration: declaration . '+' declaration
@@ -1661,7 +1668,7 @@ state 86
     $default  reduce using rule 9 (op)
 
 
-state 87
+State 87
 
    10 op: declaration GREATEREQUAL declaration .
    30 declaration: declaration . '+' declaration
@@ -1685,7 +1692,7 @@ state 87
     $default  reduce using rule 10 (op)
 
 
-state 88
+State 88
 
    30 declaration: declaration . '+' declaration
    30            | declaration '+' declaration .
@@ -1706,7 +1713,7 @@ state 88
     $default  reduce using rule 30 (declaration)
 
 
-state 89
+State 89
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1726,7 +1733,7 @@ state 89
     $default  reduce using rule 31 (declaration)
 
 
-state 90
+State 90
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1745,7 +1752,7 @@ state 90
     $default  reduce using rule 32 (declaration)
 
 
-state 91
+State 91
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1763,7 +1770,7 @@ state 91
     $default  reduce using rule 33 (declaration)
 
 
-state 92
+State 92
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -1780,21 +1787,21 @@ state 92
     $default  reduce using rule 34 (declaration)
 
 
-state 93
+State 93
 
    47 declaration: LOG '(' declaration ')' .
 
     $default  reduce using rule 47 (declaration)
 
 
-state 94
+State 94
 
    43 declaration: FIB '(' declaration ')' .
 
     $default  reduce using rule 43 (declaration)
 
 
-state 95
+State 95
 
    52 declaration: RAND '(' declaration ',' . declaration ',' declaration ')'
 
@@ -1818,7 +1825,7 @@ state 95
     declaration  go to state 117
 
 
-state 96
+State 96
 
    44 declaration: SIGMA '(' declaration ',' . declaration ')'
 
@@ -1842,28 +1849,28 @@ state 96
     declaration  go to state 118
 
 
-state 97
+State 97
 
    50 declaration: ERA '(' declaration ')' .
 
     $default  reduce using rule 50 (declaration)
 
 
-state 98
+State 98
 
    53 declaration: PRIME '(' declaration ')' .
 
     $default  reduce using rule 53 (declaration)
 
 
-state 99
+State 99
 
    54 declaration: PRIMF '(' declaration ')' .
 
     $default  reduce using rule 54 (declaration)
 
 
-state 100
+State 100
 
    45 declaration: GCD '(' declaration ',' . declaration ')'
 
@@ -1887,7 +1894,7 @@ state 100
     declaration  go to state 119
 
 
-state 101
+State 101
 
    46 declaration: AVG '(' declaration ',' . declaration ')'
 
@@ -1911,21 +1918,21 @@ state 101
     declaration  go to state 120
 
 
-state 102
+State 102
 
    48 declaration: CEIL '(' declaration ')' .
 
     $default  reduce using rule 48 (declaration)
 
 
-state 103
+State 103
 
    49 declaration: FLOOR '(' declaration ')' .
 
     $default  reduce using rule 49 (declaration)
 
 
-state 104
+State 104
 
    13 block: WHILE '(' cond ')' . op '\n'
 
@@ -1954,21 +1961,21 @@ state 104
     declaration  go to state 23
 
 
-state 105
+State 105
 
    22 logop: OR .
 
     $default  reduce using rule 22 (logop)
 
 
-state 106
+State 106
 
    21 logop: AND .
 
     $default  reduce using rule 21 (logop)
 
 
-state 107
+State 107
 
    17 cond: scond logop . cond
 
@@ -1980,49 +1987,49 @@ state 107
     nid    go to state 77
 
 
-state 108
+State 108
 
    26 relop: SMALLER .
 
     $default  reduce using rule 26 (relop)
 
 
-state 109
+State 109
 
    27 relop: GREATER .
 
     $default  reduce using rule 27 (relop)
 
 
-state 110
+State 110
 
    24 relop: EQUAL .
 
     $default  reduce using rule 24 (relop)
 
 
-state 111
+State 111
 
    23 relop: DIFFERENT .
 
     $default  reduce using rule 23 (relop)
 
 
-state 112
+State 112
 
    25 relop: SMALLEREQUAL .
 
     $default  reduce using rule 25 (relop)
 
 
-state 113
+State 113
 
    28 relop: GREATEREQUAL .
 
     $default  reduce using rule 28 (relop)
 
 
-state 114
+State 114
 
    18 scond: nid relop . nid
 
@@ -2032,7 +2039,7 @@ state 114
     nid  go to state 123
 
 
-state 115
+State 115
 
    14 block: IF '(' cond ')' . op '\n'
    15      | IF '(' cond ')' . op ELSE op '\n'
@@ -2062,7 +2069,7 @@ state 115
     declaration  go to state 23
 
 
-state 116
+State 116
 
    51 declaration: BIN '(' declaration ',' . declaration ')'
 
@@ -2086,7 +2093,7 @@ state 116
     declaration  go to state 125
 
 
-state 117
+State 117
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -2109,7 +2116,7 @@ state 117
     ','  shift, and go to state 126
 
 
-state 118
+State 118
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -2132,7 +2139,7 @@ state 118
     ')'  shift, and go to state 127
 
 
-state 119
+State 119
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -2155,7 +2162,7 @@ state 119
     ')'  shift, and go to state 128
 
 
-state 120
+State 120
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -2178,28 +2185,28 @@ state 120
     ')'  shift, and go to state 129
 
 
-state 121
+State 121
 
    13 block: WHILE '(' cond ')' op . '\n'
 
     '\n'  shift, and go to state 130
 
 
-state 122
+State 122
 
    17 cond: scond logop cond .
 
     $default  reduce using rule 17 (cond)
 
 
-state 123
+State 123
 
    18 scond: nid relop nid .
 
     $default  reduce using rule 18 (scond)
 
 
-state 124
+State 124
 
    14 block: IF '(' cond ')' op . '\n'
    15      | IF '(' cond ')' op . ELSE op '\n'
@@ -2208,7 +2215,7 @@ state 124
     '\n'  shift, and go to state 132
 
 
-state 125
+State 125
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -2231,7 +2238,7 @@ state 125
     ')'  shift, and go to state 133
 
 
-state 126
+State 126
 
    52 declaration: RAND '(' declaration ',' declaration ',' . declaration ')'
 
@@ -2255,35 +2262,35 @@ state 126
     declaration  go to state 134
 
 
-state 127
+State 127
 
    44 declaration: SIGMA '(' declaration ',' declaration ')' .
 
     $default  reduce using rule 44 (declaration)
 
 
-state 128
+State 128
 
    45 declaration: GCD '(' declaration ',' declaration ')' .
 
     $default  reduce using rule 45 (declaration)
 
 
-state 129
+State 129
 
    46 declaration: AVG '(' declaration ',' declaration ')' .
 
     $default  reduce using rule 46 (declaration)
 
 
-state 130
+State 130
 
    13 block: WHILE '(' cond ')' op '\n' .
 
     $default  reduce using rule 13 (block)
 
 
-state 131
+State 131
 
    15 block: IF '(' cond ')' op ELSE . op '\n'
 
@@ -2312,21 +2319,21 @@ state 131
     declaration  go to state 23
 
 
-state 132
+State 132
 
    14 block: IF '(' cond ')' op '\n' .
 
     $default  reduce using rule 14 (block)
 
 
-state 133
+State 133
 
    51 declaration: BIN '(' declaration ',' declaration ')' .
 
     $default  reduce using rule 51 (declaration)
 
 
-state 134
+State 134
 
    30 declaration: declaration . '+' declaration
    31            | declaration . '-' declaration
@@ -2349,21 +2356,21 @@ state 134
     ')'  shift, and go to state 136
 
 
-state 135
+State 135
 
    15 block: IF '(' cond ')' op ELSE op . '\n'
 
     '\n'  shift, and go to state 137
 
 
-state 136
+State 136
 
    52 declaration: RAND '(' declaration ',' declaration ',' declaration ')' .
 
     $default  reduce using rule 52 (declaration)
 
 
-state 137
+State 137
 
    15 block: IF '(' cond ')' op ELSE op '\n' .
 
