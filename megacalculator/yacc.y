@@ -357,7 +357,7 @@ int eratosthenes(int n) {
  int i;
  int primes = primeNums(n);
  if(n<=0){
-         printf("input must be greater than 0");
+         printf("input must be greater than 0 ");
          return 0;
      }
         int count=0;

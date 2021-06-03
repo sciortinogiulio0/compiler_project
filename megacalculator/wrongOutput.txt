@@ -1,0 +1,6 @@
+
+Insert data in our megacalculator
+input must be greater than 0input must be greater than 00.000000
+
+91.000000
+
