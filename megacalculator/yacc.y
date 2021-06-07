@@ -7,8 +7,8 @@
     #include<ctype.h>
 
     	int yydebug=1;
-			int fibonacci(int n);
-			int binomial(int n, int k);
+	int fibonacci(int n);
+	int binomial(int n, int k);
     	int eratosthenes(int n);
     	int gcd(int m, int n);
     	int primeFactors(int n);
@@ -19,24 +19,26 @@
     	bool greater(float a, float b);
     	bool equal(float a, float b);
     	int fac(int n);
-
+    	void add_type(char *type, char *name);
     	int randint(int from, int to,int count);
-      void add_variable(float val, char *name);
-      float searchSymbol (char *name);
+	void add_variable(float val, char *name);
+	float searchSymbol (char *name);
 
         struct symbolTable
         {
             char *name;
             float value;
+            char *type;
             struct symbolTable *next;
 
         };
 
         struct symbolTable *table;
 
-        extern void *malloc();
-    	void yyerror(char *s);
-    	int yylex();
+	extern void *malloc();
+	void yyerror(char *s);
+	int yylex();
+
 %}
 
 %union {
@@ -89,7 +91,14 @@
 %token EXIT
 %token BIN
 
+%token FLOAT
+%token INT
+%token STRING
+
+%type <lex> type
+%type <lex> string
 %type <value> declaration
+%nonassoc INT FLOAT STRING
 %nonassoc ID
 %right INC DEC
 %left '+'
@@ -112,10 +121,11 @@ startProgram:	op '\n'
 		;
 
 op:		declaration							{printf("%f\n\n", $1);}
-		| ID '=' declaration        {add_variable($3,$1); printf("Variable : %s\n\n", $1);}
-    | declaration SMALLER declaration 			{printf("%s", smaller($1, $3) ? "true" : "false");}
-		| declaration GREATER declaration						{printf("%s", greater($1, $3) ? "true" : "false");}
-		| declaration EQUAL declaration							{printf("%s", equal($1, $3) ? "true" : "false");}
+		| type {printf("type: %s\n\n", $1);}
+		| type ID '=' declaration        				{add_variable($4,$2); printf("Variable : %s %s\n\n", $1, $2); add_type($1,$2);}
+    		| declaration SMALLER declaration 				{printf("%s", smaller($1, $3) ? "true" : "false");}
+		| declaration GREATER declaration				{printf("%s", greater($1, $3) ? "true" : "false");}
+		| declaration EQUAL declaration				{printf("%s", equal($1, $3) ? "true" : "false");}
 		| declaration DIFFERENT declaration				{printf("%s", equal($1, $3) ? "false" : "true");}
 		| declaration SMALLEREQUAL declaration			{printf("%s", (smaller($1, $3) || equal($1, $3)) ? "true" : "false");}
 		| declaration GREATEREQUAL declaration			{printf("%s", (greater($1, $3) || equal($1, $3)) ? "true" : "false");}
@@ -125,8 +135,13 @@ op:		declaration							{printf("%f\n\n", $1);}
 
 block:	WHILE '(' cond ')' op	'\n'						{ printf("While loop detected.\n"); }
 		 | IF '(' cond ')' op '\n'					{ printf("IF clause detected.\n"); }
-		 | IF '(' cond ')' op ELSE op '\n'			{printf("IF..ELSE clause detected.\n");}
+		 | IF '(' cond ')' op ELSE op '\n'				{ printf("IF..ELSE clause detected.\n");}
 		 ;
+
+type: 	INT {$$ = (char *) "int";}
+	| FLOAT {$$ = (char *) "float";}
+	| STRING {$$ = (char *) "string";}
+	;
 
 cond: scond
 	| scond logop cond
@@ -145,11 +160,18 @@ logop: AND
 
 relop: DIFFERENT
 	| EQUAL
-    | SMALLEREQUAL
+    	| SMALLEREQUAL
 	| SMALLER
 	| GREATER
 	| GREATEREQUAL
 	;
+
+var: declaration
+	| string
+	;
+
+string:	'*' ID '*' {$$=$2;}
+		;
 
 declaration:	'(' declaration ')' 			{$$ = $2;}
 		| declaration '+' declaration		{$$ = $1 + $3;}
@@ -159,8 +181,8 @@ declaration:	'(' declaration ')' 			{$$ = $2;}
 		| declaration '^' declaration		{$$ = pow($1, $3);}
 		| declaration '!'								{$$ = (int) fac($1);}
 		| '-' declaration								{$$ =  - $2;}
-    | VALUE													{$$ = $1;}
-    | ID                            {$$ = searchSymbol($1);}
+    		| VALUE				{$$ = $1;}
+    		| ID                            {$$ = searchSymbol($1);}
 		| ID INC						{add_variable((searchSymbol($1)+1),$1); $$= searchSymbol($1);}
 		| ID DEC						{ add_variable((searchSymbol($1)-1),$1); $$= searchSymbol($1);}
 		| declaration INC			 			{ $$ = $1 + 1;}
@@ -445,4 +467,18 @@ float searchSymbol(char *name)
             return st->value;
     }
     return 0;
+}
+
+void add_type(char *type, char *name)
+{
+  struct symbolTable *st = table;
+    for(; st; st=st->next)
+    {
+        if(strcmp(st->name,name)==0)
+        {
+          st->type = (char *) malloc(strlen(type)+1);
+      		return;
+        }
+    }
+
 }

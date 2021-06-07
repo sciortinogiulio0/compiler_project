@@ -43,6 +43,11 @@ IF							{return IF;}
 ELSE						{return ELSE;}
 OR							{return OR;}
 AND							{return AND;}
+
+INT						{return INT;}
+FLOAT							{return FLOAT;}
+STRING							{return STRING;}
+
 EXIT			{return EXIT;}
 
 {ID}   	        {yylval.lex = strdup(yytext);return ID;}

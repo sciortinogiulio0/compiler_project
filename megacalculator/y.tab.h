@@ -92,7 +92,10 @@ extern int yydebug;
     DEC = 298,
     AND = 299,
     EXIT = 300,
-    BIN = 301
+    BIN = 301,
+    FLOAT = 302,
+    INT = 303,
+    STRING = 304
   };
 #endif
 /* Tokens.  */
@@ -140,17 +143,20 @@ extern int yydebug;
 #define AND 299
 #define EXIT 300
 #define BIN 301
+#define FLOAT 302
+#define INT 303
+#define STRING 304
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 42 "yacc.y"
+#line 44 "yacc.y"
 
 	char* lex;
 	float value;
 
-#line 154 "y.tab.h"
+#line 160 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
