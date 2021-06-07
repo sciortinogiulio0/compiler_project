@@ -97,7 +97,7 @@
 
 %type <lex> type
 %type <lex> string
-%type <value> declaration
+%type <value> expression
 %nonassoc INT FLOAT STRING
 %nonassoc ID
 %right INC DEC
@@ -120,15 +120,15 @@ startProgram:	op '\n'
 		| startProgram op '\n'
 		;
 
-op:		declaration							{printf("%f\n\n", $1);}
+op:		expression							{printf("%f\n\n", $1);}
 		| type {printf("type: %s\n\n", $1);}
-		| type ID '=' declaration        				{add_variable($4,$2); printf("Variable : %s %s\n\n", $1, $2); add_type($1,$2);}
-    		| declaration SMALLER declaration 				{printf("%s", smaller($1, $3) ? "true" : "false");}
-		| declaration GREATER declaration				{printf("%s", greater($1, $3) ? "true" : "false");}
-		| declaration EQUAL declaration				{printf("%s", equal($1, $3) ? "true" : "false");}
-		| declaration DIFFERENT declaration				{printf("%s", equal($1, $3) ? "false" : "true");}
-		| declaration SMALLEREQUAL declaration			{printf("%s", (smaller($1, $3) || equal($1, $3)) ? "true" : "false");}
-		| declaration GREATEREQUAL declaration			{printf("%s", (greater($1, $3) || equal($1, $3)) ? "true" : "false");}
+		| type ID '=' expression        				{add_variable($4,$2); printf("Variable : %s %s\n\n", $1, $2); add_type($1,$2);}
+    		| expression SMALLER expression 				{printf("%s", smaller($1, $3) ? "true" : "false");}
+		| expression GREATER expression				{printf("%s", greater($1, $3) ? "true" : "false");}
+		| expression EQUAL expression				{printf("%s", equal($1, $3) ? "true" : "false");}
+		| expression DIFFERENT expression				{printf("%s", equal($1, $3) ? "false" : "true");}
+		| expression SMALLEREQUAL expression			{printf("%s", (smaller($1, $3) || equal($1, $3)) ? "true" : "false");}
+		| expression GREATEREQUAL expression			{printf("%s", (greater($1, $3) || equal($1, $3)) ? "true" : "false");}
 		| block
 		| EXIT								{exit(0);}
 		;
@@ -166,39 +166,39 @@ relop: DIFFERENT
 	| GREATEREQUAL
 	;
 
-var: declaration
+var: expression
 	| string
 	;
 
 string:	'*' ID '*' {$$=$2;}
 		;
 
-declaration:	'(' declaration ')' 			{$$ = $2;}
-		| declaration '+' declaration		{$$ = $1 + $3;}
-		| declaration '-' declaration		{$$ = $1 + $3;}
-		| declaration '*' declaration		{$$ = $1 + $3;}
-		| declaration '/' declaration		{$$ = $1 + $3;}
-		| declaration '^' declaration		{$$ = pow($1, $3);}
-		| declaration '!'								{$$ = (int) fac($1);}
-		| '-' declaration								{$$ =  - $2;}
+expression:	'(' expression ')' 			{$$ = $2;}
+		| expression '+' expression		{$$ = $1 + $3;}
+		| expression '-' expression		{$$ = $1 - $3;}
+		| expression '*' expression		{$$ = $1 * $3;}
+		| expression '/' expression		{$$ = $1 / $3;}
+		| expression '^' expression		{$$ = pow($1, $3);}
+		| expression '!'								{$$ = (int) fac($1);}
+		| '-' expression								{$$ =  - $2;}
     		| VALUE				{$$ = $1;}
     		| ID                            {$$ = searchSymbol($1);}
 		| ID INC						{add_variable((searchSymbol($1)+1),$1); $$= searchSymbol($1);}
 		| ID DEC						{ add_variable((searchSymbol($1)-1),$1); $$= searchSymbol($1);}
-		| declaration INC			 			{ $$ = $1 + 1;}
-		| declaration DEC			 			{ $$ = $1 - 1;}
-		| FIB '(' declaration ')'		{$$ = (int) fibonacci($3);}
-		| SIGMA '(' declaration ',' declaration ')'		{$$ = (int) sigma($3,$5);}
-		| GCD '(' declaration ',' declaration ')'		{$$ = gcd($3,$5);}
-		| AVG '(' declaration ',' declaration ')'		{$$ = avg($3,$5);}
-		| LOG '(' declaration ')'				{$$ = log($3);}
-		| CEIL '(' declaration ')'				{$$ = ceil($3);}
-		| FLOOR '(' declaration ')'				{$$ = floor($3);}
-		| ERA '(' declaration ')'				{$$ = eratosthenes($3);}
-		| BIN '(' declaration ',' declaration ')'		{$$ = (int) binomial($3,$5);}
-		| RAND '(' declaration ',' declaration ',' declaration ')' {$$ = (int) randint($3,$5,$7);}
-		| PRIME '(' declaration ')' {$$ = (int) primeNums($3);}
-		| PRIMF '(' declaration ')' {$$ = (int) primeFactors($3);}
+		| expression INC			 			{ $$ = $1 + 1;}
+		| expression DEC			 			{ $$ = $1 - 1;}
+		| FIB '(' expression ')'		{$$ = (int) fibonacci($3);}
+		| SIGMA '(' expression ',' expression ')'		{$$ = (int) sigma($3,$5);}
+		| GCD '(' expression ',' expression ')'		{$$ = gcd($3,$5);}
+		| AVG '(' expression ',' expression ')'		{$$ = avg($3,$5);}
+		| LOG '(' expression ')'				{$$ = log($3);}
+		| CEIL '(' expression ')'				{$$ = ceil($3);}
+		| FLOOR '(' expression ')'				{$$ = floor($3);}
+		| ERA '(' expression ')'				{$$ = eratosthenes($3);}
+		| BIN '(' expression ',' expression ')'		{$$ = (int) binomial($3,$5);}
+		| RAND '(' expression ',' expression ',' expression ')' {$$ = (int) randint($3,$5,$7);}
+		| PRIME '(' expression ')' {$$ = (int) primeNums($3);}
+		| PRIMF '(' expression ')' {$$ = (int) primeFactors($3);}
 		;
 
 %%
