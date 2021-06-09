@@ -110,13 +110,14 @@
         struct symbolTable *table;
 	void printExpression(struct Number val, char type);
 	bool smaller(struct Number a, struct Number b);
+	char typeChecking(char type1, char type2);
 
 	extern void *malloc();
 	void yyerror(char *s);
 	int yylex();
 
 
-#line 120 "y.tab.c"
+#line 121 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -268,7 +269,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 51 "yacc.y"
+#line 52 "yacc.y"
 
 	char* lex;
 	struct Expr
@@ -280,7 +281,7 @@ union YYSTYPE
 	float floatVal;
 	
 
-#line 284 "y.tab.c"
+#line 285 "y.tab.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -660,10 +661,10 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,   135,   135,   136,   139,   140,   142,   148,   149,   152,
-     153,   154,   157,   158,   159,   162,   163,   166,   169,   170,
-     173,   174,   177,   178,   179,   180,   181,   182,   185,   186,
-     187,   188,   189,   190,   191,   192,   193,   194
+       0,   136,   136,   137,   140,   141,   143,   149,   150,   153,
+     154,   155,   158,   159,   160,   163,   164,   167,   170,   171,
+     174,   175,   178,   179,   180,   181,   182,   183,   186,   187,
+     192,   193,   194,   195,   196,   197,   198,   199
 };
 #endif
 
@@ -1505,127 +1506,131 @@ yyreduce:
   switch (yyn)
     {
   case 4:
-#line 139 "yacc.y"
+#line 140 "yacc.y"
                                                         {printExpression((yyvsp[0].expr).v,(yyvsp[0].expr).type);}
-#line 1511 "y.tab.c"
+#line 1512 "y.tab.c"
     break;
 
   case 5:
-#line 140 "yacc.y"
+#line 141 "yacc.y"
                                                         {printf("type: %s\n\n", (yyvsp[0].lex));}
-#line 1517 "y.tab.c"
+#line 1518 "y.tab.c"
     break;
 
   case 6:
-#line 142 "yacc.y"
+#line 143 "yacc.y"
                                                                                 {printf("%s", smaller((yyvsp[-2].expr).v, (yyvsp[0].expr).v) ? "true" : "false");}
-#line 1523 "y.tab.c"
+#line 1524 "y.tab.c"
     break;
 
   case 8:
-#line 149 "yacc.y"
+#line 150 "yacc.y"
                                                                                 {exit(0);}
-#line 1529 "y.tab.c"
+#line 1530 "y.tab.c"
     break;
 
   case 9:
-#line 152 "yacc.y"
+#line 153 "yacc.y"
                                                                                 { printf("While loop detected.\n"); }
-#line 1535 "y.tab.c"
+#line 1536 "y.tab.c"
     break;
 
   case 10:
-#line 153 "yacc.y"
+#line 154 "yacc.y"
                                                                                 { printf("IF clause detected.\n"); }
-#line 1541 "y.tab.c"
+#line 1542 "y.tab.c"
     break;
 
   case 11:
-#line 154 "yacc.y"
+#line 155 "yacc.y"
                                                                                 { printf("IF..ELSE clause detected.\n");}
-#line 1547 "y.tab.c"
+#line 1548 "y.tab.c"
     break;
 
   case 12:
-#line 157 "yacc.y"
+#line 158 "yacc.y"
             {(yyval.lex) = (char *) "int";}
-#line 1553 "y.tab.c"
+#line 1554 "y.tab.c"
     break;
 
   case 13:
-#line 158 "yacc.y"
+#line 159 "yacc.y"
                 {(yyval.lex) = (char *) "float";}
-#line 1559 "y.tab.c"
+#line 1560 "y.tab.c"
     break;
 
   case 14:
-#line 159 "yacc.y"
+#line 160 "yacc.y"
                  {(yyval.lex) = (char *) "string";}
-#line 1565 "y.tab.c"
+#line 1566 "y.tab.c"
     break;
 
   case 28:
-#line 185 "yacc.y"
+#line 186 "yacc.y"
                                                         {(yyval.expr) = (yyvsp[-1].expr);}
-#line 1571 "y.tab.c"
+#line 1572 "y.tab.c"
     break;
 
   case 29:
-#line 186 "yacc.y"
-                                                        {(yyval.expr).v.f = (float)(yyvsp[-2].expr).v.f+(float)(yyvsp[0].expr).v.f;(yyval.expr).v.i = (yyvsp[-2].expr).v.i+(yyvsp[0].expr).v.i;}
-#line 1577 "y.tab.c"
+#line 187 "yacc.y"
+                                                        {(yyval.expr).type=typeChecking((yyvsp[-2].expr).type,(yyvsp[0].expr).type);
+								(yyval.expr).v.f = (yyvsp[-2].expr).v.f+(yyvsp[0].expr).v.f;
+								if((yyvsp[-2].expr).type=='i'){(yyval.expr).v.f = (float) (yyvsp[-2].expr).v.i+(yyvsp[0].expr).v.f;}
+								if((yyvsp[0].expr).type=='i'){(yyval.expr).v.f = (yyvsp[-2].expr).v.f+(float)(yyvsp[0].expr).v.i;}
+								(yyval.expr).v.i = (yyvsp[-2].expr).v.i+(yyvsp[0].expr).v.i;}
+#line 1582 "y.tab.c"
     break;
 
   case 30:
-#line 187 "yacc.y"
-                                                        {(yyval.expr).v.f = (yyvsp[0].floatVal);(yyval.expr).type = 'f';}
-#line 1583 "y.tab.c"
+#line 192 "yacc.y"
+                                                        {(yyval.expr).v.f = (yyvsp[0].floatVal); (yyval.expr).type = 'f';}
+#line 1588 "y.tab.c"
     break;
 
   case 31:
-#line 188 "yacc.y"
-                                                        {(yyval.expr).v.i = (yyvsp[0].intVal);(yyval.expr).type = 'i';}
-#line 1589 "y.tab.c"
+#line 193 "yacc.y"
+                                                        {(yyval.expr).v.i = (yyvsp[0].intVal); (yyval.expr).type = 'i';}
+#line 1594 "y.tab.c"
     break;
 
   case 32:
-#line 189 "yacc.y"
-                                                        {(yyval.expr).v.f = (yyvsp[-2].expr).v.f-(yyvsp[0].expr).v.f;(yyval.expr).v.i = (yyvsp[-2].expr).v.i-(yyvsp[0].expr).v.i;}
-#line 1595 "y.tab.c"
+#line 194 "yacc.y"
+                                                        {(yyval.expr).v.f = (yyvsp[-2].expr).v.f-(yyvsp[0].expr).v.f; (yyval.expr).v.i = (yyvsp[-2].expr).v.i-(yyvsp[0].expr).v.i;}
+#line 1600 "y.tab.c"
     break;
 
   case 33:
-#line 190 "yacc.y"
-                                                        {(yyval.expr).v.f = (yyvsp[-2].expr).v.f*(yyvsp[0].expr).v.f;(yyval.expr).v.i = (yyvsp[-2].expr).v.i*(yyvsp[0].expr).v.i;}
-#line 1601 "y.tab.c"
+#line 195 "yacc.y"
+                                                        {(yyval.expr).v.f = (yyvsp[-2].expr).v.f*(yyvsp[0].expr).v.f; (yyval.expr).v.i = (yyvsp[-2].expr).v.i*(yyvsp[0].expr).v.i;}
+#line 1606 "y.tab.c"
     break;
 
   case 34:
-#line 191 "yacc.y"
-                                                        {(yyval.expr).v.f = (yyvsp[-2].expr).v.f/(yyvsp[0].expr).v.f;(yyval.expr).v.i = (yyvsp[-2].expr).v.i/(yyvsp[0].expr).v.i;}
-#line 1607 "y.tab.c"
+#line 196 "yacc.y"
+                                                        {(yyval.expr).v.f = (yyvsp[-2].expr).v.f/(yyvsp[0].expr).v.f; (yyval.expr).v.i = (yyvsp[-2].expr).v.i/(yyvsp[0].expr).v.i;}
+#line 1612 "y.tab.c"
     break;
 
   case 35:
-#line 192 "yacc.y"
+#line 197 "yacc.y"
                                                         {(yyval.expr).v.i = pow((yyvsp[-2].expr).v.i,(yyvsp[0].expr).v.i);}
-#line 1613 "y.tab.c"
+#line 1618 "y.tab.c"
     break;
 
   case 36:
-#line 193 "yacc.y"
+#line 198 "yacc.y"
                                                         {(yyval.expr).v.i = (int) fac((yyvsp[-1].expr).v.i);}
-#line 1619 "y.tab.c"
+#line 1624 "y.tab.c"
     break;
 
   case 37:
-#line 194 "yacc.y"
+#line 199 "yacc.y"
                                                         {(yyval.expr).v.i =  - (yyvsp[0].expr).v.i; (yyval.expr).v.f =  - (yyvsp[0].expr).v.f;}
-#line 1625 "y.tab.c"
+#line 1630 "y.tab.c"
     break;
 
 
-#line 1629 "y.tab.c"
+#line 1634 "y.tab.c"
 
       default: break;
     }
@@ -1857,7 +1862,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 215 "yacc.y"
+#line 220 "yacc.y"
 
 int yywrap()
 {
@@ -2155,4 +2160,17 @@ void printExpression(struct Number val, char type){
 		//printf("%d\n",val.i);
 		//printf("%f\n",val.f);
 	}
+}
+
+char typeChecking(char type1, char type2){
+	if(type1==type2 && type2=='i'){
+		return 'i';
+	}
+	if(type1==type2 && type2=='f'){
+		return 'f';
+	}
+	else{
+		return 'f';
+	}
+	return 'e';
 }

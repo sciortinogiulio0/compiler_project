@@ -41,6 +41,7 @@
         struct symbolTable *table;
 	void printExpression(struct Number val, char type);
 	bool smaller(struct Number a, struct Number b);
+	char typeChecking(char type1, char type2);
 
 	extern void *malloc();
 	void yyerror(char *s);
@@ -183,15 +184,43 @@ relop: DIFFERENT
 	;
 
 expression:	'(' expression ')' 			{$$ = $2;}
-		| expression '+' expression		{$$.type=checkType($1,$2);$$.v.f = (float)$1.v.f+(float)$3.v.f;$$.v.i = $1.v.i+$3.v.i;}
-		| REAL					{$$.v.f = $1;$$.type = 'f';}
-		| INTEGER				{$$.v.i = $1;$$.type = 'i';}
-		| expression '-' expression		{$$.v.f = $1.v.f-$3.v.f;$$.v.i = $1.v.i-$3.v.i;}
-		| expression '*' expression		{$$.v.f = $1.v.f*$3.v.f;$$.v.i = $1.v.i*$3.v.i;}
-		| expression '/' expression		{$$.v.f = $1.v.f/$3.v.f;$$.v.i = $1.v.i/$3.v.i;}
-		| expression '^' expression		{$$.v.i = pow($1.v.i,$3.v.i);}
-		| expression '!'			{$$.v.i = (int) fac($1.v.i);}
-		| '-' expression			{$$.v.i =  - $2.v.i; $$.v.f =  - $2.v.f;}
+		| expression '+' expression		{$$.type=typeChecking($1.type,$3.type);
+								$$.v.f = $1.v.f+$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
+								$$.v.i = $1.v.i+$3.v.i;}
+		| REAL					{$$.v.f = $1; $$.type = 'f';}
+		| INTEGER				{$$.v.i = $1; $$.type = 'i';}
+		| expression '-' expression		{$$.type=typeChecking($1.type,$3.type);
+								$$.v.f = $1.v.f+$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
+								$$.v.i = $1.v.i+$3.v.i;}
+		| expression '*' expression		{$$.type=typeChecking($1.type,$3.type);
+								$$.v.f = $1.v.f+$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
+								$$.v.i = $1.v.i+$3.v.i;}
+		| expression '/' expression		{$$.type=typeChecking($1.type,$3.type);
+								$$.v.f = $1.v.f+$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
+								$$.v.i = $1.v.i+$3.v.i;}
+		| expression '^' expression		{$$.type=typeChecking($1.type,$3.type);
+								$$.v.f = $1.v.f+$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
+								$$.v.i = $1.v.i+$3.v.i;}
+		| expression '!'			{$$.type=typeChecking($1.type,$3.type);
+								$$.v.f = $1.v.f+$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
+								$$.v.i = $1.v.i+$3.v.i;}
+		| '-' expression			{$$.type=typeChecking($1.type,$3.type);
+								$$.v.f = $1.v.f+$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
+								$$.v.i = $1.v.i+$3.v.i;}
     		/*| VALUE				{$$ = $1;}
     		| ID                            {$$ = searchSymbol($1);}
 		| ID INC						{add_variable((searchSymbol($1)+1),$1); $$= searchSymbol($1);}
@@ -509,4 +538,17 @@ void printExpression(struct Number val, char type){
 		//printf("%d\n",val.i);
 		//printf("%f\n",val.f);
 	}
+}
+
+char typeChecking(char type1, char type2){
+	if(type1==type2 && type2=='i'){
+		return 'i';
+	}
+	if(type1==type2 && type2=='f'){
+		return 'f';
+	}
+	else{
+		return 'f';
+	}
+	return 'e';
 }
