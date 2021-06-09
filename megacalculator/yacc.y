@@ -193,24 +193,22 @@ expression:	'(' expression ')' 			{$$ = $2;}
 		| INTEGER				{$$.v.i = $1; $$.type = 'i';}
 		| expression '-' expression		{$$.type=typeChecking($1.type,$3.type);
 								$$.v.f = $1.v.f+$3.v.f;
-								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
-								$$.v.i = $1.v.i+$3.v.i;}
+								if($1.type=='i'){$$.v.f = (float) $1.v.i-$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f-(float)$3.v.i;}
+								$$.v.i = $1.v.i-$3.v.i;}
 		| expression '*' expression		{$$.type=typeChecking($1.type,$3.type);
-								$$.v.f = $1.v.f+$3.v.f;
-								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
+								$$.v.f = $1.v.f*$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i*$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f*(float)$3.v.i;}
 								$$.v.i = $1.v.i+$3.v.i;}
 		| expression '/' expression		{$$.type=typeChecking($1.type,$3.type);
-								$$.v.f = $1.v.f+$3.v.f;
-								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
+								$$.v.f = $1.v.f/$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i/$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f/(float)$3.v.i;}
 								$$.v.i = $1.v.i+$3.v.i;}
-		| expression '^' expression		{$$.type=typeChecking($1.type,$3.type);
-								$$.v.f = $1.v.f+$3.v.f;
-								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
-								$$.v.i = $1.v.i+$3.v.i;}
+		| expression '^' expression		{if(typeChecking($3.type,$3.type)=='f') printf("Wrong exponential input. Megacalculator only accepts ints");
+							 else $$=pow((double)$1,(double)$1); $$.type=typeChecking($1.type,$3.type);}
+		
 		| expression '!'			{$$.type=typeChecking($1.type,$3.type);
 								$$.v.f = $1.v.f+$3.v.f;
 								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
