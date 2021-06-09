@@ -6,7 +6,8 @@
 %}
 
 DIGIT	 [0-9]
-VALUE    {DIGIT}+(\.{DIGIT}+)?
+INTEGER	 {DIGIT}+
+REAL    {DIGIT}+(\.{DIGIT}+)
 
 LETTER   [a-zA-Z]
 ID       {LETTER}({LETTER}|{DIGIT})*
@@ -15,7 +16,8 @@ ID       {LETTER}({LETTER}|{DIGIT})*
 
 [ ]			{}
 
-{VALUE} 		{yylval.value = atof(yytext); return VALUE;}
+{REAL} 		{yylval.floatVal= atof(yytext); return REAL;}
+{INTEGER} 		{yylval.intVal = atoi(yytext); return INTEGER;}
 
 FIB			{return FIB;}
 SIGMA			{return SIGMA;}

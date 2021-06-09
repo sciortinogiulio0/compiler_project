@@ -49,114 +49,123 @@ extern int yydebug;
 # define YYTOKENTYPE
   enum yytokentype
   {
-    VALUE = 258,
-    ID = 259,
-    POW = 260,
-    ROOT = 261,
-    LOG = 262,
-    COS = 263,
-    SIN = 264,
-    TAN = 265,
-    FIB = 266,
-    FACT = 267,
-    BASE = 268,
-    SUM = 269,
-    PROD = 270,
-    ABS = 271,
-    MOD = 272,
-    NEP = 273,
-    PI = 274,
-    SMALLER = 275,
-    GREATER = 276,
-    EQUAL = 277,
-    DIFFERENT = 278,
-    SMALLEREQUAL = 279,
-    GREATEREQUAL = 280,
-    RAND = 281,
-    SIGMA = 282,
-    ERA = 283,
-    PRIME = 284,
-    PRIMF = 285,
-    GCD = 286,
-    BC = 287,
-    PN = 288,
-    AVG = 289,
-    CEIL = 290,
-    FLOOR = 291,
-    FOR = 292,
-    WHILE = 293,
-    IF = 294,
-    ELSE = 295,
-    OR = 296,
-    INC = 297,
-    DEC = 298,
-    AND = 299,
-    EXIT = 300,
-    BIN = 301,
-    FLOAT = 302,
-    INT = 303,
-    STRING = 304
+    INTEGER = 258,
+    REAL = 259,
+    ID = 260,
+    POW = 261,
+    ROOT = 262,
+    LOG = 263,
+    COS = 264,
+    SIN = 265,
+    TAN = 266,
+    FIB = 267,
+    FACT = 268,
+    BASE = 269,
+    SUM = 270,
+    PROD = 271,
+    ABS = 272,
+    MOD = 273,
+    NEP = 274,
+    PI = 275,
+    SMALLER = 276,
+    GREATER = 277,
+    EQUAL = 278,
+    DIFFERENT = 279,
+    SMALLEREQUAL = 280,
+    GREATEREQUAL = 281,
+    RAND = 282,
+    SIGMA = 283,
+    ERA = 284,
+    PRIME = 285,
+    PRIMF = 286,
+    GCD = 287,
+    BC = 288,
+    PN = 289,
+    AVG = 290,
+    CEIL = 291,
+    FLOOR = 292,
+    FOR = 293,
+    WHILE = 294,
+    IF = 295,
+    ELSE = 296,
+    OR = 297,
+    INC = 298,
+    DEC = 299,
+    AND = 300,
+    EXIT = 301,
+    BIN = 302,
+    FLOAT = 303,
+    INT = 304,
+    STRING = 305
   };
 #endif
 /* Tokens.  */
-#define VALUE 258
-#define ID 259
-#define POW 260
-#define ROOT 261
-#define LOG 262
-#define COS 263
-#define SIN 264
-#define TAN 265
-#define FIB 266
-#define FACT 267
-#define BASE 268
-#define SUM 269
-#define PROD 270
-#define ABS 271
-#define MOD 272
-#define NEP 273
-#define PI 274
-#define SMALLER 275
-#define GREATER 276
-#define EQUAL 277
-#define DIFFERENT 278
-#define SMALLEREQUAL 279
-#define GREATEREQUAL 280
-#define RAND 281
-#define SIGMA 282
-#define ERA 283
-#define PRIME 284
-#define PRIMF 285
-#define GCD 286
-#define BC 287
-#define PN 288
-#define AVG 289
-#define CEIL 290
-#define FLOOR 291
-#define FOR 292
-#define WHILE 293
-#define IF 294
-#define ELSE 295
-#define OR 296
-#define INC 297
-#define DEC 298
-#define AND 299
-#define EXIT 300
-#define BIN 301
-#define FLOAT 302
-#define INT 303
-#define STRING 304
+#define INTEGER 258
+#define REAL 259
+#define ID 260
+#define POW 261
+#define ROOT 262
+#define LOG 263
+#define COS 264
+#define SIN 265
+#define TAN 266
+#define FIB 267
+#define FACT 268
+#define BASE 269
+#define SUM 270
+#define PROD 271
+#define ABS 272
+#define MOD 273
+#define NEP 274
+#define PI 275
+#define SMALLER 276
+#define GREATER 277
+#define EQUAL 278
+#define DIFFERENT 279
+#define SMALLEREQUAL 280
+#define GREATEREQUAL 281
+#define RAND 282
+#define SIGMA 283
+#define ERA 284
+#define PRIME 285
+#define PRIMF 286
+#define GCD 287
+#define BC 288
+#define PN 289
+#define AVG 290
+#define CEIL 291
+#define FLOOR 292
+#define FOR 293
+#define WHILE 294
+#define IF 295
+#define ELSE 296
+#define OR 297
+#define INC 298
+#define DEC 299
+#define AND 300
+#define EXIT 301
+#define BIN 302
+#define FLOAT 303
+#define INT 304
+#define STRING 305
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 44 "yacc.y"
+#line 51 "yacc.y"
 
 	char* lex;
-	float value;
+	struct Expr
+        {
+		struct Number v;
+		char type;
+	} expr;
+	int intVal;
+	float floatVal;
+	
 
-#line 160 "y.tab.h"
+#line 169 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

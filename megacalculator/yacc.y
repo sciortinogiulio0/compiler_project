@@ -4,7 +4,7 @@
 	#include<string.h>
 	#include<stdbool.h>
 	#include<stdlib.h>
-    #include<ctype.h>
+    	#include<ctype.h>
 
     	int yydebug=1;
 	int fibonacci(int n);
@@ -15,7 +15,7 @@
     	int primeNums(int n);
     	int sigma(int x, int n);
     	float avg (float x, float n);
-    	bool smaller(float a, float b);
+    	
     	bool greater(float a, float b);
     	bool equal(float a, float b);
     	int fac(int n);
@@ -23,17 +23,24 @@
     	int randint(int from, int to,int count);
 	void add_variable(float val, char *name);
 	float searchSymbol (char *name);
+	
+	struct Number {
+	   int i;
+	   float f;
+	};
 
         struct symbolTable
         {
             char *name;
-            float value;
+            struct Number v;
             char *type;
             struct symbolTable *next;
 
         };
 
         struct symbolTable *table;
+	void printExpression(struct Number val, char type);
+	bool smaller(struct Number a, struct Number b);
 
 	extern void *malloc();
 	void yyerror(char *s);
@@ -43,10 +50,18 @@
 
 %union {
 	char* lex;
-	float value;
+	struct Expr
+        {
+		struct Number v;
+		char type;
+	} expr;
+	int intVal;
+	float floatVal;
+	
 }
 
-%token <value> VALUE
+%token <intVal> INTEGER 
+%token <floatVal> REAL
 %token <lex> ID
 %token POW
 %token ROOT
@@ -91,13 +106,14 @@
 %token EXIT
 %token BIN
 
+%token INTEGER
 %token FLOAT
 %token INT
 %token STRING
 
 %type <lex> type
 %type <lex> string
-%type <value> expression
+%type <expr> expression
 %nonassoc INT FLOAT STRING
 %nonassoc ID
 %right INC DEC
@@ -120,15 +136,15 @@ startProgram:	op '\n'
 		| startProgram op '\n'
 		;
 
-op:		expression							{printf("%f\n\n", $1);}
-		| type {printf("type: %s\n\n", $1);}
-		| type ID '=' expression        				{add_variable($4,$2); printf("Variable : %s %s\n\n", $1, $2); add_type($1,$2);}
-    		| expression SMALLER expression 				{printf("%s", smaller($1, $3) ? "true" : "false");}
-		| expression GREATER expression				{printf("%s", greater($1, $3) ? "true" : "false");}
+op:		expression				{printExpression($1.v,$1.type);}
+		| type 					{printf("type: %s\n\n", $1);}
+		//| type ID '=' expression        				{add_variable($4,$2); printf("Variable : %s %s\n\n", $1, $2); /*add_type($1,$2);*/}
+    		| expression SMALLER expression 				{printf("%s", smaller($1.v, $3.v) ? "true" : "false");}
+		/*| expression GREATER expression				{printf("%s", greater($1, $3) ? "true" : "false");}
 		| expression EQUAL expression				{printf("%s", equal($1, $3) ? "true" : "false");}
 		| expression DIFFERENT expression				{printf("%s", equal($1, $3) ? "false" : "true");}
 		| expression SMALLEREQUAL expression			{printf("%s", (smaller($1, $3) || equal($1, $3)) ? "true" : "false");}
-		| expression GREATEREQUAL expression			{printf("%s", (greater($1, $3) || equal($1, $3)) ? "true" : "false");}
+		| expression GREATEREQUAL expression			{printf("%s", (greater($1, $3) || equal($1, $3)) ? "true" : "false");}*/
 		| block
 		| EXIT								{exit(0);}
 		;
@@ -151,7 +167,7 @@ scond: nid relop nid
 	;
 
 nid: ID
-	| VALUE
+	| REAL
 	;
 
 logop: AND
@@ -166,22 +182,17 @@ relop: DIFFERENT
 	| GREATEREQUAL
 	;
 
-var: expression
-	| string
-	;
-
-string:	'*' ID '*' {$$=$2;}
-		;
-
 expression:	'(' expression ')' 			{$$ = $2;}
-		| expression '+' expression		{$$ = $1 + $3;}
-		| expression '-' expression		{$$ = $1 - $3;}
-		| expression '*' expression		{$$ = $1 * $3;}
-		| expression '/' expression		{$$ = $1 / $3;}
-		| expression '^' expression		{$$ = pow($1, $3);}
-		| expression '!'								{$$ = (int) fac($1);}
-		| '-' expression								{$$ =  - $2;}
-    		| VALUE				{$$ = $1;}
+		| expression '+' expression		{$$.type=checkType($1,$2);$$.v.f = (float)$1.v.f+(float)$3.v.f;$$.v.i = $1.v.i+$3.v.i;}
+		| REAL					{$$.v.f = $1;$$.type = 'f';}
+		| INTEGER				{$$.v.i = $1;$$.type = 'i';}
+		| expression '-' expression		{$$.v.f = $1.v.f-$3.v.f;$$.v.i = $1.v.i-$3.v.i;}
+		| expression '*' expression		{$$.v.f = $1.v.f*$3.v.f;$$.v.i = $1.v.i*$3.v.i;}
+		| expression '/' expression		{$$.v.f = $1.v.f/$3.v.f;$$.v.i = $1.v.i/$3.v.i;}
+		| expression '^' expression		{$$.v.i = pow($1.v.i,$3.v.i);}
+		| expression '!'			{$$.v.i = (int) fac($1.v.i);}
+		| '-' expression			{$$.v.i =  - $2.v.i; $$.v.f =  - $2.v.f;}
+    		/*| VALUE				{$$ = $1;}
     		| ID                            {$$ = searchSymbol($1);}
 		| ID INC						{add_variable((searchSymbol($1)+1),$1); $$= searchSymbol($1);}
 		| ID DEC						{ add_variable((searchSymbol($1)-1),$1); $$= searchSymbol($1);}
@@ -198,7 +209,7 @@ expression:	'(' expression ')' 			{$$ = $2;}
 		| BIN '(' expression ',' expression ')'		{$$ = (int) binomial($3,$5);}
 		| RAND '(' expression ',' expression ',' expression ')' {$$ = (int) randint($3,$5,$7);}
 		| PRIME '(' expression ')' {$$ = (int) primeNums($3);}
-		| PRIMF '(' expression ')' {$$ = (int) primeFactors($3);}
+		| PRIMF '(' expression ')' {$$ = (int) primeFactors($3);}*/
 		;
 
 %%
@@ -214,9 +225,9 @@ void main()
     yyparse();
 }
 
-bool smaller(float a, float b)
+bool smaller(struct Number a, struct Number b)
 {
-	bool ret = a < b;
+	bool ret = a.i < b.i;
 	return ret;
 }
 
@@ -440,7 +451,7 @@ void add_variable(float val, char *name)
     {
         if(strcmp(st->name,name)==0)
         {
-          st->value = val;
+          st->v.f = val;
       		return;
         }
     }
@@ -454,7 +465,7 @@ void add_variable(float val, char *name)
 
 	st->name = (char *) malloc(strlen(name)+1);
 	strcpy(st->name, name);
-	st->value = val;
+	st->v.f = val;
 	table = st;
 }
 
@@ -464,7 +475,7 @@ float searchSymbol(char *name)
     for(; st; st=st->next)
     {
         if(strcmp(st->name,name)==0)
-            return st->value;
+            return st->v.f;
     }
     return 0;
 }
@@ -481,4 +492,21 @@ void add_type(char *type, char *name)
         }
     }
 
+}
+
+void printExpression(struct Number val, char type){
+	int zero=0;
+	float zerof=0.0f;
+	bool flag=false;
+	if (type=='i'){
+		//printf("i want to print a float\n");
+		printf("%d\n",val.i);
+	}else if(type=='f'){
+		//printf("i want to print a integer\n");
+		printf("%f\n",val.f);
+	}else{
+		printf("0\n");
+		//printf("%d\n",val.i);
+		//printf("%f\n",val.f);
+	}
 }
