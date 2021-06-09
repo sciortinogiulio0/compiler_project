@@ -15,7 +15,7 @@
     	int primeNums(int n);
     	int sigma(int x, int n);
     	float avg (float x, float n);
-    	
+
     	bool greater(float a, float b);
     	bool equal(float a, float b);
     	int fac(int n);
@@ -23,7 +23,7 @@
     	int randint(int from, int to,int count);
 	void add_variable(float val, char *name);
 	float searchSymbol (char *name);
-	
+
 	struct Number {
 	   int i;
 	   float f;
@@ -58,10 +58,10 @@
 	} expr;
 	int intVal;
 	float floatVal;
-	
+
 }
 
-%token <intVal> INTEGER 
+%token <intVal> INTEGER
 %token <floatVal> REAL
 %token <lex> ID
 %token POW
@@ -217,12 +217,16 @@ expression:	'(' expression ')' 			{$$ = $2;}
 								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
 								$$.v.i = $1.v.i+$3.v.i;}
 		| '-' expression			{$$.type=typeChecking($1.type,$3.type);
-								$$.v.f = $1.v.f+$3.v.f;
-								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
-								$$.v.i = $1.v.i+$3.v.i;}
-    		/*| VALUE				{$$ = $1;}
-    		| ID                            {$$ = searchSymbol($1);}
+													$$.v.f = $1.v.f+$3.v.f;
+														if($1.type=='i'){
+																		$$.v.f = (float) $1.v.i+$3.v.f;
+																	}
+														if($3.type=='i'){
+																		$$.v.f = $1.v.f+(float)$3.v.i;
+																	}
+																	$$.v.i = $1.v.i+$3.v.i;}
+    | VALUE				{$$ = $1;}
+    | ID                            {$$ = searchSymbol($1);}
 		| ID INC						{add_variable((searchSymbol($1)+1),$1); $$= searchSymbol($1);}
 		| ID DEC						{ add_variable((searchSymbol($1)-1),$1); $$= searchSymbol($1);}
 		| expression INC			 			{ $$ = $1 + 1;}
@@ -238,7 +242,10 @@ expression:	'(' expression ')' 			{$$ = $2;}
 		| BIN '(' expression ',' expression ')'		{$$ = (int) binomial($3,$5);}
 		| RAND '(' expression ',' expression ',' expression ')' {$$ = (int) randint($3,$5,$7);}
 		| PRIME '(' expression ')' {$$ = (int) primeNums($3);}
-		| PRIMF '(' expression ')' {$$ = (int) primeFactors($3);}*/
+		| PRIMF '(' expression ')' 		{$$.type=typeChecking($3.type);
+																	$$.type = (int) primeFactors($3);
+																if($3.type=='f')
+																			printf("We do not accept floats here, sorry")}
 		;
 
 %%
