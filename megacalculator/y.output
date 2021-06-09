@@ -86,7 +86,6 @@ Grammar
    33           | expression '/' expression
    34           | expression '^' expression
    35           | expression '!'
-   36           | '-' expression
 
 
 Terminals, with rules where they appear
@@ -99,7 +98,7 @@ Terminals, with rules where they appear
     '*' (42) 32
     '+' (43) 28
     ',' (44)
-    '-' (45) 31 36
+    '-' (45) 31
     '/' (47) 33
     '^' (94) 34
     error (256)
@@ -185,8 +184,8 @@ Nonterminals, with rules where they appear
         on left: 21 22 23 24 25 26
         on right: 16
     expression <expr> (71)
-        on left: 27 28 29 30 31 32 33 34 35 36
-        on right: 3 5 27 28 31 32 33 34 35 36
+        on left: 27 28 29 30 31 32 33 34 35
+        on right: 3 5 27 28 31 32 33 34 35
 
 
 State 0
@@ -201,14 +200,13 @@ State 0
     FLOAT    shift, and go to state 6
     INT      shift, and go to state 7
     STRING   shift, and go to state 8
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
+    '('      shift, and go to state 9
 
-    startProgram  go to state 11
-    op            go to state 12
-    block         go to state 13
-    type          go to state 14
-    expression    go to state 15
+    startProgram  go to state 10
+    op            go to state 11
+    block         go to state 12
+    type          go to state 13
+    expression    go to state 14
 
 
 State 1
@@ -229,7 +227,7 @@ State 3
 
     8 block: WHILE . '(' cond ')' op '\n'
 
-    '('  shift, and go to state 16
+    '('  shift, and go to state 15
 
 
 State 4
@@ -237,7 +235,7 @@ State 4
     9 block: IF . '(' cond ')' op '\n'
    10      | IF . '(' cond ')' op ELSE op '\n'
 
-    '('  shift, and go to state 17
+    '('  shift, and go to state 16
 
 
 State 5
@@ -270,34 +268,21 @@ State 8
 
 State 9
 
-   36 expression: '-' . expression
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
-
-    expression  go to state 18
-
-
-State 10
-
    27 expression: '(' . expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
+    '('      shift, and go to state 9
 
-    expression  go to state 19
+    expression  go to state 17
 
 
-State 11
+State 10
 
     0 $accept: startProgram . $end
     2 startProgram: startProgram . op '\n'
 
-    $end     shift, and go to state 20
+    $end     shift, and go to state 18
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
     WHILE    shift, and go to state 3
@@ -306,37 +291,36 @@ State 11
     FLOAT    shift, and go to state 6
     INT      shift, and go to state 7
     STRING   shift, and go to state 8
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
+    '('      shift, and go to state 9
 
-    op          go to state 21
-    block       go to state 13
-    type        go to state 14
-    expression  go to state 15
+    op          go to state 19
+    block       go to state 12
+    type        go to state 13
+    expression  go to state 14
 
 
-State 12
+State 11
 
     1 startProgram: op . '\n'
 
-    '\n'  shift, and go to state 22
+    '\n'  shift, and go to state 20
 
 
-State 13
+State 12
 
     6 op: block .
 
     $default  reduce using rule 6 (op)
 
 
-State 14
+State 13
 
     4 op: type .
 
     $default  reduce using rule 4 (op)
 
 
-State 15
+State 14
 
     3 op: expression .
     5   | expression . SMALLER expression
@@ -347,61 +331,43 @@ State 15
    34           | expression . '^' expression
    35           | expression . '!'
 
-    SMALLER  shift, and go to state 23
-    '+'      shift, and go to state 24
-    '-'      shift, and go to state 25
-    '*'      shift, and go to state 26
-    '/'      shift, and go to state 27
-    '^'      shift, and go to state 28
-    '!'      shift, and go to state 29
+    SMALLER  shift, and go to state 21
+    '+'      shift, and go to state 22
+    '-'      shift, and go to state 23
+    '*'      shift, and go to state 24
+    '/'      shift, and go to state 25
+    '^'      shift, and go to state 26
+    '!'      shift, and go to state 27
 
     $default  reduce using rule 3 (op)
 
 
-State 16
+State 15
 
     8 block: WHILE '(' . cond ')' op '\n'
 
-    REAL  shift, and go to state 30
-    ID    shift, and go to state 31
+    REAL  shift, and go to state 28
+    ID    shift, and go to state 29
 
-    cond   go to state 32
-    scond  go to state 33
-    nid    go to state 34
+    cond   go to state 30
+    scond  go to state 31
+    nid    go to state 32
 
 
-State 17
+State 16
 
     9 block: IF '(' . cond ')' op '\n'
    10      | IF '(' . cond ')' op ELSE op '\n'
 
-    REAL  shift, and go to state 30
-    ID    shift, and go to state 31
+    REAL  shift, and go to state 28
+    ID    shift, and go to state 29
 
-    cond   go to state 35
-    scond  go to state 33
-    nid    go to state 34
-
-
-State 18
-
-   28 expression: expression . '+' expression
-   31           | expression . '-' expression
-   32           | expression . '*' expression
-   33           | expression . '/' expression
-   34           | expression . '^' expression
-   35           | expression . '!'
-   36           | '-' expression .
-
-    '*'  shift, and go to state 26
-    '/'  shift, and go to state 27
-    '^'  shift, and go to state 28
-    '!'  shift, and go to state 29
-
-    $default  reduce using rule 36 (expression)
+    cond   go to state 33
+    scond  go to state 31
+    nid    go to state 32
 
 
-State 19
+State 17
 
    27 expression: '(' expression . ')'
    28           | expression . '+' expression
@@ -411,186 +377,180 @@ State 19
    34           | expression . '^' expression
    35           | expression . '!'
 
-    '+'  shift, and go to state 24
-    '-'  shift, and go to state 25
-    '*'  shift, and go to state 26
-    '/'  shift, and go to state 27
-    '^'  shift, and go to state 28
-    '!'  shift, and go to state 29
-    ')'  shift, and go to state 36
+    '+'  shift, and go to state 22
+    '-'  shift, and go to state 23
+    '*'  shift, and go to state 24
+    '/'  shift, and go to state 25
+    '^'  shift, and go to state 26
+    '!'  shift, and go to state 27
+    ')'  shift, and go to state 34
 
 
-State 20
+State 18
 
     0 $accept: startProgram $end .
 
     $default  accept
 
 
-State 21
+State 19
 
     2 startProgram: startProgram op . '\n'
 
-    '\n'  shift, and go to state 37
+    '\n'  shift, and go to state 35
 
 
-State 22
+State 20
 
     1 startProgram: op '\n' .
 
     $default  reduce using rule 1 (startProgram)
 
 
-State 23
+State 21
 
     5 op: expression SMALLER . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
+    '('      shift, and go to state 9
+
+    expression  go to state 36
+
+
+State 22
+
+   28 expression: expression '+' . expression
+
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    '('      shift, and go to state 9
+
+    expression  go to state 37
+
+
+State 23
+
+   31 expression: expression '-' . expression
+
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    '('      shift, and go to state 9
 
     expression  go to state 38
 
 
 State 24
 
-   28 expression: expression '+' . expression
+   32 expression: expression '*' . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
+    '('      shift, and go to state 9
 
     expression  go to state 39
 
 
 State 25
 
-   31 expression: expression '-' . expression
+   33 expression: expression '/' . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
+    '('      shift, and go to state 9
 
     expression  go to state 40
 
 
 State 26
 
-   32 expression: expression '*' . expression
+   34 expression: expression '^' . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
+    '('      shift, and go to state 9
 
     expression  go to state 41
 
 
 State 27
 
-   33 expression: expression '/' . expression
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
-
-    expression  go to state 42
-
-
-State 28
-
-   34 expression: expression '^' . expression
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
-
-    expression  go to state 43
-
-
-State 29
-
    35 expression: expression '!' .
 
     $default  reduce using rule 35 (expression)
 
 
-State 30
+State 28
 
    18 nid: REAL .
 
     $default  reduce using rule 18 (nid)
 
 
-State 31
+State 29
 
    17 nid: ID .
 
     $default  reduce using rule 17 (nid)
 
 
-State 32
+State 30
 
     8 block: WHILE '(' cond . ')' op '\n'
 
-    ')'  shift, and go to state 44
+    ')'  shift, and go to state 42
 
 
-State 33
+State 31
 
    14 cond: scond .
    15     | scond . logop cond
 
-    OR   shift, and go to state 45
-    AND  shift, and go to state 46
+    OR   shift, and go to state 43
+    AND  shift, and go to state 44
 
     $default  reduce using rule 14 (cond)
 
-    logop  go to state 47
+    logop  go to state 45
 
 
-State 34
+State 32
 
    16 scond: nid . relop nid
 
-    SMALLER       shift, and go to state 48
-    GREATER       shift, and go to state 49
-    EQUAL         shift, and go to state 50
-    DIFFERENT     shift, and go to state 51
-    SMALLEREQUAL  shift, and go to state 52
-    GREATEREQUAL  shift, and go to state 53
+    SMALLER       shift, and go to state 46
+    GREATER       shift, and go to state 47
+    EQUAL         shift, and go to state 48
+    DIFFERENT     shift, and go to state 49
+    SMALLEREQUAL  shift, and go to state 50
+    GREATEREQUAL  shift, and go to state 51
 
-    relop  go to state 54
+    relop  go to state 52
 
 
-State 35
+State 33
 
     9 block: IF '(' cond . ')' op '\n'
    10      | IF '(' cond . ')' op ELSE op '\n'
 
-    ')'  shift, and go to state 55
+    ')'  shift, and go to state 53
 
 
-State 36
+State 34
 
    27 expression: '(' expression ')' .
 
     $default  reduce using rule 27 (expression)
 
 
-State 37
+State 35
 
     2 startProgram: startProgram op '\n' .
 
     $default  reduce using rule 2 (startProgram)
 
 
-State 38
+State 36
 
     5 op: expression SMALLER expression .
    28 expression: expression . '+' expression
@@ -600,17 +560,17 @@ State 38
    34           | expression . '^' expression
    35           | expression . '!'
 
-    '+'  shift, and go to state 24
-    '-'  shift, and go to state 25
-    '*'  shift, and go to state 26
-    '/'  shift, and go to state 27
-    '^'  shift, and go to state 28
-    '!'  shift, and go to state 29
+    '+'  shift, and go to state 22
+    '-'  shift, and go to state 23
+    '*'  shift, and go to state 24
+    '/'  shift, and go to state 25
+    '^'  shift, and go to state 26
+    '!'  shift, and go to state 27
 
     $default  reduce using rule 5 (op)
 
 
-State 39
+State 37
 
    28 expression: expression . '+' expression
    28           | expression '+' expression .
@@ -620,16 +580,16 @@ State 39
    34           | expression . '^' expression
    35           | expression . '!'
 
-    '-'  shift, and go to state 25
-    '*'  shift, and go to state 26
-    '/'  shift, and go to state 27
-    '^'  shift, and go to state 28
-    '!'  shift, and go to state 29
+    '-'  shift, and go to state 23
+    '*'  shift, and go to state 24
+    '/'  shift, and go to state 25
+    '^'  shift, and go to state 26
+    '!'  shift, and go to state 27
 
     $default  reduce using rule 28 (expression)
 
 
-State 40
+State 38
 
    28 expression: expression . '+' expression
    31           | expression . '-' expression
@@ -639,15 +599,15 @@ State 40
    34           | expression . '^' expression
    35           | expression . '!'
 
-    '*'  shift, and go to state 26
-    '/'  shift, and go to state 27
-    '^'  shift, and go to state 28
-    '!'  shift, and go to state 29
+    '*'  shift, and go to state 24
+    '/'  shift, and go to state 25
+    '^'  shift, and go to state 26
+    '!'  shift, and go to state 27
 
     $default  reduce using rule 31 (expression)
 
 
-State 41
+State 39
 
    28 expression: expression . '+' expression
    31           | expression . '-' expression
@@ -657,14 +617,14 @@ State 41
    34           | expression . '^' expression
    35           | expression . '!'
 
-    '/'  shift, and go to state 27
-    '^'  shift, and go to state 28
-    '!'  shift, and go to state 29
+    '/'  shift, and go to state 25
+    '^'  shift, and go to state 26
+    '!'  shift, and go to state 27
 
     $default  reduce using rule 32 (expression)
 
 
-State 42
+State 40
 
    28 expression: expression . '+' expression
    31           | expression . '-' expression
@@ -674,13 +634,13 @@ State 42
    34           | expression . '^' expression
    35           | expression . '!'
 
-    '^'  shift, and go to state 28
-    '!'  shift, and go to state 29
+    '^'  shift, and go to state 26
+    '!'  shift, and go to state 27
 
     $default  reduce using rule 33 (expression)
 
 
-State 43
+State 41
 
    28 expression: expression . '+' expression
    31           | expression . '-' expression
@@ -690,12 +650,12 @@ State 43
    34           | expression '^' expression .
    35           | expression . '!'
 
-    '!'  shift, and go to state 29
+    '!'  shift, and go to state 27
 
     $default  reduce using rule 34 (expression)
 
 
-State 44
+State 42
 
     8 block: WHILE '(' cond ')' . op '\n'
 
@@ -707,94 +667,93 @@ State 44
     FLOAT    shift, and go to state 6
     INT      shift, and go to state 7
     STRING   shift, and go to state 8
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
+    '('      shift, and go to state 9
 
-    op          go to state 56
-    block       go to state 13
-    type        go to state 14
-    expression  go to state 15
+    op          go to state 54
+    block       go to state 12
+    type        go to state 13
+    expression  go to state 14
 
 
-State 45
+State 43
 
    20 logop: OR .
 
     $default  reduce using rule 20 (logop)
 
 
-State 46
+State 44
 
    19 logop: AND .
 
     $default  reduce using rule 19 (logop)
 
 
-State 47
+State 45
 
    15 cond: scond logop . cond
 
-    REAL  shift, and go to state 30
-    ID    shift, and go to state 31
+    REAL  shift, and go to state 28
+    ID    shift, and go to state 29
 
-    cond   go to state 57
-    scond  go to state 33
-    nid    go to state 34
+    cond   go to state 55
+    scond  go to state 31
+    nid    go to state 32
 
 
-State 48
+State 46
 
    24 relop: SMALLER .
 
     $default  reduce using rule 24 (relop)
 
 
-State 49
+State 47
 
    25 relop: GREATER .
 
     $default  reduce using rule 25 (relop)
 
 
-State 50
+State 48
 
    22 relop: EQUAL .
 
     $default  reduce using rule 22 (relop)
 
 
-State 51
+State 49
 
    21 relop: DIFFERENT .
 
     $default  reduce using rule 21 (relop)
 
 
-State 52
+State 50
 
    23 relop: SMALLEREQUAL .
 
     $default  reduce using rule 23 (relop)
 
 
-State 53
+State 51
 
    26 relop: GREATEREQUAL .
 
     $default  reduce using rule 26 (relop)
 
 
-State 54
+State 52
 
    16 scond: nid relop . nid
 
-    REAL  shift, and go to state 30
-    ID    shift, and go to state 31
+    REAL  shift, and go to state 28
+    ID    shift, and go to state 29
 
-    nid  go to state 58
+    nid  go to state 56
 
 
-State 55
+State 53
 
     9 block: IF '(' cond ')' . op '\n'
    10      | IF '(' cond ')' . op ELSE op '\n'
@@ -807,53 +766,52 @@ State 55
     FLOAT    shift, and go to state 6
     INT      shift, and go to state 7
     STRING   shift, and go to state 8
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
+    '('      shift, and go to state 9
 
-    op          go to state 59
-    block       go to state 13
-    type        go to state 14
-    expression  go to state 15
+    op          go to state 57
+    block       go to state 12
+    type        go to state 13
+    expression  go to state 14
 
 
-State 56
+State 54
 
     8 block: WHILE '(' cond ')' op . '\n'
 
-    '\n'  shift, and go to state 60
+    '\n'  shift, and go to state 58
 
 
-State 57
+State 55
 
    15 cond: scond logop cond .
 
     $default  reduce using rule 15 (cond)
 
 
-State 58
+State 56
 
    16 scond: nid relop nid .
 
     $default  reduce using rule 16 (scond)
 
 
-State 59
+State 57
 
     9 block: IF '(' cond ')' op . '\n'
    10      | IF '(' cond ')' op . ELSE op '\n'
 
-    ELSE  shift, and go to state 61
-    '\n'  shift, and go to state 62
+    ELSE  shift, and go to state 59
+    '\n'  shift, and go to state 60
 
 
-State 60
+State 58
 
     8 block: WHILE '(' cond ')' op '\n' .
 
     $default  reduce using rule 8 (block)
 
 
-State 61
+State 59
 
    10 block: IF '(' cond ')' op ELSE . op '\n'
 
@@ -865,30 +823,29 @@ State 61
     FLOAT    shift, and go to state 6
     INT      shift, and go to state 7
     STRING   shift, and go to state 8
-    '-'      shift, and go to state 9
-    '('      shift, and go to state 10
+    '('      shift, and go to state 9
 
-    op          go to state 63
-    block       go to state 13
-    type        go to state 14
-    expression  go to state 15
+    op          go to state 61
+    block       go to state 12
+    type        go to state 13
+    expression  go to state 14
 
 
-State 62
+State 60
 
     9 block: IF '(' cond ')' op '\n' .
 
     $default  reduce using rule 9 (block)
 
 
-State 63
+State 61
 
    10 block: IF '(' cond ')' op ELSE op . '\n'
 
-    '\n'  shift, and go to state 64
+    '\n'  shift, and go to state 62
 
 
-State 64
+State 62
 
    10 block: IF '(' cond ')' op ELSE op '\n' .
 
