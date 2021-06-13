@@ -247,12 +247,17 @@ expression:	'(' expression ')' 			{$$ = $2;}
                                                       }
                                                       
                  //VARIABLES
-/*
-		| ID INC				{add_variable((searchSymbol($1)+1),$1); $$= searchSymbol($1);}
-		| ID DEC				{ add_variable((searchSymbol($1)-1),$1); $$= searchSymbol($1);}
-		| expression INC			{ $$ = $1 + 1;}
-		| expression DEC			{ $$ = $1 - 1;}*/
-		;
+		| ID INC				{//add_variable((searchSymbol($1)),$1,searchSymbol($1).type); 
+                                    if(searchSymbol(get_type($1) == 'i')){ ($1.v.i += 1); }
+                                    else if(searchSymbol(get_type($1) == 'f')){ ($1.v.f += 1); } $$.v= searchSymbol($1);}
+		//| ID DEC				{ add_variable((searchSymbol($1)-1),$1); $$= searchSymbol($1);}
+		| expression INC			{$$.type =typeChecking($1.type,$1.type);
+                                                if($1.type == 'i'){ ($1.v.i + 1);}
+                                                else if($1.type == 'f'){($1.v.f + 1);}}
+		| expression DEC			{$$.type =typeChecking($1.type,$1.type);
+                                                if($1.type == 'i'){ ($1.v.i - 1);}
+                                                else if($1.type == 'f'){($1.v.f - 1);}}
+        ;
 
 %%
 int yywrap()
