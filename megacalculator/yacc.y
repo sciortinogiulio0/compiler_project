@@ -15,15 +15,10 @@
     	int primeNums(int n);
     	int sigma(int x, int n);
     	float avg (float x, float n);
-
-    	bool greater(float a, float b);
-    	bool equal(float a, float b);
     	int fac(int n);
     	void add_type(char *type, char *name);
     	int randint(int from, int to,int count);
-	void add_variable(float val, char *name);
-	float searchSymbol (char *name);
-
+	
 	struct Number {
 	   int i;
 	   float f;
@@ -33,7 +28,7 @@
         {
             char *name;
             struct Number v;
-            char *type;
+            char type;
             struct symbolTable *next;
 
         };
@@ -41,7 +36,12 @@
         struct symbolTable *table;
 	void printExpression(struct Number val, char type);
 	bool smaller(struct Number a, struct Number b);
+	bool greater(struct Number a, struct Number b);
+    	bool equal(struct Number a, struct Number b);
+	void add_variable(struct Number val, char *name, char type);
+	struct Number searchSymbol(char *name);
 	char typeChecking(char type1, char type2);
+	char get_type(char *varName);
 
 	extern void *malloc();
 	void yyerror(char *s);
@@ -58,10 +58,10 @@
 	} expr;
 	int intVal;
 	float floatVal;
-
+	
 }
 
-%token <intVal> INTEGER
+%token <intVal> INTEGER 
 %token <floatVal> REAL
 %token <lex> ID
 %token POW
@@ -107,15 +107,7 @@
 %token EXIT
 %token BIN
 
-%token INTEGER
-%token FLOAT
-%token INT
-%token STRING
-
-%type <lex> type
-%type <lex> string
 %type <expr> expression
-%nonassoc INT FLOAT STRING
 %nonassoc ID
 %right INC DEC
 %left '+'
@@ -138,14 +130,13 @@ startProgram:	op '\n'
 		;
 
 op:		expression				{printExpression($1.v,$1.type);}
-		| type 					{printf("type: %s\n\n", $1);}
-		//| type ID '=' expression        				{add_variable($4,$2); printf("Variable : %s %s\n\n", $1, $2); /*add_type($1,$2);*/}
+		| ID '=' expression			{ add_variable($3.v,$1,$3.type);}
     		| expression SMALLER expression 				{printf("%s", smaller($1.v, $3.v) ? "true" : "false");}
-		/*| expression GREATER expression				{printf("%s", greater($1, $3) ? "true" : "false");}
-		| expression EQUAL expression				{printf("%s", equal($1, $3) ? "true" : "false");}
-		| expression DIFFERENT expression				{printf("%s", equal($1, $3) ? "false" : "true");}
-		| expression SMALLEREQUAL expression			{printf("%s", (smaller($1, $3) || equal($1, $3)) ? "true" : "false");}
-		| expression GREATEREQUAL expression			{printf("%s", (greater($1, $3) || equal($1, $3)) ? "true" : "false");}*/
+		| expression GREATER expression				{printf("%s", greater($1.v, $3.v) ? "true" : "false");}
+		| expression EQUAL expression				{printf("%s", equal($1.v, $3.v) ? "true" : "false");}
+		| expression DIFFERENT expression				{printf("%s", equal($1.v, $3.v) ? "false" : "true");}
+		| expression SMALLEREQUAL expression			{printf("%s", (smaller($1.v, $3.v) || equal($1.v, $3.v)) ? "true" : "false");}
+		| expression GREATEREQUAL expression			{printf("%s", (greater($1.v, $3.v) || equal($1.v, $3.v)) ? "true" : "false");}
 		| block
 		| EXIT								{exit(0);}
 		;
@@ -154,11 +145,6 @@ block:	WHILE '(' cond ')' op	'\n'						{ printf("While loop detected.\n"); }
 		 | IF '(' cond ')' op '\n'					{ printf("IF clause detected.\n"); }
 		 | IF '(' cond ')' op ELSE op '\n'				{ printf("IF..ELSE clause detected.\n");}
 		 ;
-
-type: 	INT {$$ = (char *) "int";}
-	| FLOAT {$$ = (char *) "float";}
-	| STRING {$$ = (char *) "string";}
-	;
 
 cond: scond
 	| scond logop cond
@@ -184,6 +170,9 @@ relop: DIFFERENT
 	;
 
 expression:	'(' expression ')' 			{$$ = $2;}
+    		| ID                            	{$$.v = searchSymbol($1); $$.type=get_type($1);}
+    		
+    		
 		| expression '+' expression		{$$.type=typeChecking($1.type,$3.type);
 								$$.v.f = $1.v.f+$3.v.f;
 								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
@@ -193,59 +182,76 @@ expression:	'(' expression ')' 			{$$ = $2;}
 		| INTEGER				{$$.v.i = $1; $$.type = 'i';}
 		| expression '-' expression		{$$.type=typeChecking($1.type,$3.type);
 								$$.v.f = $1.v.f+$3.v.f;
-								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
-								$$.v.i = $1.v.i+$3.v.i;}
+								if($1.type=='i'){$$.v.f = (float) $1.v.i-$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f-(float)$3.v.i;}
+								$$.v.i = $1.v.i-$3.v.i;}
 		| expression '*' expression		{$$.type=typeChecking($1.type,$3.type);
-								$$.v.f = $1.v.f+$3.v.f;
-								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
-								$$.v.i = $1.v.i+$3.v.i;}
+								$$.v.f = $1.v.f*$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i*$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f*(float)$3.v.i;}
+								$$.v.i = $1.v.i*$3.v.i;}
 		| expression '/' expression		{$$.type=typeChecking($1.type,$3.type);
-								$$.v.f = $1.v.f+$3.v.f;
-								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
-								$$.v.i = $1.v.i+$3.v.i;}
-		| expression '^' expression		{$$.type=typeChecking($1.type,$3.type);
-								$$.v.f = $1.v.f+$3.v.f;
-								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
-								$$.v.i = $1.v.i+$3.v.i;}
-		| expression '!'			{$$.type=typeChecking($1.type,$3.type);
-								$$.v.f = $1.v.f+$3.v.f;
-								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
-								$$.v.i = $1.v.i+$3.v.i;}
-		| '-' expression			{$$.type=typeChecking($1.type,$3.type);
-													$$.v.f = $1.v.f+$3.v.f;
-														if($1.type=='i'){
-																		$$.v.f = (float) $1.v.i+$3.v.f;
-																	}
-														if($3.type=='i'){
-																		$$.v.f = $1.v.f+(float)$3.v.i;
-																	}
-																	$$.v.i = $1.v.i+$3.v.i;}
-    | VALUE				{$$ = $1;}
-    | ID                            {$$ = searchSymbol($1);}
-		| ID INC						{add_variable((searchSymbol($1)+1),$1); $$= searchSymbol($1);}
-		| ID DEC						{ add_variable((searchSymbol($1)-1),$1); $$= searchSymbol($1);}
-		| expression INC			 			{ $$ = $1 + 1;}
-		| expression DEC			 			{ $$ = $1 - 1;}
-		| FIB '(' expression ')'		{$$ = (int) fibonacci($3);}
-		| SIGMA '(' expression ',' expression ')'		{$$ = (int) sigma($3,$5);}
-		| GCD '(' expression ',' expression ')'		{$$ = gcd($3,$5);}
-		| AVG '(' expression ',' expression ')'		{$$ = avg($3,$5);}
-		| LOG '(' expression ')'				{$$ = log($3);}
-		| CEIL '(' expression ')'				{$$ = ceil($3);}
-		| FLOOR '(' expression ')'				{$$ = floor($3);}
-		| ERA '(' expression ')'				{$$ = eratosthenes($3);}
-		| BIN '(' expression ',' expression ')'		{$$ = (int) binomial($3,$5);}
-		| RAND '(' expression ',' expression ',' expression ')' {$$ = (int) randint($3,$5,$7);}
-		| PRIME '(' expression ')' {$$ = (int) primeNums($3);}
-		| PRIMF '(' expression ')' 		{$$.type=typeChecking($3.type);
-																	$$.type = (int) primeFactors($3);
-																if($3.type=='f')
-																			printf("We do not accept floats here, sorry")}
+								$$.v.f = $1.v.f/$3.v.f;
+								if($1.type=='i'){$$.v.f = (float) $1.v.i/$3.v.f;}
+								if($3.type=='i'){$$.v.f = $1.v.f/(float)$3.v.i;}
+								$$.v.i = $1.v.i/$3.v.i;}
+		| expression '^' expression		{if(typeChecking($3.type,$3.type)=='f') printf("Wrong input. Megacalculator only accepts integers");
+							 else $$.v.i=pow($1.v.i,$3.v.i); $$.v.f=pow($1.v.f,$3.v.i);$$.type=typeChecking($1.type,$3.type);}
+		
+		| expression '!'			{if(typeChecking($1.type,$1.type)=='f') printf("Wrong input. Factorial only accepts integers"); 
+							else {$$.type=typeChecking($1.type,$1.type); $$.v.i = (int) fac($1.v.i);$$.v.f = (int) fac($1.v.f);}}
+		| '-' expression			{$$.type=typeChecking($2.type,$2.type);$$.v.f = -$2.v.f;$$.v.i = -$2.v.i;}
+
+		| FIB '(' expression ')'        {$$.type=typeChecking($3.type,$3.type);
+                                                if($3.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
+                                                else $$.v.i = (int) fibonacci($3.v.i);}
+		| SIGMA '(' expression ',' expression ')'		{$$.type=typeChecking($3.type,$5.type);
+                                                				if($$.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
+                                                				else $$.v.i = (int) sigma($3.v.i,$5.v.i);}
+		| GCD '(' expression ',' expression ')'		{$$.type=typeChecking($3.type,$5.type);
+                                                				if($$.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
+                                                				else $$.v.i = (int) gcd($3.v.i,$5.v.i);}
+		| AVG '(' expression ',' expression ')'		{$$.type=typeChecking($3.type,$5.type);
+                                                				if($$.type=='f'){
+                                                				if($3.type=='i'){$$.v.f = avg((float)$3.v.i,$5.v.f);}
+                                                				else if($5.type=='i'){$$.v.f = avg($3.v.f,(float)$5.v.i);} 
+                                                				else $$.v.f = avg($3.v.f,$5.v.f);}
+                                                				else $$.v.i = (int) avg($3.v.i,$5.v.i);}
+
+                                               				//TO BE FIXED
+		| LOG '(' expression ')'				{$$.type=typeChecking($3.type,$3.type);
+						                        if($3.type=='i'){$$.v.f = log((float) $3.v.i);}
+						                        else if($3.type=='f') {$$.v.f = log($3.v.f);}}
+						                        
+		| CEIL '(' expression ')'				{$$.type=$3.type; $$.v.f = ceil($3.v.f);$$.v.i = $3.v.i;}
+		| FLOOR '(' expression ')'				{$$.type=$3.type; $$.v.f = floor($3.v.f);$$.v.i = $3.v.i;}
+		
+		| ERA '(' expression ')'				{$$.type=typeChecking($3.type,$3.type);
+                                                if($3.type=='f')printf("Please insert an integer and not a float for the erathostenes function \n");
+                                               else  $$.v.i = (int) eratosthenes($3.v.i); }
+		| BIN '(' expression ',' expression ')'		{$$.type=typeChecking($3.type,$5.type);
+                                                if($$.type=='f')printf("Please insert an integer and not a float for the binomial function \n");
+                                               else  $$.v.i = (int) binomial($3.v.i,$5.v.i); }
+                                               
+		| RAND '(' expression ',' expression ',' expression ')' {$$.type=typeChecking($3.type,$5.type);$$.type=typeChecking($3.type,$7.type);
+                                                if($$.type=='f')printf("Please insert an integer and not a float for the prime factorization function \n");
+                                               else  $$.v.i = (int) randint($3.v.i,$5.v.i,$7.v.i); }
+		
+		| PRIME '(' expression ')' {$$.type=typeChecking($3.type,$3.type);
+                                                if($3.type=='f')printf("Please insert an integer and not a float for the prime numbers function \n");
+                                               else  $$.v.i = (int) primeNums($3.v.i);}
+
+		| PRIMF '(' expression ')'         {$$.type=typeChecking($3.type,$3.type);
+                                                      if($3.type=='f') printf("Please insert an integer and not a float for the prime factorization function"); 
+                                                      else $$.v.i = (int) primeFactors($3.v.i);
+                                                      }
+                                                      
+                 //VARIABLES
+/*
+		| ID INC				{add_variable((searchSymbol($1)+1),$1); $$= searchSymbol($1);}
+		| ID DEC				{ add_variable((searchSymbol($1)-1),$1); $$= searchSymbol($1);}
+		| expression INC			{ $$ = $1 + 1;}
+		| expression DEC			{ $$ = $1 - 1;}*/
 		;
 
 %%
@@ -263,19 +269,20 @@ void main()
 
 bool smaller(struct Number a, struct Number b)
 {
-	bool ret = a.i < b.i;
+	
+	bool ret = (float) a.i < (float)b.i;
 	return ret;
 }
 
-bool greater(float a, float b)
+bool greater(struct Number a, struct Number b)
 {
-	bool ret = a > b;
+	bool ret = (float)a.i > (float)b.i;
 	return ret;
 }
 
-bool equal(float a, float b)
+bool equal(struct Number a, struct Number b)
 {
-	bool ret = a == b;
+	bool ret = (float)a.i == (float)b.i;
 	return ret;
 }
 
@@ -300,7 +307,7 @@ int fibonacci (int n)
       third=first+second;
       first=second;
       second=third;
-      if(third!=n){
+      if(third!=n && i<n-1){
       	printf("%d\n",third);
       }
   }
@@ -355,7 +362,7 @@ int gcd(int m, int n) {
 }
 
 float avg(float x, float n){
-	return (x+n)/2;
+	return (x+n)/2.0;
 }
 
 int binomial(int n, int k) {
@@ -393,7 +400,7 @@ int randint(int lower, int upper, int count) {
         int num = (rand() % (upper - lower + 1)) + lower;
         result = num;
         if(i<count-1){
-      		printf("%f\n",(float) result);
+      		printf("%d\n",result);
       }
     }
     return (int) result;
@@ -440,7 +447,7 @@ int eratosthenes(int n) {
                     }
                 }
                 if (!a && i != 1 && i != 0 && count<primes-1){
-                    printf("%f\n",(float) i);
+                    printf("%d\n",i);
                     count++;
                     //printf("%d ",count);
                 }
@@ -458,7 +465,7 @@ int primeFactors(int n)
     // Print the number of 2s that divide n
     while (n%2 == 0)
     {
-        printf("%f\n", 2.0);
+        printf("%d\n", 2);
         n = n/2;
     }
 
@@ -469,7 +476,7 @@ int primeFactors(int n)
         // While i divides n, print i and divide n
         while (n%i == 0)
         {
-            printf("%f\n", (float) i);
+            printf("%d\n", i);
             n = n/i;
         }
     }
@@ -480,14 +487,15 @@ int primeFactors(int n)
         return n;
 }
 
-void add_variable(float val, char *name)
+void add_variable(struct Number val, char *name, char type)
 {
   struct symbolTable *st = table;
     for(; st; st=st->next)
     {
         if(strcmp(st->name,name)==0)
         {
-          st->v.f = val;
+          st->v = val;
+          st->type=type;
       		return;
         }
     }
@@ -501,19 +509,21 @@ void add_variable(float val, char *name)
 
 	st->name = (char *) malloc(strlen(name)+1);
 	strcpy(st->name, name);
-	st->v.f = val;
+	st->v = val;
+	st->type=type;
 	table = st;
 }
 
-float searchSymbol(char *name)
+struct Number searchSymbol(char *name)
 {
   struct symbolTable *st = table;
     for(; st; st=st->next)
     {
         if(strcmp(st->name,name)==0)
-            return st->v.f;
+            return st->v;
     }
-    return 0;
+    printf("Variable not found!\n");
+
 }
 
 void add_type(char *type, char *name)
@@ -523,7 +533,7 @@ void add_type(char *type, char *name)
     {
         if(strcmp(st->name,name)==0)
         {
-          st->type = (char *) malloc(strlen(type)+1);
+          //st->type = (char *) malloc(strlen(type)+1);
       		return;
         }
     }
@@ -558,4 +568,15 @@ char typeChecking(char type1, char type2){
 		return 'f';
 	}
 	return 'e';
+}
+
+char get_type(char *name){
+    struct symbolTable *st = table;
+    for(; st; st=st->next)
+    {
+        if(strcmp(st->name,name)==0)
+        {
+      		return st->type;
+        }
+    }
 }
