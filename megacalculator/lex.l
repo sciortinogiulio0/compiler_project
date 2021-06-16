@@ -49,7 +49,7 @@ ELSE						{return ELSE;}
 OR							{return OR;}
 AND							{return AND;}
 
-EXIT			{return EXIT;}
+EXIT|exit  			{return EXIT;}
 
 {ID}   	        {yylval.lex = strdup(yytext);return ID;}
 
