@@ -1,6 +1,10 @@
 
 Insert data in our megacalculator
-input must be greater than 0input must be greater than 00.000000
+first input must be greater than the second one and greater than 0
+First input must be greater or equal than 0
+Please insert an integer and not a float for the prime numbers function 
+0.000000
+First input must be greater than 10
+input must be greater than 0input must be greater than 0
 
-91.000000
-
+Error: syntax error
