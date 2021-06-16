@@ -6,6 +6,8 @@
 	#include<stdlib.h>
     	#include<ctype.h>
 
+	//TODO: Warnings, division by 0, tokens to be done, log to be fixed, report
+
     	int yydebug=1;
 	int fibonacci(int n);
 	int binomial(int n, int k);
@@ -65,20 +67,14 @@
 %token <floatVal> REAL
 %token <lex> ID
 %token POW
-%token ROOT
-%token LOG
-%token COS
-%token SIN
-%token TAN
+%token ROOT //TODO
+%token LOG //TO FIX
 %token FIB
 %token FACT
-%token BASE
 %token SUM
 %token PROD
-%token ABS
-%token MOD
-%token NEP
-%token PI
+%token ABS //TODO
+%token PI //TODO
 %token SMALLER
 %token GREATER
 %token EQUAL
@@ -91,8 +87,6 @@
 %token PRIME
 %token PRIMF
 %token GCD
-%token BC
-%token PN
 %token AVG
 %token CEIL
 %token FLOOR
@@ -246,11 +240,14 @@ expression:	'(' expression ')' 			{$$ = $2;}
                                                       else $$.v.i = (int) primeFactors($3.v.i);
                                                       }
                                                       
-                 //VARIABLES
-		| ID INC				{//add_variable((searchSymbol($1)),$1,searchSymbol($1).type); 
-                                    if(searchSymbol(get_type($1) == 'i')){ ($1.v.i += 1); }
-                                    else if(searchSymbol(get_type($1) == 'f')){ ($1.v.f += 1); } $$.v= searchSymbol($1);}
-		//| ID DEC				{ add_variable((searchSymbol($1)-1),$1); $$= searchSymbol($1);}
+		| ID INC	{if(get_type($1) == 'i'){struct Number n; n.i=searchSymbol($1).i+1; add_variable(n,$1,get_type($1));}
+                                    else if(get_type($1) == 'f'){struct Number n; n.f=searchSymbol($1).f+1; add_variable(n,$1,get_type($1));}
+                                    struct Expr expr; expr.v=searchSymbol($1);expr.type=get_type($1); $$=expr;}
+                                    
+		| ID DEC	{if(get_type($1) == 'i'){struct Number n; n.i=searchSymbol($1).i-1; add_variable(n,$1,get_type($1));}
+                                    else if(get_type($1) == 'f'){struct Number n; n.f=searchSymbol($1).f-1; add_variable(n,$1,get_type($1));}
+                                    struct Expr expr; expr.v=searchSymbol($1);expr.type=get_type($1); $$=expr;}
+                                    
 		| expression INC			{$$.type =typeChecking($1.type,$1.type);
                                                 if($1.type == 'i'){ ($1.v.i + 1);}
                                                 else if($1.type == 'f'){($1.v.f + 1);}}
@@ -373,17 +370,17 @@ float avg(float x, float n){
 int binomial(int n, int k) {
 
      if(n<k){
-       printf("first input must be greater than the second one");
+       printf("first input must be greater than the second one and greater than ");
        return 0;
      }
 
       if(n<0){
-       printf("first input must be greater or equal than 0");
+       printf("first input must be greater or equal than ");
        return 0;
 
      }
       if(k<0){
-       printf("second input must be greater or equal than 0");
+       printf("second input must be greater or equal than ");
        return 0;
      }
 
