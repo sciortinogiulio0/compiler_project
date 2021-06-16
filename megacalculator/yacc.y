@@ -600,6 +600,7 @@ char typeConsensus(char type1, char type2){
 	return 'e';
 }
 
+//returns the type associated to a variable (looks in the symbolTable)
 char get_type(char *name){
     struct symbolTable *st = table;
     for(; st; st=st->next)
