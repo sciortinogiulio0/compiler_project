@@ -6,8 +6,6 @@
 	#include<stdlib.h>
     	#include<ctype.h>
 
-	//TODO: Warnings, division by 0, tokens to be done, log to be fixed, report
-
     	int yydebug=1;
 	int fibonacci(int n);
 	int binomial(int n, int k);
@@ -18,9 +16,9 @@
     	int sigma(int x, int n);
     	float avg (float x, float n);
     	int fac(int n);
-    	void add_type(char *type, char *name);
     	int randint(int from, int to,int count);
 	
+	//The calculator handles this struct Number for the calculations
 	struct Number {
 	   int i;
 	   float f;
@@ -36,13 +34,14 @@
         };
 
         struct symbolTable *table;
+        
 	void printExpression(struct Number val, char type);
 	bool smaller(struct Number a, struct Number b);
 	bool greater(struct Number a, struct Number b);
     	bool equal(struct Number a, struct Number b);
 	void add_variable(struct Number val, char *name, char type);
 	struct Number searchSymbol(char *name);
-	char typeChecking(char type1, char type2);
+	char typeConsensus(char type1, char type2);
 	char get_type(char *varName);
 
 	extern void *malloc();
@@ -60,21 +59,20 @@
 	} expr;
 	int intVal;
 	float floatVal;
-	
 }
 
-%token <intVal> INTEGER 
+%token <intVal> INTEGER
 %token <floatVal> REAL
 %token <lex> ID
 %token POW
-%token ROOT //TODO
-%token LOG //TO FIX
+%token ROOT
+%token LOGN //TO FIX
 %token FIB
 %token FACT
 %token SUM
 %token PROD
-%token ABS //TODO
-%token PI //TODO
+%token ABS
+%token PI
 %token SMALLER
 %token GREATER
 %token EQUAL
@@ -122,7 +120,7 @@
 startProgram:	op '\n'
 		| startProgram op '\n'
 		;
-
+							//When an expression is found by the compiler, it is printed out accordingly to the function printExpression
 op:		expression				{printExpression($1.v,$1.type);}
 		| ID '=' expression			{ add_variable($3.v,$1,$3.type);}
     		| expression SMALLER expression 				{printf("%s", smaller($1.v, $3.v) ? "true" : "false");}
@@ -164,82 +162,66 @@ relop: DIFFERENT
 	;
 
 expression:	'(' expression ')' 			{$$ = $2;}
+
+							//$$.type is a float. It carries a float value inside the Number structure
+    		| PI                            	{$$.type='f';$$.v.f = M_PI;}
+    		
+    							//v is of type Number, and has as a value, the Number v in the struct SymbolTable associated to variable 
+    							//recognized from the input (ID)
     		| ID                            	{$$.v = searchSymbol($1); $$.type=get_type($1);}
-    		
-    		
-		| expression '+' expression		{$$.type=typeChecking($1.type,$3.type);
+    							
+							//$$.type is a float. It carries a float value inside the Number structure
+		| REAL					{$$.v.f = $1; $$.type = 'f';}
+							//$$.type is a int. It carries a integer value inside the Number structure
+		| INTEGER				{$$.v.i = $1; $$.type = 'i';}
+		
+		//typeConsensus is used to "agree" on the type of the expression. See the declaration for further info
+		| expression '+' expression		{$$.type=typeConsensus($1.type,$3.type);
+								//the float value is updated whether result is floar or int,
+								//but only the type of the correct value will be printed out accordingly to $$.type
+								//(see function printExpression() )
 								$$.v.f = $1.v.f+$3.v.f;
+								$$.v.i = $1.v.i+$3.v.i;
+								//If only one input is an int, the result will be done performing a cast to float on the int value
+								//A warning will be shown in this case (see function typeConsensus() )
 								if($1.type=='i'){$$.v.f = (float) $1.v.i+$3.v.f;}
 								if($3.type=='i'){$$.v.f = $1.v.f+(float)$3.v.i;}
-								$$.v.i = $1.v.i+$3.v.i;}
-		| REAL					{$$.v.f = $1; $$.type = 'f';}
-		| INTEGER				{$$.v.i = $1; $$.type = 'i';}
-		| expression '-' expression		{$$.type=typeChecking($1.type,$3.type);
+								}
+							// operations '-' and '*' work the same as '+'
+		| expression '-' expression		{$$.type=typeConsensus($1.type,$3.type);
 								$$.v.f = $1.v.f+$3.v.f;
+								$$.v.i = $1.v.i-$3.v.i;
 								if($1.type=='i'){$$.v.f = (float) $1.v.i-$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f-(float)$3.v.i;}
-								$$.v.i = $1.v.i-$3.v.i;}
-		| expression '*' expression		{$$.type=typeChecking($1.type,$3.type);
+								if($3.type=='i'){$$.v.f = $1.v.f-(float)$3.v.i;}}
+								
+		| expression '*' expression		{$$.type=typeConsensus($1.type,$3.type);
 								$$.v.f = $1.v.f*$3.v.f;
+								$$.v.i = $1.v.i*$3.v.i;
 								if($1.type=='i'){$$.v.f = (float) $1.v.i*$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f*(float)$3.v.i;}
-								$$.v.i = $1.v.i*$3.v.i;}
-		| expression '/' expression		{$$.type=typeChecking($1.type,$3.type);
+								if($3.type=='i'){$$.v.f = $1.v.f*(float)$3.v.i;}}
+								
+							//also '/' works the same as '+' but performs a check on the second input to avoid segmentation fault
+		| expression '/' expression		{$$.type=typeConsensus($1.type,$3.type);
+								if($$.type=='i'&&$3.v.i!=0)
+									{$$.v.i = $1.v.i/$3.v.i;}
+								//only if both inputs are integer AND the second one is 0, an error is shown
+								else if($$.type=='i'&&$3.v.i==0)
+									{printf("Error: division by zero! ");
+									//if the first input is != 0 the result is infinite, otherwise NaN
+									if($1.v.i!=0){printf("Result is infinite! ");}$$.type='f'; $$.v.f=(float)$1.v.i/(float)$3.v.i;}
 								$$.v.f = $1.v.f/$3.v.f;
 								if($1.type=='i'){$$.v.f = (float) $1.v.i/$3.v.f;}
-								if($3.type=='i'){$$.v.f = $1.v.f/(float)$3.v.i;}
-								$$.v.i = $1.v.i/$3.v.i;}
-		| expression '^' expression		{if(typeChecking($3.type,$3.type)=='f') printf("Wrong input. Megacalculator only accepts integers");
-							 else $$.v.i=pow($1.v.i,$3.v.i); $$.v.f=pow($1.v.f,$3.v.i);$$.type=typeChecking($1.type,$3.type);}
+								if($3.type=='i'){$$.v.f = $1.v.f/(float)$3.v.i;}}
+							
+		| expression '^' expression		{if(typeConsensus($3.type,$3.type)=='f') printf("Wrong input. Megacalculator only accepts integers");
+							 else $$.v.i=pow($1.v.i,$3.v.i); $$.v.f=pow($1.v.f,$3.v.i);$$.type=typeConsensus($1.type,$3.type);}
 		
-		| expression '!'			{if(typeChecking($1.type,$1.type)=='f') printf("Wrong input. Factorial only accepts integers"); 
-							else {$$.type=typeChecking($1.type,$1.type); $$.v.i = (int) fac($1.v.i);$$.v.f = (int) fac($1.v.f);}}
-		| '-' expression			{$$.type=typeChecking($2.type,$2.type);$$.v.f = -$2.v.f;$$.v.i = -$2.v.i;}
-
-		| FIB '(' expression ')'        {$$.type=typeChecking($3.type,$3.type);
-                                                if($3.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
-                                                else $$.v.i = (int) fibonacci($3.v.i);}
-		| SIGMA '(' expression ',' expression ')'		{$$.type=typeChecking($3.type,$5.type);
-                                                				if($$.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
-                                                				else $$.v.i = (int) sigma($3.v.i,$5.v.i);}
-		| GCD '(' expression ',' expression ')'		{$$.type=typeChecking($3.type,$5.type);
-                                                				if($$.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
-                                                				else $$.v.i = (int) gcd($3.v.i,$5.v.i);}
-		| AVG '(' expression ',' expression ')'		{$$.type=typeChecking($3.type,$5.type);
-                                                				if($$.type=='f'){
-                                                				if($3.type=='i'){$$.v.f = avg((float)$3.v.i,$5.v.f);}
-                                                				else if($5.type=='i'){$$.v.f = avg($3.v.f,(float)$5.v.i);} 
-                                                				else $$.v.f = avg($3.v.f,$5.v.f);}
-                                                				else $$.v.i = (int) avg($3.v.i,$5.v.i);}
-
-                                               				//TO BE FIXED
-		| LOG '(' expression ')'				{$$.type=typeChecking($3.type,$3.type);
-						                        if($3.type=='i'){$$.v.f = log((float) $3.v.i);}
-						                        else if($3.type=='f') {$$.v.f = log($3.v.f);}}
-						                        
-		| CEIL '(' expression ')'				{$$.type=$3.type; $$.v.f = ceil($3.v.f);$$.v.i = $3.v.i;}
-		| FLOOR '(' expression ')'				{$$.type=$3.type; $$.v.f = floor($3.v.f);$$.v.i = $3.v.i;}
+		| expression '!'			{if(typeConsensus($1.type,$1.type)=='f') printf("Wrong input. Factorial only accepts integers"); 
+							else {$$.type=typeConsensus($1.type,$1.type); $$.v.i = (int) fac($1.v.i);$$.v.f = (int) fac($1.v.f);}}
+		| '-' expression			{$$.type=typeConsensus($2.type,$2.type);$$.v.f = -$2.v.f;$$.v.i = -$2.v.i;}
 		
-		| ERA '(' expression ')'				{$$.type=typeChecking($3.type,$3.type);
-                                                if($3.type=='f')printf("Please insert an integer and not a float for the erathostenes function \n");
-                                               else  $$.v.i = (int) eratosthenes($3.v.i); }
-		| BIN '(' expression ',' expression ')'		{$$.type=typeChecking($3.type,$5.type);
-                                                if($$.type=='f')printf("Please insert an integer and not a float for the binomial function \n");
-                                               else  $$.v.i = (int) binomial($3.v.i,$5.v.i); }
-                                               
-		| RAND '(' expression ',' expression ',' expression ')' {$$.type=typeChecking($3.type,$5.type);$$.type=typeChecking($3.type,$7.type);
-                                                if($$.type=='f')printf("Please insert an integer and not a float for the prime factorization function \n");
-                                               else  $$.v.i = (int) randint($3.v.i,$5.v.i,$7.v.i); }
 		
-		| PRIME '(' expression ')' {$$.type=typeChecking($3.type,$3.type);
-                                                if($3.type=='f')printf("Please insert an integer and not a float for the prime numbers function \n");
-                                               else  $$.v.i = (int) primeNums($3.v.i);}
-
-		| PRIMF '(' expression ')'         {$$.type=typeChecking($3.type,$3.type);
-                                                      if($3.type=='f') printf("Please insert an integer and not a float for the prime factorization function"); 
-                                                      else $$.v.i = (int) primeFactors($3.v.i);
-                                                      }
-                                                      
+		//the symbol ID is searched in the symbolTable and value is incremented
 		| ID INC	{if(get_type($1) == 'i'){struct Number n; n.i=searchSymbol($1).i+1; add_variable(n,$1,get_type($1));}
                                     else if(get_type($1) == 'f'){struct Number n; n.f=searchSymbol($1).f+1; add_variable(n,$1,get_type($1));}
                                     struct Expr expr; expr.v=searchSymbol($1);expr.type=get_type($1); $$=expr;}
@@ -248,12 +230,60 @@ expression:	'(' expression ')' 			{$$ = $2;}
                                     else if(get_type($1) == 'f'){struct Number n; n.f=searchSymbol($1).f-1; add_variable(n,$1,get_type($1));}
                                     struct Expr expr; expr.v=searchSymbol($1);expr.type=get_type($1); $$=expr;}
                                     
-		| expression INC			{$$.type =typeChecking($1.type,$1.type);
+		| expression INC			{$$.type =typeConsensus($1.type,$1.type);
                                                 if($1.type == 'i'){ ($1.v.i + 1);}
                                                 else if($1.type == 'f'){($1.v.f + 1);}}
-		| expression DEC			{$$.type =typeChecking($1.type,$1.type);
+		| expression DEC			{$$.type =typeConsensus($1.type,$1.type);
                                                 if($1.type == 'i'){ ($1.v.i - 1);}
                                                 else if($1.type == 'f'){($1.v.f - 1);}}
+                                                
+	 	//all function from next line on have the same basic principle. The only relevant difference from one another is in the type checking
+		| ABS '(' expression ')'		{$$.type=typeConsensus($3.type,$3.type);$$.v.f = abs($3.v.f);$$.v.i = abs($3.v.i);}
+
+		| FIB '(' expression ')'        {$$.type=typeConsensus($3.type,$3.type);
+                                                if($3.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
+                                                else $$.v.i = (int) fibonacci($3.v.i);}
+		| SIGMA '(' expression ',' expression ')'		{$$.type=typeConsensus($3.type,$5.type);
+                                                				if($$.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
+                                                				else $$.v.i = (int) sigma($3.v.i,$5.v.i);}
+		| GCD '(' expression ',' expression ')'		{$$.type=typeConsensus($3.type,$5.type);
+                                                				if($$.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
+                                                				else $$.v.i = (int) gcd($3.v.i,$5.v.i);}
+		| AVG '(' expression ',' expression ')'		{$$.type=typeConsensus($3.type,$5.type);
+                                                				if($$.type=='f'){
+                                                				if($3.type=='i'){$$.v.f = avg((float)$3.v.i,$5.v.f);}
+                                                				else if($5.type=='i'){$$.v.f = avg($3.v.f,(float)$5.v.i);} 
+                                                				else $$.v.f = avg($3.v.f,$5.v.f);}
+                                                				else $$.v.i = (int) avg($3.v.i,$5.v.i);}
+                                                				
+		| LOGN '(' expression ')'				{$$.type='f'; if(typeConsensus($3.type,$3.type)=='i') {$$.v.f=logf((float)$3.v.i);} 
+                					else{$$.v.f=sqrtf($3.v.f);} }
+						                        
+		| CEIL '(' expression ')'				{$$.type=$3.type; $$.v.f = ceil($3.v.f);$$.v.i = $3.v.i;}
+		| FLOOR '(' expression ')'				{$$.type=$3.type; $$.v.f = floor($3.v.f);$$.v.i = $3.v.i;}
+		
+		| ERA '(' expression ')'				{$$.type=typeConsensus($3.type,$3.type);
+                                                if($3.type=='f')printf("Please insert an integer and not a float for the erathostenes function \n");
+                                               else  $$.v.i = (int) eratosthenes($3.v.i); }
+		| BIN '(' expression ',' expression ')'		{$$.type=typeConsensus($3.type,$5.type);
+                                                if($$.type=='f')printf("Please insert an integer and not a float for the binomial function \n");
+                                               else  $$.v.i = (int) binomial($3.v.i,$5.v.i); }
+                                               
+		| RAND '(' expression ',' expression ',' expression ')' {$$.type=typeConsensus($3.type,$5.type);$$.type=typeConsensus($3.type,$7.type);
+                                                if($$.type=='f')printf("Please insert an integer and not a float for the prime factorization function \n");
+                                               else  $$.v.i = (int) randint($3.v.i,$5.v.i,$7.v.i); }
+		
+		| PRIME '(' expression ')' {$$.type=typeConsensus($3.type,$3.type);
+                                                if($3.type=='f')printf("Please insert an integer and not a float for the prime numbers function \n");
+                                               else  $$.v.i = (int) primeNums($3.v.i);}
+
+		| PRIMF '(' expression ')'         {$$.type=typeConsensus($3.type,$3.type);
+                                                      if($3.type=='f') printf("Please insert an integer and not a float for the prime factorization function"); 
+                                                      else $$.v.i = (int) primeFactors($3.v.i);
+                                                      }
+                                                
+                | ROOT '(' expression ')'		{$$.type='f'; if(typeConsensus($3.type,$3.type)=='i') {$$.v.f=sqrtf((float)$3.v.i);} 
+                					else{$$.v.f=sqrtf($3.v.f);} }
         ;
 
 %%
@@ -489,11 +519,13 @@ int primeFactors(int n)
         return n;
 }
 
+//Adds a variable in the symbolTable
 void add_variable(struct Number val, char *name, char type)
 {
   struct symbolTable *st = table;
     for(; st; st=st->next)
     {
+    	//If variables with name is found, type and values are 
         if(strcmp(st->name,name)==0)
         {
           st->v = val;
@@ -502,12 +534,12 @@ void add_variable(struct Number val, char *name, char type)
         }
     }
 
-  /* variable not there, allocate a new entry and link it on the list */
+  //If variable is not there, allocates a new entry and link it on the list
 
 	st = (struct symbolTable *) malloc(sizeof(struct symbolTable));
 	st->next = table;
 
-  /* have to copy the variable itself as well */
+  // have to copy the variable itself as well
 
 	st->name = (char *) malloc(strlen(name)+1);
 	strcpy(st->name, name);
@@ -516,6 +548,7 @@ void add_variable(struct Number val, char *name, char type)
 	table = st;
 }
 
+//This functions returns the Number associated to the variable with name
 struct Number searchSymbol(char *name)
 {
   struct symbolTable *st = table;
@@ -524,21 +557,8 @@ struct Number searchSymbol(char *name)
         if(strcmp(st->name,name)==0)
             return st->v;
     }
-    printf("Variable not found!\n");
-
-}
-
-void add_type(char *type, char *name)
-{
-  struct symbolTable *st = table;
-    for(; st; st=st->next)
-    {
-        if(strcmp(st->name,name)==0)
-        {
-          //st->type = (char *) malloc(strlen(type)+1);
-      		return;
-        }
-    }
+    //If variable is not there, an error message is printed
+    printf("Error: Variable not found!\n");
 
 }
 
@@ -559,16 +579,24 @@ void printExpression(struct Number val, char type){
 	}
 }
 
-char typeChecking(char type1, char type2){
+//this function is used to find the type of the result of an operation
+char typeConsensus(char type1, char type2){
+	//when inputs are of type int, result will be int
 	if(type1==type2 && type2=='i'){
 		return 'i';
 	}
+	//same with float
 	if(type1==type2 && type2=='f'){
 		return 'f';
 	}
-	else{
+	//if types are different, a choice has to be made. We decided to return a float with a warning message
+	//So when a user writes ,for example, 7+3.0, result will be treated as a float (and a proper warning is printed)
+	else if(type1!=type2 && (type1=='f'||type1=='i')&&(type2=='f'||type2=='i')){
+		printf("\nWarning: you are operating with two different types. Result will be cast to float.\n\n");
 		return 'f';
 	}
+	//if it's not possible to find a consensus, then 'e' is returned (stands for error)
+	//this happens when the type of an input is not defined
 	return 'e';
 }
 

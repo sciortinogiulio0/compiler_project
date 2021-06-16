@@ -1,12 +1,9 @@
 Terminals unused in grammar
 
     POW
-    ROOT
     FACT
     SUM
     PROD
-    ABS
-    PI
     FOR
 
 
@@ -51,86 +48,89 @@ Grammar
    28      | GREATEREQUAL
 
    29 expression: '(' expression ')'
-   30           | ID
-   31           | expression '+' expression
+   30           | PI
+   31           | ID
    32           | REAL
    33           | INTEGER
-   34           | expression '-' expression
-   35           | expression '*' expression
-   36           | expression '/' expression
-   37           | expression '^' expression
-   38           | expression '!'
-   39           | '-' expression
-   40           | FIB '(' expression ')'
-   41           | SIGMA '(' expression ',' expression ')'
-   42           | GCD '(' expression ',' expression ')'
-   43           | AVG '(' expression ',' expression ')'
-   44           | LOG '(' expression ')'
-   45           | CEIL '(' expression ')'
-   46           | FLOOR '(' expression ')'
-   47           | ERA '(' expression ')'
-   48           | BIN '(' expression ',' expression ')'
-   49           | RAND '(' expression ',' expression ',' expression ')'
-   50           | PRIME '(' expression ')'
-   51           | PRIMF '(' expression ')'
-   52           | ID INC
-   53           | ID DEC
-   54           | expression INC
-   55           | expression DEC
+   34           | expression '+' expression
+   35           | expression '-' expression
+   36           | expression '*' expression
+   37           | expression '/' expression
+   38           | expression '^' expression
+   39           | expression '!'
+   40           | '-' expression
+   41           | ID INC
+   42           | ID DEC
+   43           | expression INC
+   44           | expression DEC
+   45           | ABS '(' expression ')'
+   46           | FIB '(' expression ')'
+   47           | SIGMA '(' expression ',' expression ')'
+   48           | GCD '(' expression ',' expression ')'
+   49           | AVG '(' expression ',' expression ')'
+   50           | LOGN '(' expression ')'
+   51           | CEIL '(' expression ')'
+   52           | FLOOR '(' expression ')'
+   53           | ERA '(' expression ')'
+   54           | BIN '(' expression ',' expression ')'
+   55           | RAND '(' expression ',' expression ',' expression ')'
+   56           | PRIME '(' expression ')'
+   57           | PRIMF '(' expression ')'
+   58           | ROOT '(' expression ')'
 
 
 Terminals, with rules where they appear
 
     $end (0) 0
     '\n' (10) 1 2 13 14 15
-    '!' (33) 38
-    '(' (40) 13 14 15 29 40 41 42 43 44 45 46 47 48 49 50 51
-    ')' (41) 13 14 15 29 40 41 42 43 44 45 46 47 48 49 50 51
-    '*' (42) 35
-    '+' (43) 31
-    ',' (44) 41 42 43 48 49
-    '-' (45) 34 39
-    '/' (47) 36
+    '!' (33) 39
+    '(' (40) 13 14 15 29 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+    ')' (41) 13 14 15 29 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+    '*' (42) 36
+    '+' (43) 34
+    ',' (44) 47 48 49 54 55
+    '-' (45) 35 40
+    '/' (47) 37
     '=' (61) 4
-    '^' (94) 37
+    '^' (94) 38
     error (256)
     INTEGER <intVal> (258) 33
     REAL <floatVal> (259) 20 32
-    ID <lex> (260) 4 19 30 52 53
+    ID <lex> (260) 4 19 31 41 42
     POW (261)
-    ROOT (262)
-    LOG (263) 44
-    FIB (264) 40
+    ROOT (262) 58
+    LOGN (263) 50
+    FIB (264) 46
     FACT (265)
     SUM (266)
     PROD (267)
-    ABS (268)
-    PI (269)
+    ABS (268) 45
+    PI (269) 30
     SMALLER (270) 5 26
     GREATER (271) 6 27
     EQUAL (272) 7 24
     DIFFERENT (273) 8 23
     SMALLEREQUAL (274) 9 25
     GREATEREQUAL (275) 10 28
-    RAND (276) 49
-    SIGMA (277) 41
-    ERA (278) 47
-    PRIME (279) 50
-    PRIMF (280) 51
-    GCD (281) 42
-    AVG (282) 43
-    CEIL (283) 45
-    FLOOR (284) 46
+    RAND (276) 55
+    SIGMA (277) 47
+    ERA (278) 53
+    PRIME (279) 56
+    PRIMF (280) 57
+    GCD (281) 48
+    AVG (282) 49
+    CEIL (283) 51
+    FLOOR (284) 52
     FOR (285)
     WHILE (286) 13
     IF (287) 14 15
     ELSE (288) 15
     OR (289) 22
-    INC (290) 52 54
-    DEC (291) 53 55
+    INC (290) 41 43
+    DEC (291) 42 44
     AND (292) 21
     EXIT (293) 12
-    BIN (294) 48
+    BIN (294) 54
 
 
 Nonterminals, with rules where they appear
@@ -162,8 +162,8 @@ Nonterminals, with rules where they appear
         on left: 23 24 25 26 27 28
         on right: 18
     expression <expr> (60)
-        on left: 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55
-        on right: 3 4 5 6 7 8 9 10 29 31 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 54 55
+        on left: 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
+        on right: 3 4 5 6 7 8 9 10 29 34 35 36 37 38 39 40 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58
 
 
 State 0
@@ -173,28 +173,31 @@ State 0
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
     ID       shift, and go to state 3
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    WHILE    shift, and go to state 15
-    IF       shift, and go to state 16
-    EXIT     shift, and go to state 17
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    WHILE    shift, and go to state 18
+    IF       shift, and go to state 19
+    EXIT     shift, and go to state 20
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    startProgram  go to state 21
-    op            go to state 22
-    block         go to state 23
-    expression    go to state 24
+    startProgram  go to state 24
+    op            go to state 25
+    block         go to state 26
+    expression    go to state 27
 
 
 State 1
@@ -214,220 +217,250 @@ State 2
 State 3
 
     4 op: ID . '=' expression
-   30 expression: ID .
-   52           | ID . INC
-   53           | ID . DEC
+   31 expression: ID .
+   41           | ID . INC
+   42           | ID . DEC
 
-    INC  shift, and go to state 25
-    DEC  shift, and go to state 26
-    '='  shift, and go to state 27
+    INC  shift, and go to state 28
+    DEC  shift, and go to state 29
+    '='  shift, and go to state 30
 
-    $default  reduce using rule 30 (expression)
+    $default  reduce using rule 31 (expression)
 
 
 State 4
 
-   44 expression: LOG . '(' expression ')'
-
-    '('  shift, and go to state 28
-
-
-State 5
-
-   40 expression: FIB . '(' expression ')'
-
-    '('  shift, and go to state 29
-
-
-State 6
-
-   49 expression: RAND . '(' expression ',' expression ',' expression ')'
-
-    '('  shift, and go to state 30
-
-
-State 7
-
-   41 expression: SIGMA . '(' expression ',' expression ')'
+   58 expression: ROOT . '(' expression ')'
 
     '('  shift, and go to state 31
 
 
-State 8
+State 5
 
-   47 expression: ERA . '(' expression ')'
+   50 expression: LOGN . '(' expression ')'
 
     '('  shift, and go to state 32
 
 
-State 9
+State 6
 
-   50 expression: PRIME . '(' expression ')'
+   46 expression: FIB . '(' expression ')'
 
     '('  shift, and go to state 33
 
 
-State 10
+State 7
 
-   51 expression: PRIMF . '(' expression ')'
+   45 expression: ABS . '(' expression ')'
 
     '('  shift, and go to state 34
 
 
-State 11
+State 8
 
-   42 expression: GCD . '(' expression ',' expression ')'
+   30 expression: PI .
+
+    $default  reduce using rule 30 (expression)
+
+
+State 9
+
+   55 expression: RAND . '(' expression ',' expression ',' expression ')'
 
     '('  shift, and go to state 35
 
 
-State 12
+State 10
 
-   43 expression: AVG . '(' expression ',' expression ')'
+   47 expression: SIGMA . '(' expression ',' expression ')'
 
     '('  shift, and go to state 36
 
 
-State 13
+State 11
 
-   45 expression: CEIL . '(' expression ')'
+   53 expression: ERA . '(' expression ')'
 
     '('  shift, and go to state 37
 
 
-State 14
+State 12
 
-   46 expression: FLOOR . '(' expression ')'
+   56 expression: PRIME . '(' expression ')'
 
     '('  shift, and go to state 38
 
 
-State 15
+State 13
 
-   13 block: WHILE . '(' cond ')' op '\n'
+   57 expression: PRIMF . '(' expression ')'
 
     '('  shift, and go to state 39
 
 
-State 16
+State 14
 
-   14 block: IF . '(' cond ')' op '\n'
-   15      | IF . '(' cond ')' op ELSE op '\n'
+   48 expression: GCD . '(' expression ',' expression ')'
 
     '('  shift, and go to state 40
 
 
+State 15
+
+   49 expression: AVG . '(' expression ',' expression ')'
+
+    '('  shift, and go to state 41
+
+
+State 16
+
+   51 expression: CEIL . '(' expression ')'
+
+    '('  shift, and go to state 42
+
+
 State 17
+
+   52 expression: FLOOR . '(' expression ')'
+
+    '('  shift, and go to state 43
+
+
+State 18
+
+   13 block: WHILE . '(' cond ')' op '\n'
+
+    '('  shift, and go to state 44
+
+
+State 19
+
+   14 block: IF . '(' cond ')' op '\n'
+   15      | IF . '(' cond ')' op ELSE op '\n'
+
+    '('  shift, and go to state 45
+
+
+State 20
 
    12 op: EXIT .
 
     $default  reduce using rule 12 (op)
 
 
-State 18
+State 21
 
-   48 expression: BIN . '(' expression ',' expression ')'
+   54 expression: BIN . '(' expression ',' expression ')'
 
-    '('  shift, and go to state 41
+    '('  shift, and go to state 46
 
 
-State 19
+State 22
 
-   39 expression: '-' . expression
+   40 expression: '-' . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 43
+    expression  go to state 48
 
 
-State 20
+State 23
 
    29 expression: '(' . expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 44
+    expression  go to state 49
 
 
-State 21
+State 24
 
     0 $accept: startProgram . $end
     2 startProgram: startProgram . op '\n'
 
-    $end     shift, and go to state 45
+    $end     shift, and go to state 50
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
     ID       shift, and go to state 3
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    WHILE    shift, and go to state 15
-    IF       shift, and go to state 16
-    EXIT     shift, and go to state 17
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    WHILE    shift, and go to state 18
+    IF       shift, and go to state 19
+    EXIT     shift, and go to state 20
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    op          go to state 46
-    block       go to state 23
-    expression  go to state 24
+    op          go to state 51
+    block       go to state 26
+    expression  go to state 27
 
 
-State 22
+State 25
 
     1 startProgram: op . '\n'
 
-    '\n'  shift, and go to state 47
+    '\n'  shift, and go to state 52
 
 
-State 23
+State 26
 
    11 op: block .
 
     $default  reduce using rule 11 (op)
 
 
-State 24
+State 27
 
     3 op: expression .
     5   | expression . SMALLER expression
@@ -436,1636 +469,1839 @@ State 24
     8   | expression . DIFFERENT expression
     9   | expression . SMALLEREQUAL expression
    10   | expression . GREATEREQUAL expression
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    SMALLER       shift, and go to state 48
-    GREATER       shift, and go to state 49
-    EQUAL         shift, and go to state 50
-    DIFFERENT     shift, and go to state 51
-    SMALLEREQUAL  shift, and go to state 52
-    GREATEREQUAL  shift, and go to state 53
-    INC           shift, and go to state 54
-    DEC           shift, and go to state 55
-    '+'           shift, and go to state 56
-    '-'           shift, and go to state 57
-    '*'           shift, and go to state 58
-    '/'           shift, and go to state 59
-    '^'           shift, and go to state 60
-    '!'           shift, and go to state 61
+    SMALLER       shift, and go to state 53
+    GREATER       shift, and go to state 54
+    EQUAL         shift, and go to state 55
+    DIFFERENT     shift, and go to state 56
+    SMALLEREQUAL  shift, and go to state 57
+    GREATEREQUAL  shift, and go to state 58
+    INC           shift, and go to state 59
+    DEC           shift, and go to state 60
+    '+'           shift, and go to state 61
+    '-'           shift, and go to state 62
+    '*'           shift, and go to state 63
+    '/'           shift, and go to state 64
+    '^'           shift, and go to state 65
+    '!'           shift, and go to state 66
 
     $default  reduce using rule 3 (op)
 
 
-State 25
+State 28
 
-   52 expression: ID INC .
+   41 expression: ID INC .
 
-    $default  reduce using rule 52 (expression)
-
-
-State 26
-
-   53 expression: ID DEC .
-
-    $default  reduce using rule 53 (expression)
+    $default  reduce using rule 41 (expression)
 
 
-State 27
+State 29
+
+   42 expression: ID DEC .
+
+    $default  reduce using rule 42 (expression)
+
+
+State 30
 
     4 op: ID '=' . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 62
-
-
-State 28
-
-   44 expression: LOG '(' . expression ')'
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 63
-
-
-State 29
-
-   40 expression: FIB '(' . expression ')'
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 64
-
-
-State 30
-
-   49 expression: RAND '(' . expression ',' expression ',' expression ')'
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 65
-
-
-State 31
-
-   41 expression: SIGMA '(' . expression ',' expression ')'
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 66
-
-
-State 32
-
-   47 expression: ERA '(' . expression ')'
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
     expression  go to state 67
 
 
-State 33
+State 31
 
-   50 expression: PRIME '(' . expression ')'
+   58 expression: ROOT '(' . expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
     expression  go to state 68
 
 
-State 34
+State 32
 
-   51 expression: PRIMF '(' . expression ')'
+   50 expression: LOGN '(' . expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
     expression  go to state 69
 
 
-State 35
+State 33
 
-   42 expression: GCD '(' . expression ',' expression ')'
+   46 expression: FIB '(' . expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
     expression  go to state 70
 
 
-State 36
+State 34
 
-   43 expression: AVG '(' . expression ',' expression ')'
+   45 expression: ABS '(' . expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
     expression  go to state 71
 
 
-State 37
+State 35
 
-   45 expression: CEIL '(' . expression ')'
+   55 expression: RAND '(' . expression ',' expression ',' expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
     expression  go to state 72
 
 
-State 38
+State 36
 
-   46 expression: FLOOR '(' . expression ')'
+   47 expression: SIGMA '(' . expression ',' expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
     expression  go to state 73
 
 
+State 37
+
+   53 expression: ERA '(' . expression ')'
+
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 74
+
+
+State 38
+
+   56 expression: PRIME '(' . expression ')'
+
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 75
+
+
 State 39
 
-   13 block: WHILE '(' . cond ')' op '\n'
+   57 expression: PRIMF '(' . expression ')'
 
-    REAL  shift, and go to state 74
-    ID    shift, and go to state 75
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    cond   go to state 76
-    scond  go to state 77
-    nid    go to state 78
+    expression  go to state 76
 
 
 State 40
 
-   14 block: IF '(' . cond ')' op '\n'
-   15      | IF '(' . cond ')' op ELSE op '\n'
+   48 expression: GCD '(' . expression ',' expression ')'
 
-    REAL  shift, and go to state 74
-    ID    shift, and go to state 75
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    cond   go to state 79
-    scond  go to state 77
-    nid    go to state 78
+    expression  go to state 77
 
 
 State 41
 
-   48 expression: BIN '(' . expression ',' expression ')'
+   49 expression: AVG '(' . expression ',' expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 80
+    expression  go to state 78
 
 
 State 42
 
-   30 expression: ID .
-   52           | ID . INC
-   53           | ID . DEC
+   51 expression: CEIL '(' . expression ')'
 
-    INC  shift, and go to state 25
-    DEC  shift, and go to state 26
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    $default  reduce using rule 30 (expression)
+    expression  go to state 79
 
 
 State 43
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   39           | '-' expression .
-   54           | expression . INC
-   55           | expression . DEC
+   52 expression: FLOOR '(' . expression ')'
 
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    $default  reduce using rule 39 (expression)
+    expression  go to state 80
 
 
 State 44
 
-   29 expression: '(' expression . ')'
-   31           | expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   13 block: WHILE '(' . cond ')' op '\n'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 81
+    REAL  shift, and go to state 81
+    ID    shift, and go to state 82
+
+    cond   go to state 83
+    scond  go to state 84
+    nid    go to state 85
 
 
 State 45
+
+   14 block: IF '(' . cond ')' op '\n'
+   15      | IF '(' . cond ')' op ELSE op '\n'
+
+    REAL  shift, and go to state 81
+    ID    shift, and go to state 82
+
+    cond   go to state 86
+    scond  go to state 84
+    nid    go to state 85
+
+
+State 46
+
+   54 expression: BIN '(' . expression ',' expression ')'
+
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 87
+
+
+State 47
+
+   31 expression: ID .
+   41           | ID . INC
+   42           | ID . DEC
+
+    INC  shift, and go to state 28
+    DEC  shift, and go to state 29
+
+    $default  reduce using rule 31 (expression)
+
+
+State 48
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   40           | '-' expression .
+   43           | expression . INC
+   44           | expression . DEC
+
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+
+    $default  reduce using rule 40 (expression)
+
+
+State 49
+
+   29 expression: '(' expression . ')'
+   34           | expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 88
+
+
+State 50
 
     0 $accept: startProgram $end .
 
     $default  accept
 
 
-State 46
+State 51
 
     2 startProgram: startProgram op . '\n'
 
-    '\n'  shift, and go to state 82
+    '\n'  shift, and go to state 89
 
 
-State 47
+State 52
 
     1 startProgram: op '\n' .
 
     $default  reduce using rule 1 (startProgram)
 
 
-State 48
+State 53
 
     5 op: expression SMALLER . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 83
+    expression  go to state 90
 
 
-State 49
+State 54
 
     6 op: expression GREATER . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 84
+    expression  go to state 91
 
 
-State 50
+State 55
 
     7 op: expression EQUAL . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 85
+    expression  go to state 92
 
 
-State 51
+State 56
 
     8 op: expression DIFFERENT . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 86
+    expression  go to state 93
 
 
-State 52
+State 57
 
     9 op: expression SMALLEREQUAL . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 87
+    expression  go to state 94
 
 
-State 53
+State 58
 
    10 op: expression GREATEREQUAL . expression
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 88
-
-
-State 54
-
-   54 expression: expression INC .
-
-    $default  reduce using rule 54 (expression)
-
-
-State 55
-
-   55 expression: expression DEC .
-
-    $default  reduce using rule 55 (expression)
-
-
-State 56
-
-   31 expression: expression '+' . expression
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 89
-
-
-State 57
-
-   34 expression: expression '-' . expression
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 90
-
-
-State 58
-
-   35 expression: expression '*' . expression
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 91
+    expression  go to state 95
 
 
 State 59
 
-   36 expression: expression '/' . expression
+   43 expression: expression INC .
 
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 92
+    $default  reduce using rule 43 (expression)
 
 
 State 60
 
-   37 expression: expression '^' . expression
+   44 expression: expression DEC .
 
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 93
+    $default  reduce using rule 44 (expression)
 
 
 State 61
 
-   38 expression: expression '!' .
+   34 expression: expression '+' . expression
 
-    $default  reduce using rule 38 (expression)
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 96
 
 
 State 62
 
-    4 op: ID '=' expression .
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   35 expression: expression '-' . expression
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    $default  reduce using rule 4 (op)
+    expression  go to state 97
 
 
 State 63
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   44           | LOG '(' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
+   36 expression: expression '*' . expression
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 94
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 98
 
 
 State 64
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   40           | FIB '(' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
+   37 expression: expression '/' . expression
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 95
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 99
 
 
 State 65
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   49           | RAND '(' expression . ',' expression ',' expression ')'
-   54           | expression . INC
-   55           | expression . DEC
+   38 expression: expression '^' . expression
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ','  shift, and go to state 96
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 100
 
 
 State 66
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   41           | SIGMA '(' expression . ',' expression ')'
-   54           | expression . INC
-   55           | expression . DEC
+   39 expression: expression '!' .
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ','  shift, and go to state 97
+    $default  reduce using rule 39 (expression)
 
 
 State 67
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   47           | ERA '(' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
+    4 op: ID '=' expression .
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 98
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+
+    $default  reduce using rule 4 (op)
 
 
 State 68
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   50           | PRIME '(' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   58           | ROOT '(' expression . ')'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 99
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 101
 
 
 State 69
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   51           | PRIMF '(' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   50           | LOGN '(' expression . ')'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 100
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 102
 
 
 State 70
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   42           | GCD '(' expression . ',' expression ')'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   46           | FIB '(' expression . ')'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ','  shift, and go to state 101
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 103
 
 
 State 71
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   43           | AVG '(' expression . ',' expression ')'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   45           | ABS '(' expression . ')'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ','  shift, and go to state 102
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 104
 
 
 State 72
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   45           | CEIL '(' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   55           | RAND '(' expression . ',' expression ',' expression ')'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 103
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ','  shift, and go to state 105
 
 
 State 73
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   46           | FLOOR '(' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   47           | SIGMA '(' expression . ',' expression ')'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 104
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ','  shift, and go to state 106
 
 
 State 74
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   53           | ERA '(' expression . ')'
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 107
+
+
+State 75
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   56           | PRIME '(' expression . ')'
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 108
+
+
+State 76
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   57           | PRIMF '(' expression . ')'
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 109
+
+
+State 77
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   48           | GCD '(' expression . ',' expression ')'
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ','  shift, and go to state 110
+
+
+State 78
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   49           | AVG '(' expression . ',' expression ')'
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ','  shift, and go to state 111
+
+
+State 79
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   51           | CEIL '(' expression . ')'
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 112
+
+
+State 80
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   52           | FLOOR '(' expression . ')'
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 113
+
+
+State 81
 
    20 nid: REAL .
 
     $default  reduce using rule 20 (nid)
 
 
-State 75
+State 82
 
    19 nid: ID .
 
     $default  reduce using rule 19 (nid)
 
 
-State 76
+State 83
 
    13 block: WHILE '(' cond . ')' op '\n'
 
-    ')'  shift, and go to state 105
+    ')'  shift, and go to state 114
 
 
-State 77
+State 84
 
    16 cond: scond .
    17     | scond . logop cond
 
-    OR   shift, and go to state 106
-    AND  shift, and go to state 107
+    OR   shift, and go to state 115
+    AND  shift, and go to state 116
 
     $default  reduce using rule 16 (cond)
 
-    logop  go to state 108
+    logop  go to state 117
 
 
-State 78
+State 85
 
    18 scond: nid . relop nid
 
-    SMALLER       shift, and go to state 109
-    GREATER       shift, and go to state 110
-    EQUAL         shift, and go to state 111
-    DIFFERENT     shift, and go to state 112
-    SMALLEREQUAL  shift, and go to state 113
-    GREATEREQUAL  shift, and go to state 114
+    SMALLER       shift, and go to state 118
+    GREATER       shift, and go to state 119
+    EQUAL         shift, and go to state 120
+    DIFFERENT     shift, and go to state 121
+    SMALLEREQUAL  shift, and go to state 122
+    GREATEREQUAL  shift, and go to state 123
 
-    relop  go to state 115
+    relop  go to state 124
 
 
-State 79
+State 86
 
    14 block: IF '(' cond . ')' op '\n'
    15      | IF '(' cond . ')' op ELSE op '\n'
 
-    ')'  shift, and go to state 116
+    ')'  shift, and go to state 125
 
 
-State 80
+State 87
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   48           | BIN '(' expression . ',' expression ')'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   54           | BIN '(' expression . ',' expression ')'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ','  shift, and go to state 117
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ','  shift, and go to state 126
 
 
-State 81
+State 88
 
    29 expression: '(' expression ')' .
 
     $default  reduce using rule 29 (expression)
 
 
-State 82
+State 89
 
     2 startProgram: startProgram op '\n' .
 
     $default  reduce using rule 2 (startProgram)
 
 
-State 83
+State 90
 
     5 op: expression SMALLER expression .
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
 
     $default  reduce using rule 5 (op)
 
 
-State 84
+State 91
 
     6 op: expression GREATER expression .
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
 
     $default  reduce using rule 6 (op)
 
 
-State 85
+State 92
 
     7 op: expression EQUAL expression .
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
 
     $default  reduce using rule 7 (op)
 
 
-State 86
+State 93
 
     8 op: expression DIFFERENT expression .
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
 
     $default  reduce using rule 8 (op)
 
 
-State 87
+State 94
 
     9 op: expression SMALLEREQUAL expression .
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
 
     $default  reduce using rule 9 (op)
 
 
-State 88
+State 95
 
    10 op: expression GREATEREQUAL expression .
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
 
     $default  reduce using rule 10 (op)
 
 
-State 89
+State 96
 
-   31 expression: expression . '+' expression
-   31           | expression '+' expression .
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   34           | expression '+' expression .
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-
-    $default  reduce using rule 31 (expression)
-
-
-State 90
-
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   34           | expression '-' expression .
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
-
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
 
     $default  reduce using rule 34 (expression)
 
 
-State 91
+State 97
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   35           | expression '*' expression .
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   35           | expression '-' expression .
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
 
     $default  reduce using rule 35 (expression)
 
 
-State 92
+State 98
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   36           | expression '/' expression .
-   37           | expression . '^' expression
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   36           | expression '*' expression .
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
 
     $default  reduce using rule 36 (expression)
 
 
-State 93
+State 99
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   37           | expression '^' expression .
-   38           | expression . '!'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   37           | expression '/' expression .
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    '!'  shift, and go to state 61
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
 
     $default  reduce using rule 37 (expression)
 
 
-State 94
-
-   44 expression: LOG '(' expression ')' .
-
-    $default  reduce using rule 44 (expression)
-
-
-State 95
-
-   40 expression: FIB '(' expression ')' .
-
-    $default  reduce using rule 40 (expression)
-
-
-State 96
-
-   49 expression: RAND '(' expression ',' . expression ',' expression ')'
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 118
-
-
-State 97
-
-   41 expression: SIGMA '(' expression ',' . expression ')'
-
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 119
-
-
-State 98
-
-   47 expression: ERA '(' expression ')' .
-
-    $default  reduce using rule 47 (expression)
-
-
-State 99
-
-   50 expression: PRIME '(' expression ')' .
-
-    $default  reduce using rule 50 (expression)
-
-
 State 100
 
-   51 expression: PRIMF '(' expression ')' .
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   38           | expression '^' expression .
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
 
-    $default  reduce using rule 51 (expression)
+    '!'  shift, and go to state 66
+
+    $default  reduce using rule 38 (expression)
 
 
 State 101
 
-   42 expression: GCD '(' expression ',' . expression ')'
+   58 expression: ROOT '(' expression ')' .
 
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 120
+    $default  reduce using rule 58 (expression)
 
 
 State 102
 
-   43 expression: AVG '(' expression ',' . expression ')'
+   50 expression: LOGN '(' expression ')' .
 
-    INTEGER  shift, and go to state 1
-    REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
-
-    expression  go to state 121
+    $default  reduce using rule 50 (expression)
 
 
 State 103
 
-   45 expression: CEIL '(' expression ')' .
-
-    $default  reduce using rule 45 (expression)
-
-
-State 104
-
-   46 expression: FLOOR '(' expression ')' .
+   46 expression: FIB '(' expression ')' .
 
     $default  reduce using rule 46 (expression)
 
 
+State 104
+
+   45 expression: ABS '(' expression ')' .
+
+    $default  reduce using rule 45 (expression)
+
+
 State 105
+
+   55 expression: RAND '(' expression ',' . expression ',' expression ')'
+
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 127
+
+
+State 106
+
+   47 expression: SIGMA '(' expression ',' . expression ')'
+
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 128
+
+
+State 107
+
+   53 expression: ERA '(' expression ')' .
+
+    $default  reduce using rule 53 (expression)
+
+
+State 108
+
+   56 expression: PRIME '(' expression ')' .
+
+    $default  reduce using rule 56 (expression)
+
+
+State 109
+
+   57 expression: PRIMF '(' expression ')' .
+
+    $default  reduce using rule 57 (expression)
+
+
+State 110
+
+   48 expression: GCD '(' expression ',' . expression ')'
+
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 129
+
+
+State 111
+
+   49 expression: AVG '(' expression ',' . expression ')'
+
+    INTEGER  shift, and go to state 1
+    REAL     shift, and go to state 2
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
+
+    expression  go to state 130
+
+
+State 112
+
+   51 expression: CEIL '(' expression ')' .
+
+    $default  reduce using rule 51 (expression)
+
+
+State 113
+
+   52 expression: FLOOR '(' expression ')' .
+
+    $default  reduce using rule 52 (expression)
+
+
+State 114
 
    13 block: WHILE '(' cond ')' . op '\n'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
     ID       shift, and go to state 3
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    WHILE    shift, and go to state 15
-    IF       shift, and go to state 16
-    EXIT     shift, and go to state 17
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    WHILE    shift, and go to state 18
+    IF       shift, and go to state 19
+    EXIT     shift, and go to state 20
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    op          go to state 122
-    block       go to state 23
-    expression  go to state 24
+    op          go to state 131
+    block       go to state 26
+    expression  go to state 27
 
 
-State 106
+State 115
 
    22 logop: OR .
 
     $default  reduce using rule 22 (logop)
 
 
-State 107
+State 116
 
    21 logop: AND .
 
     $default  reduce using rule 21 (logop)
 
 
-State 108
+State 117
 
    17 cond: scond logop . cond
 
-    REAL  shift, and go to state 74
-    ID    shift, and go to state 75
+    REAL  shift, and go to state 81
+    ID    shift, and go to state 82
 
-    cond   go to state 123
-    scond  go to state 77
-    nid    go to state 78
+    cond   go to state 132
+    scond  go to state 84
+    nid    go to state 85
 
 
-State 109
+State 118
 
    26 relop: SMALLER .
 
     $default  reduce using rule 26 (relop)
 
 
-State 110
+State 119
 
    27 relop: GREATER .
 
     $default  reduce using rule 27 (relop)
 
 
-State 111
+State 120
 
    24 relop: EQUAL .
 
     $default  reduce using rule 24 (relop)
 
 
-State 112
+State 121
 
    23 relop: DIFFERENT .
 
     $default  reduce using rule 23 (relop)
 
 
-State 113
+State 122
 
    25 relop: SMALLEREQUAL .
 
     $default  reduce using rule 25 (relop)
 
 
-State 114
+State 123
 
    28 relop: GREATEREQUAL .
 
     $default  reduce using rule 28 (relop)
 
 
-State 115
+State 124
 
    18 scond: nid relop . nid
 
-    REAL  shift, and go to state 74
-    ID    shift, and go to state 75
+    REAL  shift, and go to state 81
+    ID    shift, and go to state 82
 
-    nid  go to state 124
+    nid  go to state 133
 
 
-State 116
+State 125
 
    14 block: IF '(' cond ')' . op '\n'
    15      | IF '(' cond ')' . op ELSE op '\n'
@@ -2073,334 +2309,346 @@ State 116
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
     ID       shift, and go to state 3
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    WHILE    shift, and go to state 15
-    IF       shift, and go to state 16
-    EXIT     shift, and go to state 17
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    WHILE    shift, and go to state 18
+    IF       shift, and go to state 19
+    EXIT     shift, and go to state 20
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    op          go to state 125
-    block       go to state 23
-    expression  go to state 24
+    op          go to state 134
+    block       go to state 26
+    expression  go to state 27
 
 
-State 117
+State 126
 
-   48 expression: BIN '(' expression ',' . expression ')'
+   54 expression: BIN '(' expression ',' . expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 126
-
-
-State 118
-
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   49           | RAND '(' expression ',' expression . ',' expression ')'
-   54           | expression . INC
-   55           | expression . DEC
-
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ','  shift, and go to state 127
+    expression  go to state 135
 
 
-State 119
+State 127
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   41           | SIGMA '(' expression ',' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   55           | RAND '(' expression ',' expression . ',' expression ')'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 128
-
-
-State 120
-
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   42           | GCD '(' expression ',' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
-
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 129
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ','  shift, and go to state 136
 
 
-State 121
+State 128
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   43           | AVG '(' expression ',' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   47           | SIGMA '(' expression ',' expression . ')'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 130
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 137
 
 
-State 122
+State 129
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   48           | GCD '(' expression ',' expression . ')'
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 138
+
+
+State 130
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   49           | AVG '(' expression ',' expression . ')'
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 139
+
+
+State 131
 
    13 block: WHILE '(' cond ')' op . '\n'
 
-    '\n'  shift, and go to state 131
+    '\n'  shift, and go to state 140
 
 
-State 123
+State 132
 
    17 cond: scond logop cond .
 
     $default  reduce using rule 17 (cond)
 
 
-State 124
+State 133
 
    18 scond: nid relop nid .
 
     $default  reduce using rule 18 (scond)
 
 
-State 125
+State 134
 
    14 block: IF '(' cond ')' op . '\n'
    15      | IF '(' cond ')' op . ELSE op '\n'
 
-    ELSE  shift, and go to state 132
-    '\n'  shift, and go to state 133
+    ELSE  shift, and go to state 141
+    '\n'  shift, and go to state 142
 
 
-State 126
+State 135
 
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   48           | BIN '(' expression ',' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   54           | BIN '(' expression ',' expression . ')'
 
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 134
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 143
 
 
-State 127
+State 136
 
-   49 expression: RAND '(' expression ',' expression ',' . expression ')'
+   55 expression: RAND '(' expression ',' expression ',' . expression ')'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
-    ID       shift, and go to state 42
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ID       shift, and go to state 47
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    expression  go to state 135
-
-
-State 128
-
-   41 expression: SIGMA '(' expression ',' expression ')' .
-
-    $default  reduce using rule 41 (expression)
+    expression  go to state 144
 
 
-State 129
+State 137
 
-   42 expression: GCD '(' expression ',' expression ')' .
+   47 expression: SIGMA '(' expression ',' expression ')' .
 
-    $default  reduce using rule 42 (expression)
-
-
-State 130
-
-   43 expression: AVG '(' expression ',' expression ')' .
-
-    $default  reduce using rule 43 (expression)
+    $default  reduce using rule 47 (expression)
 
 
-State 131
+State 138
+
+   48 expression: GCD '(' expression ',' expression ')' .
+
+    $default  reduce using rule 48 (expression)
+
+
+State 139
+
+   49 expression: AVG '(' expression ',' expression ')' .
+
+    $default  reduce using rule 49 (expression)
+
+
+State 140
 
    13 block: WHILE '(' cond ')' op '\n' .
 
     $default  reduce using rule 13 (block)
 
 
-State 132
+State 141
 
    15 block: IF '(' cond ')' op ELSE . op '\n'
 
     INTEGER  shift, and go to state 1
     REAL     shift, and go to state 2
     ID       shift, and go to state 3
-    LOG      shift, and go to state 4
-    FIB      shift, and go to state 5
-    RAND     shift, and go to state 6
-    SIGMA    shift, and go to state 7
-    ERA      shift, and go to state 8
-    PRIME    shift, and go to state 9
-    PRIMF    shift, and go to state 10
-    GCD      shift, and go to state 11
-    AVG      shift, and go to state 12
-    CEIL     shift, and go to state 13
-    FLOOR    shift, and go to state 14
-    WHILE    shift, and go to state 15
-    IF       shift, and go to state 16
-    EXIT     shift, and go to state 17
-    BIN      shift, and go to state 18
-    '-'      shift, and go to state 19
-    '('      shift, and go to state 20
+    ROOT     shift, and go to state 4
+    LOGN     shift, and go to state 5
+    FIB      shift, and go to state 6
+    ABS      shift, and go to state 7
+    PI       shift, and go to state 8
+    RAND     shift, and go to state 9
+    SIGMA    shift, and go to state 10
+    ERA      shift, and go to state 11
+    PRIME    shift, and go to state 12
+    PRIMF    shift, and go to state 13
+    GCD      shift, and go to state 14
+    AVG      shift, and go to state 15
+    CEIL     shift, and go to state 16
+    FLOOR    shift, and go to state 17
+    WHILE    shift, and go to state 18
+    IF       shift, and go to state 19
+    EXIT     shift, and go to state 20
+    BIN      shift, and go to state 21
+    '-'      shift, and go to state 22
+    '('      shift, and go to state 23
 
-    op          go to state 136
-    block       go to state 23
-    expression  go to state 24
+    op          go to state 145
+    block       go to state 26
+    expression  go to state 27
 
 
-State 133
+State 142
 
    14 block: IF '(' cond ')' op '\n' .
 
     $default  reduce using rule 14 (block)
 
 
-State 134
+State 143
 
-   48 expression: BIN '(' expression ',' expression ')' .
+   54 expression: BIN '(' expression ',' expression ')' .
 
-    $default  reduce using rule 48 (expression)
-
-
-State 135
-
-   31 expression: expression . '+' expression
-   34           | expression . '-' expression
-   35           | expression . '*' expression
-   36           | expression . '/' expression
-   37           | expression . '^' expression
-   38           | expression . '!'
-   49           | RAND '(' expression ',' expression ',' expression . ')'
-   54           | expression . INC
-   55           | expression . DEC
-
-    INC  shift, and go to state 54
-    DEC  shift, and go to state 55
-    '+'  shift, and go to state 56
-    '-'  shift, and go to state 57
-    '*'  shift, and go to state 58
-    '/'  shift, and go to state 59
-    '^'  shift, and go to state 60
-    '!'  shift, and go to state 61
-    ')'  shift, and go to state 137
+    $default  reduce using rule 54 (expression)
 
 
-State 136
+State 144
+
+   34 expression: expression . '+' expression
+   35           | expression . '-' expression
+   36           | expression . '*' expression
+   37           | expression . '/' expression
+   38           | expression . '^' expression
+   39           | expression . '!'
+   43           | expression . INC
+   44           | expression . DEC
+   55           | RAND '(' expression ',' expression ',' expression . ')'
+
+    INC  shift, and go to state 59
+    DEC  shift, and go to state 60
+    '+'  shift, and go to state 61
+    '-'  shift, and go to state 62
+    '*'  shift, and go to state 63
+    '/'  shift, and go to state 64
+    '^'  shift, and go to state 65
+    '!'  shift, and go to state 66
+    ')'  shift, and go to state 146
+
+
+State 145
 
    15 block: IF '(' cond ')' op ELSE op . '\n'
 
-    '\n'  shift, and go to state 138
+    '\n'  shift, and go to state 147
 
 
-State 137
+State 146
 
-   49 expression: RAND '(' expression ',' expression ',' expression ')' .
+   55 expression: RAND '(' expression ',' expression ',' expression ')' .
 
-    $default  reduce using rule 49 (expression)
+    $default  reduce using rule 55 (expression)
 
 
-State 138
+State 147
 
    15 block: IF '(' cond ')' op ELSE op '\n' .
 

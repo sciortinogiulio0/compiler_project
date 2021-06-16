@@ -21,16 +21,19 @@ ID       {LETTER}({LETTER}|{DIGIT})*
 
 FIB			{return FIB;}
 SIGMA			{return SIGMA;}
-LOG			{return LOG;}
+LOGN			{return LOGN;}
 AVG			{return AVG;}
 CEIL			{return CEIL;}
 FLOOR			{return FLOOR;}
+ROOT			{return ROOT;}
 RAND			{return RAND;}
 BIN			{return BIN;}
 GCD			{return GCD;}
 PRIME			{return PRIME;}
 PRIMF			{return PRIMF;}
 ERA			{return ERA;}
+PI			{return PI;}
+ABS			{return ABS;}
 \+\+ 						{return INC;}
 \-\- 						{return DEC;}
 \<			{return SMALLER;}

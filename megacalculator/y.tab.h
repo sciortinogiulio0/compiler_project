@@ -54,7 +54,7 @@ extern int yydebug;
     ID = 260,
     POW = 261,
     ROOT = 262,
-    LOG = 263,
+    LOGN = 263,
     FIB = 264,
     FACT = 265,
     SUM = 266,
@@ -94,7 +94,7 @@ extern int yydebug;
 #define ID 260
 #define POW 261
 #define ROOT 262
-#define LOG 263
+#define LOGN 263
 #define FIB 264
 #define FACT 265
 #define SUM 266
@@ -131,7 +131,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 52 "yacc.y"
+#line 53 "yacc.y"
 
 	char* lex;
 	struct Expr
@@ -141,9 +141,8 @@ union YYSTYPE
 	} expr;
 	int intVal;
 	float floatVal;
-	
 
-#line 147 "y.tab.h"
+#line 146 "y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
