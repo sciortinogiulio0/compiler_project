@@ -4,7 +4,7 @@
 	#include<string.h>
 	#include<stdbool.h>
 	#include<stdlib.h>
-    	#include<ctype.h>
+    #include<ctype.h>
 
     	int yydebug=1;
 	int fibonacci(int n);
@@ -61,6 +61,8 @@
 	float floatVal;
 }
 
+//terminal symbols
+
 %token <intVal> INTEGER
 %token <floatVal> REAL
 %token <lex> ID
@@ -98,8 +100,12 @@
 %token AND
 %token EXIT
 %token BIN
+//end of terminal symbols
 
 %type <expr> expression
+
+//precedence rules
+
 %nonassoc ID
 %right INC DEC
 %left '+'
@@ -112,10 +118,12 @@
 %left ')'
 %left ','
 
-
+//starting symbol
 %start startProgram
 
 %%
+
+/* here we defined the grammar productions*/
 
 startProgram:	op '\n'
 		| startProgram op '\n'
@@ -177,7 +185,7 @@ expression:	'(' expression ')' 			{$$ = $2;}
 		
 		//typeConsensus is used to "agree" on the type of the expression. See the declaration for further info
 		| expression '+' expression		{$$.type=typeConsensus($1.type,$3.type);
-								//the float value is updated whether result is floar or int,
+								//the float value is updated whether result is float or int,
 								//but only the type of the correct value will be printed out accordingly to $$.type
 								//(see function printExpression() )
 								$$.v.f = $1.v.f+$3.v.f;
@@ -562,14 +570,21 @@ struct Number searchSymbol(char *name)
 
 }
 
+//This functions allows us to print a variable according to its type
 void printExpression(struct Number val, char type){
 	int zero=0;
 	float zerof=0.0f;
 	bool flag=false;
+
+    // if the type of the variable is an int an int will be printed
 	if (type=='i'){
 		printf("%d\n",val.i);
+        
+     // if the type of the variable is a float a float will be printed
 	}else if(type=='f'){
 		printf("%f\n",val.f);
+
+    //print 0 otherwise    
 	}else{
 		printf("0\n");
 		
