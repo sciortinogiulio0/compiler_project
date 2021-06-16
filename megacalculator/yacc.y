@@ -66,7 +66,7 @@
 %token <lex> ID
 %token POW
 %token ROOT
-%token LOGN //TO FIX
+%token LOGN
 %token FIB
 %token FACT
 %token SUM
@@ -244,10 +244,10 @@ expression:	'(' expression ')' 			{$$ = $2;}
                                                 if($3.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
                                                 else $$.v.i = (int) fibonacci($3.v.i);}
 		| SIGMA '(' expression ',' expression ')'		{$$.type=typeConsensus($3.type,$5.type);
-                                                				if($$.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
+                                                				if($$.type=='f') printf("Please insert an integer and not a float for the Sigma \n"); 
                                                 				else $$.v.i = (int) sigma($3.v.i,$5.v.i);}
 		| GCD '(' expression ',' expression ')'		{$$.type=typeConsensus($3.type,$5.type);
-                                                				if($$.type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
+                                                				if($$.type=='f') printf("Please insert an integer and not a float for the GCD \n"); 
                                                 				else $$.v.i = (int) gcd($3.v.i,$5.v.i);}
 		| AVG '(' expression ',' expression ')'		{$$.type=typeConsensus($3.type,$5.type);
                                                 				if($$.type=='f'){
@@ -270,7 +270,7 @@ expression:	'(' expression ')' 			{$$ = $2;}
                                                else  $$.v.i = (int) binomial($3.v.i,$5.v.i); }
                                                
 		| RAND '(' expression ',' expression ',' expression ')' {$$.type=typeConsensus($3.type,$5.type);$$.type=typeConsensus($3.type,$7.type);
-                                                if($$.type=='f')printf("Please insert an integer and not a float for the prime factorization function \n");
+                                                if($$.type=='f')printf("Please insert an integer and not a float for the random function \n");
                                                else  $$.v.i = (int) randint($3.v.i,$5.v.i,$7.v.i); }
 		
 		| PRIME '(' expression ')' {$$.type=typeConsensus($3.type,$3.type);
@@ -567,15 +567,12 @@ void printExpression(struct Number val, char type){
 	float zerof=0.0f;
 	bool flag=false;
 	if (type=='i'){
-		//printf("i want to print a float\n");
 		printf("%d\n",val.i);
 	}else if(type=='f'){
-		//printf("i want to print a integer\n");
 		printf("%f\n",val.f);
 	}else{
 		printf("0\n");
-		//printf("%d\n",val.i);
-		//printf("%f\n",val.f);
+		
 	}
 }
 
