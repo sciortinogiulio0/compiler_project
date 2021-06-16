@@ -1,2 +1,6 @@
-SIGMA(2,9)
-EXIT
+BIN(1,2)
+GCD(-1,-2)
+PRIME(3.12)
+SIGMA(0,-1)
+ERA(-55)
+
