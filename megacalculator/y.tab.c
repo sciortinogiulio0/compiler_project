@@ -155,7 +155,7 @@
 	#include<string.h>
 	#include<stdbool.h>
 	#include<stdlib.h>
-    	#include<ctype.h>
+    #include<ctype.h>
 
     	int yydebug=1;
 	int fibonacci(int n);
@@ -558,12 +558,12 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   120,   120,   121,   124,   125,   126,   127,   128,   129,
-     130,   131,   132,   133,   136,   137,   138,   141,   142,   145,
-     148,   149,   152,   153,   156,   157,   158,   159,   160,   161,
-     164,   167,   171,   174,   176,   179,   191,   197,   204,   216,
-     219,   221,   225,   229,   233,   236,   241,   243,   246,   249,
-     252,   259,   262,   263,   265,   268,   272,   276,   280,   285
+       0,   128,   128,   129,   132,   133,   134,   135,   136,   137,
+     138,   139,   140,   141,   144,   145,   146,   149,   150,   153,
+     156,   157,   160,   161,   164,   165,   166,   167,   168,   169,
+     172,   175,   179,   182,   184,   187,   199,   205,   212,   224,
+     227,   229,   233,   237,   241,   244,   249,   251,   254,   257,
+     260,   267,   270,   271,   273,   276,   280,   284,   288,   293
 };
 #endif
 
@@ -1613,94 +1613,94 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 124 "yacc.y"
+#line 132 "yacc.y"
     {printExpression((yyvsp[(1) - (1)].expr).v,(yyvsp[(1) - (1)].expr).type);}
     break;
 
   case 5:
-#line 125 "yacc.y"
+#line 133 "yacc.y"
     { add_variable((yyvsp[(3) - (3)].expr).v,(yyvsp[(1) - (3)].lex),(yyvsp[(3) - (3)].expr).type);}
     break;
 
   case 6:
-#line 126 "yacc.y"
+#line 134 "yacc.y"
     {printf("%s", smaller((yyvsp[(1) - (3)].expr).v, (yyvsp[(3) - (3)].expr).v) ? "true" : "false");}
     break;
 
   case 7:
-#line 127 "yacc.y"
+#line 135 "yacc.y"
     {printf("%s", greater((yyvsp[(1) - (3)].expr).v, (yyvsp[(3) - (3)].expr).v) ? "true" : "false");}
     break;
 
   case 8:
-#line 128 "yacc.y"
+#line 136 "yacc.y"
     {printf("%s", equal((yyvsp[(1) - (3)].expr).v, (yyvsp[(3) - (3)].expr).v) ? "true" : "false");}
     break;
 
   case 9:
-#line 129 "yacc.y"
+#line 137 "yacc.y"
     {printf("%s", equal((yyvsp[(1) - (3)].expr).v, (yyvsp[(3) - (3)].expr).v) ? "false" : "true");}
     break;
 
   case 10:
-#line 130 "yacc.y"
+#line 138 "yacc.y"
     {printf("%s", (smaller((yyvsp[(1) - (3)].expr).v, (yyvsp[(3) - (3)].expr).v) || equal((yyvsp[(1) - (3)].expr).v, (yyvsp[(3) - (3)].expr).v)) ? "true" : "false");}
     break;
 
   case 11:
-#line 131 "yacc.y"
+#line 139 "yacc.y"
     {printf("%s", (greater((yyvsp[(1) - (3)].expr).v, (yyvsp[(3) - (3)].expr).v) || equal((yyvsp[(1) - (3)].expr).v, (yyvsp[(3) - (3)].expr).v)) ? "true" : "false");}
     break;
 
   case 13:
-#line 133 "yacc.y"
+#line 141 "yacc.y"
     {exit(0);}
     break;
 
   case 14:
-#line 136 "yacc.y"
+#line 144 "yacc.y"
     { printf("While loop detected.\n"); }
     break;
 
   case 15:
-#line 137 "yacc.y"
+#line 145 "yacc.y"
     { printf("IF clause detected.\n"); }
     break;
 
   case 16:
-#line 138 "yacc.y"
+#line 146 "yacc.y"
     { printf("IF..ELSE clause detected.\n");}
     break;
 
   case 30:
-#line 164 "yacc.y"
+#line 172 "yacc.y"
     {(yyval.expr) = (yyvsp[(2) - (3)].expr);}
     break;
 
   case 31:
-#line 167 "yacc.y"
+#line 175 "yacc.y"
     {(yyval.expr).type='f';(yyval.expr).v.f = M_PI;}
     break;
 
   case 32:
-#line 171 "yacc.y"
+#line 179 "yacc.y"
     {(yyval.expr).v = searchSymbol((yyvsp[(1) - (1)].lex)); (yyval.expr).type=get_type((yyvsp[(1) - (1)].lex));}
     break;
 
   case 33:
-#line 174 "yacc.y"
+#line 182 "yacc.y"
     {(yyval.expr).v.f = (yyvsp[(1) - (1)].floatVal); (yyval.expr).type = 'f';}
     break;
 
   case 34:
-#line 176 "yacc.y"
+#line 184 "yacc.y"
     {(yyval.expr).v.i = (yyvsp[(1) - (1)].intVal); (yyval.expr).type = 'i';}
     break;
 
   case 35:
-#line 179 "yacc.y"
+#line 187 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(1) - (3)].expr).type,(yyvsp[(3) - (3)].expr).type);
-								//the float value is updated whether result is floar or int,
+								//the float value is updated whether result is float or int,
 								//but only the type of the correct value will be printed out accordingly to $$.type
 								//(see function printExpression() )
 								(yyval.expr).v.f = (yyvsp[(1) - (3)].expr).v.f+(yyvsp[(3) - (3)].expr).v.f;
@@ -1713,7 +1713,7 @@ yyreduce:
     break;
 
   case 36:
-#line 191 "yacc.y"
+#line 199 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(1) - (3)].expr).type,(yyvsp[(3) - (3)].expr).type);
 								(yyval.expr).v.f = (yyvsp[(1) - (3)].expr).v.f+(yyvsp[(3) - (3)].expr).v.f;
 								(yyval.expr).v.i = (yyvsp[(1) - (3)].expr).v.i-(yyvsp[(3) - (3)].expr).v.i;
@@ -1722,7 +1722,7 @@ yyreduce:
     break;
 
   case 37:
-#line 197 "yacc.y"
+#line 205 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(1) - (3)].expr).type,(yyvsp[(3) - (3)].expr).type);
 								(yyval.expr).v.f = (yyvsp[(1) - (3)].expr).v.f*(yyvsp[(3) - (3)].expr).v.f;
 								(yyval.expr).v.i = (yyvsp[(1) - (3)].expr).v.i*(yyvsp[(3) - (3)].expr).v.i;
@@ -1731,7 +1731,7 @@ yyreduce:
     break;
 
   case 38:
-#line 204 "yacc.y"
+#line 212 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(1) - (3)].expr).type,(yyvsp[(3) - (3)].expr).type);
 								if((yyval.expr).type=='i'&&(yyvsp[(3) - (3)].expr).v.i!=0)
 									{(yyval.expr).v.i = (yyvsp[(1) - (3)].expr).v.i/(yyvsp[(3) - (3)].expr).v.i;}
@@ -1746,78 +1746,78 @@ yyreduce:
     break;
 
   case 39:
-#line 216 "yacc.y"
+#line 224 "yacc.y"
     {if(typeConsensus((yyvsp[(3) - (3)].expr).type,(yyvsp[(3) - (3)].expr).type)=='f') printf("Wrong input. Megacalculator only accepts integers");
 							 else (yyval.expr).v.i=pow((yyvsp[(1) - (3)].expr).v.i,(yyvsp[(3) - (3)].expr).v.i); (yyval.expr).v.f=pow((yyvsp[(1) - (3)].expr).v.f,(yyvsp[(3) - (3)].expr).v.i);(yyval.expr).type=typeConsensus((yyvsp[(1) - (3)].expr).type,(yyvsp[(3) - (3)].expr).type);}
     break;
 
   case 40:
-#line 219 "yacc.y"
+#line 227 "yacc.y"
     {if(typeConsensus((yyvsp[(1) - (2)].expr).type,(yyvsp[(1) - (2)].expr).type)=='f') printf("Wrong input. Factorial only accepts integers"); 
 							else {(yyval.expr).type=typeConsensus((yyvsp[(1) - (2)].expr).type,(yyvsp[(1) - (2)].expr).type); (yyval.expr).v.i = (int) fac((yyvsp[(1) - (2)].expr).v.i);(yyval.expr).v.f = (int) fac((yyvsp[(1) - (2)].expr).v.f);}}
     break;
 
   case 41:
-#line 221 "yacc.y"
+#line 229 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(2) - (2)].expr).type,(yyvsp[(2) - (2)].expr).type);(yyval.expr).v.f = -(yyvsp[(2) - (2)].expr).v.f;(yyval.expr).v.i = -(yyvsp[(2) - (2)].expr).v.i;}
     break;
 
   case 42:
-#line 225 "yacc.y"
+#line 233 "yacc.y"
     {if(get_type((yyvsp[(1) - (2)].lex)) == 'i'){struct Number n; n.i=searchSymbol((yyvsp[(1) - (2)].lex)).i+1; add_variable(n,(yyvsp[(1) - (2)].lex),get_type((yyvsp[(1) - (2)].lex)));}
                                     else if(get_type((yyvsp[(1) - (2)].lex)) == 'f'){struct Number n; n.f=searchSymbol((yyvsp[(1) - (2)].lex)).f+1; add_variable(n,(yyvsp[(1) - (2)].lex),get_type((yyvsp[(1) - (2)].lex)));}
                                     struct Expr expr; expr.v=searchSymbol((yyvsp[(1) - (2)].lex));expr.type=get_type((yyvsp[(1) - (2)].lex)); (yyval.expr)=expr;}
     break;
 
   case 43:
-#line 229 "yacc.y"
+#line 237 "yacc.y"
     {if(get_type((yyvsp[(1) - (2)].lex)) == 'i'){struct Number n; n.i=searchSymbol((yyvsp[(1) - (2)].lex)).i-1; add_variable(n,(yyvsp[(1) - (2)].lex),get_type((yyvsp[(1) - (2)].lex)));}
                                     else if(get_type((yyvsp[(1) - (2)].lex)) == 'f'){struct Number n; n.f=searchSymbol((yyvsp[(1) - (2)].lex)).f-1; add_variable(n,(yyvsp[(1) - (2)].lex),get_type((yyvsp[(1) - (2)].lex)));}
                                     struct Expr expr; expr.v=searchSymbol((yyvsp[(1) - (2)].lex));expr.type=get_type((yyvsp[(1) - (2)].lex)); (yyval.expr)=expr;}
     break;
 
   case 44:
-#line 233 "yacc.y"
+#line 241 "yacc.y"
     {(yyval.expr).type =typeConsensus((yyvsp[(1) - (2)].expr).type,(yyvsp[(1) - (2)].expr).type);
                                                 if((yyvsp[(1) - (2)].expr).type == 'i'){ ((yyvsp[(1) - (2)].expr).v.i + 1);}
                                                 else if((yyvsp[(1) - (2)].expr).type == 'f'){((yyvsp[(1) - (2)].expr).v.f + 1);}}
     break;
 
   case 45:
-#line 236 "yacc.y"
+#line 244 "yacc.y"
     {(yyval.expr).type =typeConsensus((yyvsp[(1) - (2)].expr).type,(yyvsp[(1) - (2)].expr).type);
                                                 if((yyvsp[(1) - (2)].expr).type == 'i'){ ((yyvsp[(1) - (2)].expr).v.i - 1);}
                                                 else if((yyvsp[(1) - (2)].expr).type == 'f'){((yyvsp[(1) - (2)].expr).v.f - 1);}}
     break;
 
   case 46:
-#line 241 "yacc.y"
+#line 249 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(3) - (4)].expr).type,(yyvsp[(3) - (4)].expr).type);(yyval.expr).v.f = abs((yyvsp[(3) - (4)].expr).v.f);(yyval.expr).v.i = abs((yyvsp[(3) - (4)].expr).v.i);}
     break;
 
   case 47:
-#line 243 "yacc.y"
+#line 251 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(3) - (4)].expr).type,(yyvsp[(3) - (4)].expr).type);
                                                 if((yyvsp[(3) - (4)].expr).type=='f') printf("Please insert an integer and not a float for the fibonacci \n"); 
                                                 else (yyval.expr).v.i = (int) fibonacci((yyvsp[(3) - (4)].expr).v.i);}
     break;
 
   case 48:
-#line 246 "yacc.y"
+#line 254 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(3) - (6)].expr).type,(yyvsp[(5) - (6)].expr).type);
                                                 				if((yyval.expr).type=='f') printf("Please insert an integer and not a float for the Sigma \n"); 
                                                 				else (yyval.expr).v.i = (int) sigma((yyvsp[(3) - (6)].expr).v.i,(yyvsp[(5) - (6)].expr).v.i);}
     break;
 
   case 49:
-#line 249 "yacc.y"
+#line 257 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(3) - (6)].expr).type,(yyvsp[(5) - (6)].expr).type);
                                                 				if((yyval.expr).type=='f') printf("Please insert an integer and not a float for the GCD \n"); 
                                                 				else (yyval.expr).v.i = (int) gcd((yyvsp[(3) - (6)].expr).v.i,(yyvsp[(5) - (6)].expr).v.i);}
     break;
 
   case 50:
-#line 252 "yacc.y"
+#line 260 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(3) - (6)].expr).type,(yyvsp[(5) - (6)].expr).type);
                                                 				if((yyval.expr).type=='f'){
                                                 				if((yyvsp[(3) - (6)].expr).type=='i'){(yyval.expr).v.f = avg((float)(yyvsp[(3) - (6)].expr).v.i,(yyvsp[(5) - (6)].expr).v.f);}
@@ -1827,51 +1827,51 @@ yyreduce:
     break;
 
   case 51:
-#line 259 "yacc.y"
+#line 267 "yacc.y"
     {(yyval.expr).type='f'; if(typeConsensus((yyvsp[(3) - (4)].expr).type,(yyvsp[(3) - (4)].expr).type)=='i') {(yyval.expr).v.f=logf((float)(yyvsp[(3) - (4)].expr).v.i);} 
                 					else{(yyval.expr).v.f=sqrtf((yyvsp[(3) - (4)].expr).v.f);} }
     break;
 
   case 52:
-#line 262 "yacc.y"
+#line 270 "yacc.y"
     {(yyval.expr).type=(yyvsp[(3) - (4)].expr).type; (yyval.expr).v.f = ceil((yyvsp[(3) - (4)].expr).v.f);(yyval.expr).v.i = (yyvsp[(3) - (4)].expr).v.i;}
     break;
 
   case 53:
-#line 263 "yacc.y"
+#line 271 "yacc.y"
     {(yyval.expr).type=(yyvsp[(3) - (4)].expr).type; (yyval.expr).v.f = floor((yyvsp[(3) - (4)].expr).v.f);(yyval.expr).v.i = (yyvsp[(3) - (4)].expr).v.i;}
     break;
 
   case 54:
-#line 265 "yacc.y"
+#line 273 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(3) - (4)].expr).type,(yyvsp[(3) - (4)].expr).type);
                                                 if((yyvsp[(3) - (4)].expr).type=='f')printf("Please insert an integer and not a float for the erathostenes function \n");
                                                else  (yyval.expr).v.i = (int) eratosthenes((yyvsp[(3) - (4)].expr).v.i); }
     break;
 
   case 55:
-#line 268 "yacc.y"
+#line 276 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(3) - (6)].expr).type,(yyvsp[(5) - (6)].expr).type);
                                                 if((yyval.expr).type=='f')printf("Please insert an integer and not a float for the binomial function \n");
                                                else  (yyval.expr).v.i = (int) binomial((yyvsp[(3) - (6)].expr).v.i,(yyvsp[(5) - (6)].expr).v.i); }
     break;
 
   case 56:
-#line 272 "yacc.y"
+#line 280 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(3) - (8)].expr).type,(yyvsp[(5) - (8)].expr).type);(yyval.expr).type=typeConsensus((yyvsp[(3) - (8)].expr).type,(yyvsp[(7) - (8)].expr).type);
                                                 if((yyval.expr).type=='f')printf("Please insert an integer and not a float for the random function \n");
                                                else  (yyval.expr).v.i = (int) randint((yyvsp[(3) - (8)].expr).v.i,(yyvsp[(5) - (8)].expr).v.i,(yyvsp[(7) - (8)].expr).v.i); }
     break;
 
   case 57:
-#line 276 "yacc.y"
+#line 284 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(3) - (4)].expr).type,(yyvsp[(3) - (4)].expr).type);
                                                 if((yyvsp[(3) - (4)].expr).type=='f')printf("Please insert an integer and not a float for the prime numbers function \n");
                                                else  (yyval.expr).v.i = (int) primeNums((yyvsp[(3) - (4)].expr).v.i);}
     break;
 
   case 58:
-#line 280 "yacc.y"
+#line 288 "yacc.y"
     {(yyval.expr).type=typeConsensus((yyvsp[(3) - (4)].expr).type,(yyvsp[(3) - (4)].expr).type);
                                                       if((yyvsp[(3) - (4)].expr).type=='f') printf("Please insert an integer and not a float for the prime factorization function"); 
                                                       else (yyval.expr).v.i = (int) primeFactors((yyvsp[(3) - (4)].expr).v.i);
@@ -1879,7 +1879,7 @@ yyreduce:
     break;
 
   case 59:
-#line 285 "yacc.y"
+#line 293 "yacc.y"
     {(yyval.expr).type='f'; if(typeConsensus((yyvsp[(3) - (4)].expr).type,(yyvsp[(3) - (4)].expr).type)=='i') {(yyval.expr).v.f=sqrtf((float)(yyvsp[(3) - (4)].expr).v.i);} 
                 					else{(yyval.expr).v.f=sqrtf((yyvsp[(3) - (4)].expr).v.f);} }
     break;
@@ -2100,7 +2100,7 @@ yyreturn:
 }
 
 
-#line 289 "yacc.y"
+#line 297 "yacc.y"
 
 int yywrap()
 {
@@ -2377,14 +2377,21 @@ struct Number searchSymbol(char *name)
 
 }
 
+//This functions allows us to print a variable according to its type
 void printExpression(struct Number val, char type){
 	int zero=0;
 	float zerof=0.0f;
 	bool flag=false;
+
+    // if the type of the variable is an int an int will be printed
 	if (type=='i'){
 		printf("%d\n",val.i);
+        
+     // if the type of the variable is a float a float will be printed
 	}else if(type=='f'){
 		printf("%f\n",val.f);
+
+    //print 0 otherwise    
 	}else{
 		printf("0\n");
 		
